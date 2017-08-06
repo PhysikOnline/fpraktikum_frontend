@@ -1,4 +1,5 @@
-import FormComponent from '../form/form.vue';
+import RegistrationComponent from '../registration/registration.vue';
+import Test from '../../service/test.service';
 
 export default {
   name: 'app',
@@ -18,6 +19,6 @@ export default {
     },
   },
   components: {
-    'registration-form': FormComponent,
+    'registration': RegistrationComponent,
   },
 };
