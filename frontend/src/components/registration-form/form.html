@@ -1,63 +1,113 @@
-<md-stepper>
-  <md-step :md-continue="!!selected.graduation" md-button-continue="Weiter" md-button-back="Zurück">
-    <p>Bitte wähle deinen Studiengang aus:</p>
-    <div>
-      <md-list>
-        <md-list-item v-for="g in graduations" :key="g">
-          <md-radio v-model="selected.graduation" class="registration-radio"
-                    :md-value="g">{{ fullGraduations[g] }}
-          </md-radio>
-        </md-list-item>
-      </md-list>
-    </div>
-  </md-step>
-  <md-step :md-button-continue="selected.partner.name && selected.partner.account ? 'Weiter' : 'Überspringen'">
-    <p>Falls du einen bereits eine Partnerin oder einen Partner für das Praktikum hast, kannst du sie/ihn hier
-      eintragen.</p>
-    <p>Dies kann auch nachträglich nach der Anmeldung eingetragen werden oder am Tag der Einführungsveranstaltung.</p>
-    <md-input-container>
-      <label>HRZ-Account (s-Nummer):</label>
-      <md-input v-model="selected.partner.account"></md-input>
-    </md-input-container>
-    <md-input-container>
-      <label>Nachname:</label>
-      <md-input v-model="selected.partner.name"></md-input>
-    </md-input-container>
-  </md-step>
-  <md-step md-button-continue="Weiter" md-button-back="Zurück">
-    <p>Wähle bitte zwei Institute aus, die Reihenfolge (1./2. Semesterhälfte) werden wir dir per Mail am Ende der Anmeldephase
-      zuschicken.</p>
-    <div class="form-md-switch">
-      <md-switch @change="toggleInstitutesNameOnly">Ich möchte gerne die Reihenfolge festlegen.</md-switch>
-    </div>
-    <div class="form-md-switch">
-      <md-switch @change="toggleOnlyOneInstitute">Ich habe bereits alle notwendigen Versuche in einem Institut abgeschlossen und möchte nur eines
-        auswählen.
-      </md-switch>
-    </div>
-    <div id="form-institutes">
-      <md-list v-if="selected.instituteNamesOnly">
-        <md-list-item v-for="i in instituteNames[selected.graduation]" :key="i.id">
-          <md-checkbox @change="selectInstitute" :md-value="i">{{ i }}</md-checkbox>
-        </md-list-item>
-      </md-list>
-      <div v-else>
-        <p>1. Semesterhälfte</p>
+<div>
+  <md-stepper @completed="completeRegistration">
+    <md-step :md-continue="!!selected.graduation" md-button-continue="Weiter" md-button-back="Zurück">
+      <p>Bitte wähle deinen Studiengang aus:</p>
+      <div>
         <md-list>
-          <md-list-item v-for="i in institutesByGradAndHalf[selected.graduation][0]" :key="i.id">
-            <md-radio @change="selectInstitute" :md-value="i.id">{{ i.name }}</md-radio>
-          </md-list-item>
-        </md-list>
-        <p>2. Semesterhälfte</p>
-        <md-list>
-          <md-list-item v-for="i in institutesByGradAndHalf[selected.graduation][1]" :key="i.id">
-            <md-radio @change="selectInstitute" :md-value="i.id">{{ i.name }}</md-radio>
+          <md-list-item v-for="g in graduations" :key="g">
+            <md-radio v-model="selected.graduation" class="registration-radio"
+                      :md-value="g">{{ fullGraduations[g] }}
+            </md-radio>
           </md-list-item>
         </md-list>
       </div>
-    </div>
-  </md-step>
-  <md-step md-button-continue="Weiter" md-button-back="Zurück">
+    </md-step>
+    <md-step :md-button-continue="selected.partner.name && selected.partner.account ? 'Weiter' : 'Überspringen'"
+             md-button-back="Zurück">
+      <p>Falls du einen bereits eine Partnerin oder einen Partner für das Praktikum hast, kannst du sie/ihn hier
+        eintragen.</p>
+      <p>Dies kann auch nachträglich nach der Anmeldung eingetragen werden oder am Tag der Einführungsveranstaltung.</p>
+      <md-input-container>
+        <label>HRZ-Account (s-Nummer):</label>
+        <md-input v-model="selected.partner.account"></md-input>
+      </md-input-container>
+      <md-input-container>
+        <label>Nachname:</label>
+        <md-input v-model="selected.partner.name"></md-input>
+      </md-input-container>
+    </md-step>
+    <md-step md-button-continue="Weiter" md-button-back="Zurück"
+             :md-continue="selected.institutes[0] !== undefined && selected.institutes[1] !== undefined">
+      <p>Wähle bitte zwei Institute aus.</p>
+      <div class="form-md-switch">
+        <md-switch @change="toggleOnlyOneInstitute">Ich habe bereits alle notwendigen Versuche in einem Institut
+          abgeschlossen und möchte nur eines
+          auswählen.
+        </md-switch>
+      </div>
+      <div id="form-institutes" v-if="selected.graduation">
+        <div>
+          <p>1. Semesterhälfte</p>
+          <md-list>
+            <md-list-item v-for="i in institutesMap[selected.graduation].filter(i => i.semester_half === 1)"
+                          :key="i.id">
+              <md-radio :disabled="!!selected.institutes[1] && institutes.find(n => n.id === selected.institutes[1]).name === i.name"
+                        v-model="selected.institutes[0]" @change="selectInstitute" :md-value="i.id">{{ i.name }}
+              </md-radio>
+            </md-list-item>
+          </md-list>
+          <p>2. Semesterhälfte</p>
+          <md-list>
+            <md-list-item v-for="i in institutesMap[selected.graduation].filter(i => i.semester_half === 2)"
+                          :key="i.id">
+              <md-radio :disabled="!!selected.institutes[0] && institutes.find(n => n.id === selected.institutes[0]).name === i.name"
+                        v-model="selected.institutes[1]" @change="selectInstitute" :md-value="i.id">{{ i.name }}
+              </md-radio>
+            </md-list-item>
+          </md-list>
+        </div>
+        <md-button class="md-raised" @click="selected.institutes = []">Reset</md-button>
+      </div>
+    </md-step>
+    <md-step md-button-continue="Weiter" md-button-back="Zurück"
+             :md-button-continue="selected.notes ? 'Weiter' : 'Überspringen'">
+      <p>Hier kannst du eine Bemerkung hinterlassen.</p>
+      <md-input-container>
+        <label>Bemerkung</label>
+        <md-textarea v-model="selected.notes"></md-textarea>
+      </md-input-container>
+    </md-step>
+    <md-step md-button-continue="Absenden" md-button-back="Zurück">
+      <p>Hier sind deine Anmeldedaten:</p>
+      <div id="reg-data">
+        <md-layout md-gutter class="reg-data-row">
+          <md-layout md-flex-small="40" md-flex-medium="30" md-flex="20" md-flex-xsmall="100" class="data-title">
+            Studiengang
+          </md-layout>
+          <md-layout class="data-content">{{ selected.graduation }}</md-layout>
+        </md-layout>
+        <md-layout md-gutter class="reg-data-row">
+          <md-layout md-flex-small="40" md-flex-medium="30" md-flex="20" md-flex-xsmall="100" class="data-title">
+            PartnerIn
+          </md-layout>
+          <md-layout md-flex="60" class="data-content">{{ selected.partner.name ? selected.partner.name : '-' }}
+          </md-layout>
+        </md-layout>
+        <md-layout md-gutter class="reg-data-row">
+          <md-layout md-flex-small="40" md-flex-medium="30" md-flex="20" md-flex-xsmall="100" class="data-title">
+            Institute
+          </md-layout>
+          <md-layout md-flex="60" class="data-content">
+            <div v-for="id in selected.institutes">{{ institutes.find(i => i.id === id).name }}</div>
+          </md-layout>
+        </md-layout>
+        <md-layout md-gutter class="reg-data-row">
+          <md-layout md-flex-small="40" md-flex-medium="30" md-flex="20" md-flex-xsmall="100" class="data-title">
+            Bemerkung
+          </md-layout>
+          <md-layout md-flex="60" class="data-content">{{ selected.notes ? selected.notes : '-' }}</md-layout>
+        </md-layout>
+      </div>
+      </md-list>
+    </md-step>
+  </md-stepper>
+  <md-dialog ref="completeDialog" :md-click-outside-to-close="false" :<md-esc-to-close="false">
+    <md-dialog-title>Anmeldung abgeschlossen</md-dialog-title>
 
-  </md-step>
-</md-stepper>
+    <md-dialog-content>Du wurdest erfolgreich für das Fortgeschrittenen Praktikum im {{ semester }} angemeldet.</md-dialog-content>
+
+    <md-dialog-actions>
+      <md-button class="md-primary" @click="onCompleteDialogClose()">Ok</md-button>
+    </md-dialog-actions>
+  </md-dialog>
+</div>

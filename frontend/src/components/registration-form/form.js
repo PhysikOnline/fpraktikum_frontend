@@ -1,127 +1,63 @@
+import Config from '../../config';
+
 export default {
-  name: 'form',
+  name: 'registration-form',
+  props: ['registrationService'],
   data() {
     return {
-      graduations: ['BA'],
-      fullGraduations: {
-        BA: 'Bachelor',
-        MA: 'Master',
-        LA: 'Lehramt',
-      },
-      institutes: [
-        {
-          id: 324235,
-          name: 'IAP',
-          graduation: 'BA',
-          places: 20,
-          free: 10,
-          waiting: 0,
-          half: 0,
-        },
-        {
-          id: 324243235,
-          name: 'IAP',
-          graduation: 'BA',
-          places: 20,
-          free: 10,
-          waiting: 0,
-          half: 1,
-        },
-        {
-          id: 3252,
-          name: 'PI',
-          graduation: 'BA',
-          places: 10,
-          free: 10,
-          waiting: 0,
-          half: 0,
-        },
-        {
-          id: 3232452,
-          name: 'PI',
-          graduation: 'BA',
-          places: 10,
-          free: 10,
-          waiting: 0,
-          half: 1,
-        },
-        {
-          id: 324658658235,
-          name: 'IKF',
-          graduation: 'BA',
-          half: 0,
-          places: 20,
-          free: 10,
-          waiting: 0,
-        },
-      ],
-      instituteNames: {},
-      institutesByGradAndHalf: {},
+      graduations: [],
+      fullGraduations: Config.GRADUATION_MAP,
+      institutes: [],
+      institutesMap: {},
       selected: {
         graduation: null,
         partner: {
           name: null,
           account: null,
         },
+        notes: null,
         institutes: [],
-        instituteNamesOnly: true,
         onlyOneInstitute: false,
       },
     };
   },
   created() {
-    this.instituteNames = this.getInstituteNamesByGrad(this.institutes);
-    this.institutesByGradAndHalf = this.getInstitutesByHalfAndGrad(this.institutes);
+    this.institutes = this.registrationService.institutes;
+    this.graduations = this.getGraduationsFromInstitutes(this.institutes);
+    this.institutesMap = this.getInstitutesMap(this.institutes);
   },
   updated() {
-    console.log(this.selected);
+    console.log(this.selected)
   },
   methods: {
+    getGraduationsFromInstitutes(institutes) {
+      const graduations = [];
+      institutes.forEach((i) => {
+        const grad = i.graduation;
+        if (graduations.indexOf(grad) === -1) {
+          graduations.push(grad);
+        }
+      });
+      return graduations;
+    },
+    getInstitutesMap(institutes) {
+      const instituteMap = {};
+      this.graduations.forEach((g) => {
+        instituteMap[g] = institutes.filter(i => i.graduation === g);
+      });
+      return instituteMap;
+    },
+    toggleOnlyOneInstitute() {
+      this.selected.onlyOneInstitute = !this.selected.onlyOneInstitute;
+    },
     selectInstitute(id) {
-      const institute = this.institutes.find(i => i.id === id);
-      console.log(institute.name);
 
     },
-    toggleInstitutesNameOnly(event) {
-      this.selected.instituteNamesOnly = !event;
+    completeRegistration() {
+      this.$refs.completeDialog.open();
     },
-    toggleOnlyOneInstitute(event) {
-      this.selected.onlyOneInstitute = event;
+    onCompleteDialogClose() {
+      this.$refs.completeDialog.close();
     },
-    getInstituteNamesByGrad(institutes) {
-      const result = {};
-
-      for (const i of institutes) {
-        const grad = i.graduation;
-        if (!result[grad]) {
-          result[grad] = [];
-        }
-        if (result[grad].indexOf(i.name) === -1) {
-          result[grad].push(i.name);
-        }
-      }
-
-      return result;
-    },
-    getInstitutesByHalfAndGrad(institutes) {
-      const result = {};
-
-      for (const i of institutes) {
-        const grad = i.graduation;
-        const half = i.half;
-
-        if (!result[grad]) {
-          result[grad] = {};
-        }
-        if (!result[grad][half]) {
-          result[grad][half] = [];
-        }
-        if (!result[grad][half].find(f => f === i)) {
-          result[grad][half].push(i);
-        }
-      }
-
-      return result;
-    }
-  }
+  },
 };

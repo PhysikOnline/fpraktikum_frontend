@@ -1,7 +1,7 @@
 <div id="registration">
   <md-card id="registration-start">
     <md-card-header>
-      <div class="md-title">Hi {{ user.name }},</div>
+      <div class="md-title">Hi {{ user.firstName }},</div>
     </md-card-header>
     <md-card-content>
       hier kannst du dich für das Fortgeschrittenen Praktikum im {{ semester }} anmelden.
@@ -11,6 +11,7 @@
     </md-card-actions>
   </md-card>
   <transition name="fade">
-    <registration-form v-if="startRegistration" id="registration-form"></registration-form>
+    <registration-form :registrationService="registrationService"
+                       v-if="startRegistration" id="registration-form"></registration-form>
   </transition>
 </div>

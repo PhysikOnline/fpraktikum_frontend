@@ -1,3 +1,15 @@
 <div id="app">
   <registration></registration>
+  <md-snackbar :md-position="'bottom' + ' ' + 'center'" ref="alertLog" :md-duration="4000">
+    <span>{{ alertMessage }}</span>
+  </md-snackbar>
+  <md-dialog ref="errorDialog">
+    <md-dialog-title>Ein Fehler ist aufgetreten</md-dialog-title>
+
+    <md-dialog-content>{{ errorMessage }}</md-dialog-content>
+
+    <md-dialog-actions>
+      <md-button class="md-primary" @click="$refs.errorDialog.close()">Ok</md-button>
+    </md-dialog-actions>
+  </md-dialog>
 </div>
