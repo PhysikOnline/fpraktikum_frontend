@@ -1,0 +1,37 @@
+export const APP_TEXT = {
+  'de': {
+    WELCOME: 'Hi',
+    WELCOME_DESCRIPTION: 'Hier kannst du dich für das Fortgeschrittenen Praktikum im %0% anmelden.',
+    WELCOME_GO_BUTTON: 'Los geht\'s',
+    BA: 'Bachelor',
+    MA: 'Master',
+    LA: 'Lehramt',
+    NAME: 'Name',
+    PARTNER: 'Partner',
+    INSTITUTES: 'Institute',
+    GRADUATION: 'Studiengang',
+    SNUMBER: 'S-Nummer',
+    EMAIL: 'E-Mail',
+    RESET: 'Zurücksetzen',
+    SNACKBAR_CLOSE: 'Schließen',
+    SNACKBAR_GOT_DATA: 'Daten angekommen.',
+    SNACKBAR_INITIAL_REQUEST_ERROR: 'Fehler beim Abrufen der Daten vom Server.',
+    BUTTON_NEXT: 'Weiter',
+    BUTTON_BACK: 'Zurück',
+    BUTTON_SKIP: 'Überspringen',
+    BUTTON_SEND: 'Abschicken',
+    REG_GRADUATION_STEP_TITLE: 'Studiengang',
+    REG_GRADUATION_STEP_DESC: 'Bitte wähle deinen Studiengang:',
+    REG_PARTNER_STEP_TITLE: 'Partner',
+    REG_PARTNER_STEP_DESC: 'Hier kannst du eine Partnerin oder einen Partner auswählen. ' +
+    'Dies kann aber auch noch am Tag der Einführungsveranstaltung getan werden.',
+    INPUT_PARTNER_LASTNAME_HINT: 'Der Nachname muss mit dem im Profil übereinstimmen!',
+    REG_INSTITUTES_STEP_TITLE: 'Institute',
+    REG_INSTITUTES_STEP_DESC: 'Bitte wähle %0% Institut%1% aus.',
+    REG_INSTITUTES_STEP_ONLY_ONE_INSTITUTE: 'Ich möchte nur ein Institut auswählen ' +
+    '(z.B. weil du bereits ein Institut bestanden hast).',
+    SEMESTER_HALF: 'Semesterhälfte',
+    REG_CHECK_STEP_TITLE: 'Auswahl überprüfen',
+    REG_CHECK_STEP_DESC: 'Bitte kontrolliere deine Daten, dann kannst du die Anmeldung abschicken.',
+  }
+};

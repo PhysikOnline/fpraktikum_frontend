@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+html, body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.mat-slide-toggle-label {
+  display: inline-block !important;
+}
+
+.mat-slide-toggle-bar {
+  display: inline-block !important;
+}
+
+.mat-slide-toggle {
+  white-space: normal;
+}

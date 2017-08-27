@@ -1,0 +1,26 @@
+.app-step {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+
+  padding: 40px;
+  @media (max-width: 600px){
+    padding: 0;
+  }
+
+  .step-card {
+    min-height: 60%;
+  }
+
+  .step-content {
+    margin: 30px 0;
+    min-height: 400px;
+  }
+
+  .step-actions {
+    position: absolute;
+    bottom: 5%;
+    padding-left: 16px;
+  }
+}
