@@ -1,0 +1,15 @@
+.list-identifier {
+  display: inline-block;
+  width: 120px;
+}
+
+.list-content {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-institute {
+  margin-right: 5px;
+}

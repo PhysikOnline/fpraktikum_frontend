@@ -1,0 +1,95 @@
+<div class="centered full-width welcome-wrapper">
+  <md-card id="welcome">
+    <md-card-title>{{ 'WELCOME' | translate }} {{ user.firstName }},</md-card-title>
+    <md-card-content>
+      <p>{{ 'WELCOME_DESCRIPTION' | translate:semester }}</p>
+      <button md-raised-button color="primary" id="welcome-button" (click)="startRegistration()">
+        {{ 'WELCOME_GO_BUTTON' | translate }}
+      </button>
+    </md-card-content>
+  </md-card>
+</div>
+
+<!-- Choose graduation -->
+<app-step [@stepState]="stepStates[0]" (stepNext)="advanceOneStep(1)"
+          (stepBack)="toggleStep(0)" [progressValue]="progress[0]" [nextDisables]="!user.graduation"
+          [nextButtonName]="'BUTTON_NEXT'" [backButtonName]="null" [stepName]="'REG_GRADUATION_STEP_TITLE'">
+
+  <p>{{ 'REG_GRADUATION_STEP_DESC' | translate }}</p>
+
+  <md-radio-group (change)="graduationChange($event)">
+    <md-radio-button class="radio-button-vertical" *ngFor="let graduation of graduationsArray" [value]="graduation">
+      {{ graduation | translate }}
+    </md-radio-button>
+  </md-radio-group>
+</app-step>
+
+<!-- Choose partner -->
+<app-step [@stepState]="stepStates[1]" (stepNext)="checkPartnerAndAdvanceStep(2)"
+          (stepBack)="toggleStep(1)" [progressValue]="progress[1]"
+          [nextButtonName]="partner.lastName && partner.sNumber ? 'BUTTON_NEXT' : 'BUTTON_SKIP'"
+          [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_PARTNER_STEP_TITLE'">
+
+  <p>{{ 'REG_PARTNER_STEP_DESC' | translate }}</p>
+  <p>{{ 'REG_PARTNER_STEP_DESC2' | translate }}</p>
+
+  <md-input-container class="input-container">
+    <input mdInput placeholder="S-Nummer" [(ngModel)]="partner.sNumber">
+  </md-input-container>
+  <md-input-container class="input-container">
+    <input mdInput placeholder="Nachname" [(ngModel)]="partner.lastName">
+    <md-hint align="start">{{ 'INPUT_PARTNER_LASTNAME_HINT' | translate }}</md-hint>
+  </md-input-container>
+</app-step>
+
+<!-- Choose institutes -->
+<app-step [@stepState]="stepStates[2]" (stepNext)="advanceOneStep(3)"
+          (stepBack)="toggleStep(2)" [progressValue]="progress[2]"
+          [nextButtonName]="'BUTTON_NEXT'" [nextDisables]="!hasUserEnoughInstitutesSelected()"
+          [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_INSTITUTES_STEP_TITLE'">
+
+  <p>
+    {{ 'REG_INSTITUTES_STEP_DESC' |
+    translate:(canSelectOnlyOneInstitute() ? 'ein' : 'zwei')
+    :(canSelectOnlyOneInstitute() ? '' : 'e') }}
+  </p>
+
+  <div class="institute-form" *ngIf="!needsOnlyOneInstitute()">
+    <md-slide-toggle [(ngModel)]="onlyOneInstitute">{{ 'REG_INSTITUTES_STEP_ONLY_ONE_INSTITUTE' | translate }}</md-slide-toggle>
+    <p>1. {{ 'SEMESTER_HALF' | translate }}</p>
+    <md-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(1)">
+      <md-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 1)"
+                       *ngFor="let institute of institutes | instituteFilter:user.graduation:1" [value]="institute">
+        {{ institute.name }}
+      </md-radio-button>
+    </md-radio-group>
+    <p>2. {{ 'SEMESTER_HALF' | translate }}</p>
+    <md-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(2)">
+      <md-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 2)"
+                       *ngFor="let institute of institutes | instituteFilter:user.graduation:2" [value]="institute">
+        {{ institute.name }}
+      </md-radio-button>
+    </md-radio-group>
+  </div>
+
+  <div class="institute-form" *ngIf="needsOnlyOneInstitute()">
+    <md-radio-group [(ngModel)]="user.institutes[0]">
+      <md-radio-button class="radio-button-vertical"
+                       *ngFor="let institute of institutes | instituteFilter:user.graduation" [value]="institute">
+        {{ institute.name }}
+      </md-radio-button>
+    </md-radio-group>
+  </div>
+  <button md-raised-button (click)="user.institutes = []"
+          class="reset-button" [disabled]="user.institutes.length === 0">{{ 'RESET' | translate }}</button>
+</app-step>
+
+<!-- Check registration and send -->
+<app-step [@stepState]="stepStates[3]" (stepNext)="advanceOneStep(4)"
+          (stepBack)="toggleStep(3)" [progressValue]="progress[3]"
+          [nextButtonName]="'BUTTON_SEND'"
+          [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_CHECK_STEP_TITLE'">
+
+  <p>{{ 'REG_CHECK_STEP_DESC' | translate }}</p>
+  <app-user-info-list [user]="user"></app-user-info-list>
+</app-step>

@@ -1,0 +1,49 @@
+.welcome-wrapper {
+  max-width: 500px;
+  padding: 10px;
+}
+
+#welcome {
+  #welcome-button {
+    display: block;
+    margin: auto;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+}
+
+app-step {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.radio-button-vertical {
+  display: block;
+  margin-top: 5px;
+}
+
+.input-container {
+  display: block;
+  margin-top: 10px;
+}
+
+.reset-button {
+  margin-top: 20px;
+}
+
+.mat-slide-toggle-label {
+  display: inline-block !important;
+}
+
+.mat-slide-toggle-bar {
+  display: inline-block !important;
+}
+
+.mat-slide-toggle {
+  white-space: normal;
+}
