@@ -7,7 +7,7 @@ export const APP_TEXT = {
     MA: 'Master',
     LA: 'Lehramt',
     NAME: 'Name',
-    PARTNER: 'Partner',
+    PARTNER: 'PartnerIn',
     INSTITUTES: 'Institute',
     GRADUATION: 'Studiengang',
     SNUMBER: 'S-Nummer',
@@ -21,13 +21,15 @@ export const APP_TEXT = {
     BUTTON_SKIP: 'Überspringen',
     BUTTON_SEND: 'Abschicken',
     REG_GRADUATION_STEP_TITLE: 'Studiengang',
-    REG_GRADUATION_STEP_DESC: 'Bitte wähle deinen Studiengang:',
+    REG_GRADUATION_STEP_DESC: 'First things first: Bitte wähle deinen Studiengang.',
     REG_PARTNER_STEP_TITLE: 'Partner',
-    REG_PARTNER_STEP_DESC: 'Hier kannst du eine Partnerin oder einen Partner auswählen. ' +
-    'Dies kann aber auch noch am Tag der Einführungsveranstaltung getan werden.',
+    REG_PARTNER_STEP_DESC: 'Falls du bereits eine Partnerin oder einen Partner für das Praktikum hast, kannst sie oder ihn hier auswählen. ' +
+    'Dies kann aber auch noch am Tag der Einführungsveranstaltung nachgeholt werden.',
+    REG_PARTNER_STEP_DESC2: 'Deine Partnerin/dein Partner kann dich auch nachträglich auswählen. ' +
+    'Falls du die s-Nummer also nicht weißt, überspringe diesen Schritt einfach.',
     INPUT_PARTNER_LASTNAME_HINT: 'Der Nachname muss mit dem im Profil übereinstimmen!',
     REG_INSTITUTES_STEP_TITLE: 'Institute',
-    REG_INSTITUTES_STEP_DESC: 'Bitte wähle %0% Institut%1% aus.',
+    REG_INSTITUTES_STEP_DESC: 'Nun kommen wir zum wichtigsten Schritt: Bitte wähle %0% Institut%1% aus.',
     REG_INSTITUTES_STEP_ONLY_ONE_INSTITUTE: 'Ich möchte nur ein Institut auswählen ' +
     '(z.B. weil du bereits ein Institut bestanden hast).',
     SEMESTER_HALF: 'Semesterhälfte',

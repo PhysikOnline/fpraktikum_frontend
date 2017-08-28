@@ -65,6 +65,18 @@ export const REG = {
       graduation: 'MA',
       semester_half: 2,
     },
+    {
+      name: 'IAP',
+      places: 25,
+      graduation: 'LA',
+      semester_half: 1,
+    },
+    {
+      name: 'PI',
+      places: 10,
+      graduation: 'LA',
+      semester_half: 2,
+    },
   ]
 };
 

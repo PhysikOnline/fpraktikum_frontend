@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from '../../services/registration.service';
 import { UserInterface } from '../interfaces/user.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { CONFIG } from '../../config';
 import { InstituteInterface } from '../interfaces/institute.interface';
 
 const TOTAL_NUMBER_OF_STEPS = 4;
@@ -55,14 +54,6 @@ export class RegistrationFormComponent implements OnInit {
     this.stepStates[0] = 'active';
   }
 
-  advanceOneStep(index) {
-    if (index === this.stepStates.length) {
-      this.registrationEnd();
-    } else {
-      this.toggleStep(index);
-    }
-  }
-
   checkPartnerAndAdvanceStep(index) {
     if(!(this.partner.lastName && this.partner.sNumber)) {
       this.advanceOneStep(index);
@@ -76,6 +67,14 @@ export class RegistrationFormComponent implements OnInit {
         institutes: []
       }
       this.advanceOneStep(index);
+    }
+  }
+
+  advanceOneStep(index) {
+    if (index === this.stepStates.length) {
+      this.registrationEnd();
+    } else {
+      this.toggleStep(index);
     }
   }
 
@@ -128,7 +127,12 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   graduationChange(graduationEvent) {
+    this.resetRegistration();
     this.user.graduation = graduationEvent.value;
   }
 
+  resetRegistration() {
+    this.user.graduation = null;
+    this.user.institutes = [];
+  }
 }
