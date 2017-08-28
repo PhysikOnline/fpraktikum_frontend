@@ -1,0 +1,6 @@
+<app-step [nextButtonName]="''" [backButtonName]="''"
+          [progressValue]="100" [stepName]="'REG_INFO_TITLE'">
+  <app-user-info-list [user]="user"></app-user-info-list>
+  <button md-raised-button color="warn" (click)="signOut()"
+          class="button-bottom">{{ 'SIGN_OUT' | translate }}</button>
+</app-step>

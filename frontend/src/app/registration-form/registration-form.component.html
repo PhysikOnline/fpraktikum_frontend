@@ -91,18 +91,5 @@
           [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_CHECK_STEP_TITLE'">
 
   <p>{{ 'REG_CHECK_STEP_DESC' | translate }}</p>
-  <md-list>
-    <md-list-item><span class="list-identifier">{{ 'NAME' | translate }}</span>
-      <span class="list-content">{{ user.firstName }} {{ user.lastName }}</span></md-list-item>
-    <md-list-item><span class="list-identifier">{{ 'SNUMBER' | translate }}</span>
-      <span class="list-content">{{ user.sNumber }}</span></md-list-item>
-    <md-list-item><span class="list-identifier">{{ 'GRADUATION' | translate }}</span>
-      <span class="list-content">{{ user.graduation | translate }}</span></md-list-item>
-    <md-list-item><span class="list-identifier">{{ 'EMAIL' | translate }}</span>
-      <span class="list-content">{{ user.email }}</span></md-list-item>
-    <md-list-item><span class="list-identifier">{{ 'PARTNER' | translate }}</span>
-      <span class="list-content" *ngIf="user.partner">{{ user.partner.firstName }} {{ user.partner.lastName }}</span></md-list-item>
-    <md-list-item><span class="list-identifier">{{ 'INSTITUTES' | translate }}</span>
-      <span *ngFor="let i of user.institutes" class="list-institute">{{ i.name }}</span></md-list-item>
-  </md-list>
+  <app-user-info-list [user]="user"></app-user-info-list>
 </app-step>

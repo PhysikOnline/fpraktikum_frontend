@@ -20,7 +20,8 @@ export class AlertService {
   showDialog(component: any, data: any): Promise<{}> {
     return new Promise((res, rej) => {
       const dialog = this.dialog.open(component, {
-        data: data
+        data: data,
+        disableClose: true
       });
       dialog.afterClosed().subscribe(result => {
         res();

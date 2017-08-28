@@ -106,10 +106,10 @@ export class RegistrationService {
         lastName: USER_LAST_NAME,
         sNumber: USER_ACCOUNT,
         email: USER_EMAIL,
-        graduation: null,
+        graduation: 'BA',
         institutes: [],
         partner: null,
-        status: null
+        status: 'registered'
       };
       observer.next();
     })
@@ -137,7 +137,16 @@ export class RegistrationService {
 
   registerUser(): Observable<void> {
     return Observable.create(observer => {
+      this.user.status = 'registered'
       this.registrationDoneEvent.emit();
+      observer.next();
+    })
+  }
+
+  signOutUser(): Observable<void> {
+    return Observable.create(observer => {
+      this.registrationDoneEvent.emit();
+      this.user.status = null;
       observer.next();
     })
   }

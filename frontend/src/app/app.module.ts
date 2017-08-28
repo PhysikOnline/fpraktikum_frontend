@@ -14,6 +14,8 @@ import { RegistrationCompleteComponent } from './registration-complete/registrat
 import { StarRatingModule } from 'angular-star-rating';
 import { RatingComponent } from './rating/rating.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { RegisteredInfoComponent } from './registered-info/registered-info.component';
+import { UserInfoListComponent } from './user-info-list/user-info-list.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
     RegistrationCompleteComponent,
     RatingComponent,
     ErrorDialogComponent,
+    RegisteredInfoComponent,
+    UserInfoListComponent,
   ],
   entryComponents: [
     RegistrationCompleteComponent,

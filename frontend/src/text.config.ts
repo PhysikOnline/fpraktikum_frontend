@@ -16,6 +16,7 @@ export const APP_TEXT = {
     RESET: 'Zurücksetzen',
     SUBMIT: 'Abschicken',
     CLOSE: 'Schließen',
+    SIGN_OUT: 'Anmeldung löschen',
 
     SNACKBAR_GOT_DATA: 'Daten angekommen.',
     SNACKBAR_INITIAL_REQUEST_ERROR: 'Fehler beim Abrufen der Daten vom Server.',
@@ -58,6 +59,8 @@ export const APP_TEXT = {
     RATING_DETAIL_BAD: 'Erzählst du uns noch kurz, was wir besser machen können?',
     RATING_SEND_CONFIRM: 'Dein Feedback wurde gespeichert.',
     RATING_SEND_ERROR: 'Dein Feedback kannte leider nicht gespeichert werden!',
+
+    REG_INFO_TITLE: 'Anmeldedaten',
 
     ERROR_TITLE_GENERIC: 'Oops, es ist ein Fehler aufgetreten!',
     ERROR_TITLE_BACKEND: 'Oops, es ist ein Fehler im Backend aufgetreten!',
