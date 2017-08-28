@@ -3,6 +3,9 @@ import { RegistrationService } from '../../services/registration.service';
 import { UserInterface } from '../interfaces/user.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { InstituteInterface } from '../interfaces/institute.interface';
+import { AlertService } from '../../services/alert.service';
+import { RegistrationCompleteComponent } from '../registration-complete/registration-complete.component';
+import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 
 const TOTAL_NUMBER_OF_STEPS = 4;
 
@@ -40,7 +43,8 @@ export class RegistrationFormComponent implements OnInit {
   stepStates = Array.from(Array(TOTAL_NUMBER_OF_STEPS)).map(e => 'inactive');
   progress = Array.from(Array(TOTAL_NUMBER_OF_STEPS)).map((e, index) => 100 / TOTAL_NUMBER_OF_STEPS * (index + 1));
 
-  constructor(private registrationService: RegistrationService) {
+  constructor(private registrationService: RegistrationService,
+              private alert: AlertService) {
   }
 
   ngOnInit() {
@@ -79,7 +83,12 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   registrationEnd() {
-
+    this.registrationService.registerUser().subscribe(() => {
+      this.alert.showDialog(RegistrationCompleteComponent, {});
+    }, error => this.alert.showDialog(ErrorDialogComponent, {
+      content: JSON.stringify(error),
+      isBackend: true,
+    }));
   }
 
   toggleStep(index) {

@@ -1,11 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~angular-star-rating/assets/scss/star-rating";
+
+.rating:focus {
+  outline: none;
+}
+
 
 .centered {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.full-width {
+  width: 100%;
 }
 
 html, body {
@@ -32,4 +42,12 @@ html, body {
 
 .mat-slide-toggle {
   white-space: normal;
+}
+
+md-dialog-container {
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+.mat-dialog-container {
+  max-width: 95vw !important;
 }

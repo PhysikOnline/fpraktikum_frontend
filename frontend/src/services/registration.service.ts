@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { InstituteInterface } from '../app/interfaces/institute.interface';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
@@ -90,6 +90,8 @@ export class RegistrationService {
   private _partner: { name: string, sNumber: string };
   private _graduationAvailable: string[] = [];
 
+  registrationDoneEvent = new EventEmitter();
+
   constructor(private http: HttpClient) {
   }
 
@@ -131,6 +133,13 @@ export class RegistrationService {
       this._graduationAvailable = RegistrationService.getGraduationAvailable(this.institutes);
       observer.next();
     });
+  }
+
+  registerUser(): Observable<void> {
+    return Observable.create(observer => {
+      this.registrationDoneEvent.emit();
+      observer.next();
+    })
   }
 
   get semester(): string {

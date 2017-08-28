@@ -15,7 +15,7 @@ export class TranslateService {
 
   translate(name: string): string {
     const text = this._text[this.language][name];
-    return text ? text : 'UNKNOWN';
+    return text ? text : name;
   }
 
   get language(): string {

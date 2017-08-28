@@ -1,0 +1,8 @@
+<h2 md-dialog-title>{{ 'REG_COMPLETE_TITLE' | translate }}</h2>
+<md-dialog-content>
+  <p>{{ 'REG_COMPLETE_CONTENT'  | translate:(hasPartner ? 'AND_YOUR_PARTNER' : '') }}</p>
+  <app-rating></app-rating>
+</md-dialog-content>
+<md-dialog-actions>
+  <button md-raised-button md-dialog-close>{{ 'CLOSE' | translate }}</button>
+</md-dialog-actions>

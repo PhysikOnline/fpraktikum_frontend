@@ -5,14 +5,15 @@ import { AppComponent } from './app.component';
 import { ServiceModule } from '../services/service.module';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MdButtonModule, MdCardModule, MdCheckboxModule, MdInputModule, MdListModule, MdProgressBarModule,
-  MdRadioModule, MdSlideToggleModule
-} from '@angular/material';
 import { TranslatePipe } from '../pipes/translate.pipe';
 import { StepComponent } from './step/step.component';
 import { FormsModule } from '@angular/forms';
 import { InstituteFilterPipe } from '../pipes/institute-filter.pipe';
+import { MaterialModule } from './modules/material.module';
+import { RegistrationCompleteComponent } from './registration-complete/registration-complete.component';
+import { StarRatingModule } from 'angular-star-rating';
+import { RatingComponent } from './rating/rating.component';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 
 @NgModule({
   declarations: [
@@ -21,20 +22,21 @@ import { InstituteFilterPipe } from '../pipes/institute-filter.pipe';
     TranslatePipe,
     StepComponent,
     InstituteFilterPipe,
+    RegistrationCompleteComponent,
+    RatingComponent,
+    ErrorDialogComponent,
+  ],
+  entryComponents: [
+    RegistrationCompleteComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
     ServiceModule,
     BrowserAnimationsModule,
     FormsModule,
-    MdButtonModule,
-    MdCheckboxModule,
-    MdCardModule,
-    MdProgressBarModule,
-    MdRadioModule,
-    MdInputModule,
-    MdSlideToggleModule,
-    MdListModule,
+    MaterialModule,
+    StarRatingModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

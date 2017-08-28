@@ -18,7 +18,7 @@ export class TranslatePipe implements PipeTransform {
 
   transform(name: string, ...args: any[]): string {
     let text = this.translate.translate(name);
-    args.forEach((a, i) => text = text.replace(new RegExp(`%${i}%`), a));
+    args.forEach((a, i) => text = text.replace(new RegExp(`%${i}%`), a ? this.translate.translate(a) : ''));
     return text;
   }
 }
