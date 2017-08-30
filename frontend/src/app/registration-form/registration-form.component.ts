@@ -55,11 +55,12 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   startRegistration() {
+    this.resetRegistration();
     this.stepStates[0] = 'active';
   }
 
   checkPartnerAndAdvanceStep(index) {
-    if(!(this.partner.lastName && this.partner.sNumber)) {
+    if (!(this.partner.lastName && this.partner.sNumber)) {
       this.advanceOneStep(index);
     } else {
       // TODO implement PartnerCheck routine
@@ -69,7 +70,7 @@ export class RegistrationFormComponent implements OnInit {
         sNumber: this.partner.sNumber,
         email: '',
         institutes: []
-      }
+      };
       this.advanceOneStep(index);
     }
   }
@@ -103,7 +104,7 @@ export class RegistrationFormComponent implements OnInit {
     } else {
       this.user.institutes.push(institute);
     }
-    console.log(this.user.institutes)
+    console.log(this.user.institutes);
   }
 
   shouldOptionBeDisabled(instituteName, semesterHalf) {

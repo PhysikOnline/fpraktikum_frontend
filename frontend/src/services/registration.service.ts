@@ -109,7 +109,7 @@ export class RegistrationService {
         graduation: 'BA',
         institutes: [],
         partner: null,
-        status: 'registered'
+        status: null
       };
       observer.next();
     })

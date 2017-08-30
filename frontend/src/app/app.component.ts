@@ -24,7 +24,7 @@ export class AppComponent {
 
   constructor(private registrationService: RegistrationService, private alert: AlertService) {
     registrationService.init().subscribe(() => {
-      this.alert.showSnack('SNACKBAR_GOT_DATA');
+      // this.alert.showSnack('SNACKBAR_GOT_DATA');
       this.showView = true;
       this.user = this.registrationService.user;
     }, error => this.alert.showDialog(ErrorDialogComponent, {

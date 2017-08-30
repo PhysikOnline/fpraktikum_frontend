@@ -2,7 +2,6 @@
   <app-registration-form [@fadeIn] *ngIf="!user.status"></app-registration-form>
   <app-registered-info [@fadeIn] *ngIf="user.status === 'registered'"></app-registered-info>
 </div>
-<button (click)="showView = !showView">Toggle</button>
 <div class="sk-spinner" *ngIf="!showView">
   <div class="sk-spinner-animate"></div>
 </div>
