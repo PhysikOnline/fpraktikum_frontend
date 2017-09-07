@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from '../../services/registration.service';
-import { UserInterface } from '../interfaces/user.interface';
+import { User } from '../../models/user.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { InstituteInterface } from '../interfaces/institute.interface';
+import { Institute } from '../../models/institute';
 import { AlertService } from '../../services/alert.service';
 import { RegistrationCompleteComponent } from '../registration-complete/registration-complete.component';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
@@ -30,8 +30,8 @@ const TOTAL_NUMBER_OF_STEPS = 4;
 })
 export class RegistrationFormComponent implements OnInit {
 
-  user: UserInterface;
-  institutes: InstituteInterface[];
+  user: User;
+  institutes: Institute[];
   semester: string;
   graduationsArray: string[];
   partner: {
@@ -97,7 +97,7 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   instituteChange(instituteEvent) {
-    const institute: InstituteInterface = instituteEvent.value;
+    const institute: Institute = instituteEvent.value;
     const instituteOfSameHalf = this.user.institutes.find(i => i.semesterHalf === institute.semesterHalf);
     if (instituteOfSameHalf) {
       this.user.institutes[this.user.institutes.indexOf(instituteOfSameHalf)] = institute;

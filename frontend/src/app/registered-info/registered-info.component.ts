@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from '../../services/registration.service';
-import { UserInterface } from '../interfaces/user.interface';
+import { User } from '../../models/user.interface';
 
 @Component({
   selector: 'app-registered-info',
@@ -8,7 +8,7 @@ import { UserInterface } from '../interfaces/user.interface';
   styleUrls: ['./registered-info.component.scss']
 })
 export class RegisteredInfoComponent implements OnInit {
-  user: UserInterface;
+  user: User;
 
   constructor(private registrationService: RegistrationService) { }
 

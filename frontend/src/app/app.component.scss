@@ -26,6 +26,7 @@ app-registration-form, app-registered-info {
     color: white;
     left: 50%;
     transform: translate(-50%, -50%);
+    white-space: nowrap;
 
     a {
       text-decoration: none;
@@ -38,6 +39,21 @@ app-registration-form, app-registered-info {
     left: 10px;
     top: 50%;
     transform: translate(0, -50%);
+    cursor: pointer;
+    * {
+      vertical-align: middle;
+    }
+  }
+
+  #footer-heart {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
+    cursor: pointer;
+    * {
+      vertical-align: middle;
+    }
   }
 }
 

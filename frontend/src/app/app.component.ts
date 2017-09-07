@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { RegistrationService } from '../services/registration.service';
 import { AlertService } from '../services/alert.service';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
-import { UserInterface } from './interfaces/user.interface';
+import { User } from '../models/user.interface';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MdDialog } from '@angular/material';
+import { InfoBoxComponent } from './info-box/info-box.component';
 
 @Component({
   selector: 'app-root',
@@ -20,10 +22,16 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class AppComponent {
   showView = false;
-  user: UserInterface;
+  user: User;
 
-  constructor(private registrationService: RegistrationService, private alert: AlertService) {
-    registrationService.init().subscribe(() => {
+  constructor(private registrationService: RegistrationService,
+              private alert: AlertService,
+              private dialog: MdDialog) {
+    this.initRegistrationService();
+  }
+
+  private initRegistrationService() {
+    this.registrationService.init().subscribe(([registration, user]) => {
       // this.alert.showSnack('SNACKBAR_GOT_DATA');
       this.showView = true;
       this.user = this.registrationService.user;
@@ -31,5 +39,9 @@ export class AppComponent {
       content: JSON.stringify(error),
       isBackend: true,
     }));
+  }
+
+  onInfoBoxClick() {
+    this.dialog.open(InfoBoxComponent);
   }
 }

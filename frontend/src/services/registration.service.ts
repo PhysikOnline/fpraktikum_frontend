@@ -1,10 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { InstituteInterface } from '../app/interfaces/institute.interface';
+import { Institute } from '../models/institute';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
-import { UserInterface } from '../app/interfaces/user.interface';
+import { User } from '../models/user.interface';
 
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/map'
+import { Registration } from '../models/registration';
 
 // we have to get the user from the document
 declare let USER_FIRST_NAME: string;
@@ -85,8 +87,8 @@ export class RegistrationService {
 
   private _semester = '';
   private _date: { start: string, end: string };
-  private _user: UserInterface;
-  private _institutes: InstituteInterface[] = [];
+  private _user: User;
+  private _institutes: Institute[] = [];
   private _partner: { name: string, sNumber: string };
   private _graduationAvailable: string[] = [];
 
@@ -95,44 +97,53 @@ export class RegistrationService {
   constructor(private http: HttpClient) {
   }
 
-  init(): Observable<[void, void]> {
+  init(): Observable<[Registration, void]> {
     return Observable.combineLatest(this.getRegistration(), this.getUser());
   }
 
   getUser(): Observable<void> {
     return Observable.create(observer => {
-      this._user = {
-        firstName: USER_FIRST_NAME,
-        lastName: USER_LAST_NAME,
-        sNumber: USER_ACCOUNT,
-        email: USER_EMAIL,
-        graduation: 'BA',
-        institutes: [],
-        partner: null,
-        status: null
-      };
+      this._user = new User(
+        USER_FIRST_NAME,
+        USER_LAST_NAME,
+        USER_ACCOUNT,
+        USER_EMAIL,
+        'BA',
+        [],
+        null,
+        null
+      );
       observer.next();
     })
   }
 
-  getRegistration(): Observable<void> {
+  getRegistration(): Observable<Registration> {
     return Observable.create(observer => {
-      this._semester = REG.semester;
-      this._date = {
-        start: REG.start_date,
-        end: REG.end_date
-      };
-      this._institutes = REG.institutes.map(i => {
-        return {
-          name: i.name,
-          places: i.places,
-          graduation: i.graduation,
-          semesterHalf: i.semester_half
-        };
-      });
-      this._graduationAvailable = RegistrationService.getGraduationAvailable(this.institutes);
-      observer.next();
+        this.http.get('https://po-fp.physikelearning.de/api/registration')
+        .map(Registration.fromApiType)
+        .subscribe(res => {
+          this._semester = res.semester;
+          observer.next(res);
+        })
     });
+
+    // return Observable.create(observer => {
+    //   this._semester = REG.semester;
+    //   this._date = {
+    //     start: REG.start_date,
+    //     end: REG.end_date
+    //   };
+    //   this._institutes = REG.institutes.map(i => {
+    //     return new Institute(
+    //       i.name,
+    //       i.graduation,
+    //       i.places,
+    //       i.semester_half
+    //     );
+    //   });
+    //   this._graduationAvailable = RegistrationService.getGraduationAvailable(this.institutes);
+    //   observer.next();
+    // });
   }
 
   registerUser(): Observable<void> {
@@ -159,11 +170,11 @@ export class RegistrationService {
     return this._date;
   }
 
-  get user(): UserInterface {
+  get user(): User {
     return this._user;
   }
 
-  get institutes(): InstituteInterface[] {
+  get institutes(): Institute[] {
     return this._institutes;
   }
 
@@ -175,7 +186,7 @@ export class RegistrationService {
     return this._graduationAvailable;
   }
 
-  static getGraduationAvailable(institutes: InstituteInterface[]): string[] {
+  static getGraduationAvailable(institutes: Institute[]): string[] {
     return institutes.reduce((r, i) => {
       if (r.indexOf(i.graduation) === -1) {
         r.push(i.graduation);

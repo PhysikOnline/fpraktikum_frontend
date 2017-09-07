@@ -23,4 +23,11 @@
     bottom: 5%;
     padding-left: 16px;
   }
+
+  .step-footer {
+    md-progress-bar {
+      position: absolute;
+      bottom: 0;
+    }
+  }
 }

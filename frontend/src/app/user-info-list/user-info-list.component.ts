@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UserInterface } from '../interfaces/user.interface';
+import { User } from '../../models/user.interface';
 
 @Component({
   selector: 'app-user-info-list',
@@ -7,7 +7,7 @@ import { UserInterface } from '../interfaces/user.interface';
   styleUrls: ['./user-info-list.component.scss']
 })
 export class UserInfoListComponent implements OnInit {
-  @Input() user: UserInterface;
+  @Input() user: User;
 
   constructor() { }
 

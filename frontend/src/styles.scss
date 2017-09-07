@@ -57,6 +57,10 @@ md-dialog-container {
   font-family: Roboto,"Helvetica Neue",sans-serif;
 }
 
+.mat-form-field {
+  width: 100% !important;
+}
+
 .mat-dialog-container {
   max-width: 95vw !important;
 }

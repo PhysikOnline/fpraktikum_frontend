@@ -16,6 +16,7 @@ import { RatingComponent } from './rating/rating.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { RegisteredInfoComponent } from './registered-info/registered-info.component';
 import { UserInfoListComponent } from './user-info-list/user-info-list.component';
+import { InfoBoxComponent } from './info-box/info-box.component';
 
 @NgModule({
   declarations: [
@@ -29,10 +30,12 @@ import { UserInfoListComponent } from './user-info-list/user-info-list.component
     ErrorDialogComponent,
     RegisteredInfoComponent,
     UserInfoListComponent,
+    InfoBoxComponent,
   ],
   entryComponents: [
     RegistrationCompleteComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    InfoBoxComponent,
   ],
   imports: [
     BrowserModule,

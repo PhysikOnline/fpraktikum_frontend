@@ -1,16 +1,16 @@
-<div class="view-wrapper" *ngIf="showView">
+<main class="view-wrapper" *ngIf="showView">
   <app-registration-form [@fadeIn] *ngIf="!user.status"></app-registration-form>
   <app-registered-info [@fadeIn] *ngIf="user.status === 'registered'"></app-registered-info>
-</div>
+</main>
 <div class="sk-spinner" *ngIf="!showView">
   <div class="sk-spinner-animate"></div>
 </div>
 <footer id="footer" class="roboto">
   <div id="footer-info">
-    <i class="material-icons md-light">info_outline</i>
+    <i class="material-icons md-light" (click)="onInfoBoxClick()">info_outline</i>
   </div>
   <div id="buildByPO">
-    Build with <span style="color: #FF8E8E;font-size: 140%;">♥</span> by
-    <a href="https://physikonline.uni-frankfurt.de">PhysikOnline</a>
+    Built with <span style="color: #FF8E8E;font-size: 140%;">♥</span> by
+    <a href="https://physikonline.uni-frankfurt.de" target="_blank">PhysikOnline</a>
   </div>
 </footer>
