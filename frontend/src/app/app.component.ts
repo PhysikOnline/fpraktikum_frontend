@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RegistrationService } from '../services/registration.service';
 import { AlertService } from '../services/alert.service';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
-import { User } from '../models/user.interface';
+import { User } from '../models/user';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MdDialog } from '@angular/material';
 import { InfoBoxComponent } from './info-box/info-box.component';

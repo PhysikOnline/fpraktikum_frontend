@@ -28,4 +28,8 @@ export class AlertService {
       });
     });
   }
+
+  showError(error) {
+    this.showSnack(error, 0);
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from '../../services/registration.service';
-import { User } from '../../models/user.interface';
+import { User } from '../../models/user';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Institute } from '../../models/institute';
 import { AlertService } from '../../services/alert.service';

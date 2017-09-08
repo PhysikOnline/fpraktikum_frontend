@@ -2,14 +2,14 @@ import { Institute } from './institute';
 import { Record } from './record';
 
 export interface UserApiModel {
-  firstName: string;
-  lastName: string;
-  sNumber: string;
-  graduation: string;
-  email: string;
-  institutes: Institute[];
+  firstName?: string;
+  lastName?: string;
+  sNumber?: string;
+  graduation?: string;
+  email?: string;
+  institutes?: Institute[];
   status: string;
-  partner: {
+  partner?: {
     firstName: string,
     lastName: string,
     sNumber: string,
@@ -43,14 +43,14 @@ export class User extends Record {
     };
   }
 
-  constructor(public firstName: string,
-              public lastName: string,
-              public sNumber: string,
-              public graduation: string,
-              public email: string,
-              public institutes: Institute[],
-              public status: string,
-              public partner: {
+  constructor(public status: string,
+              public firstName?: string,
+              public lastName?: string,
+              public sNumber?: string,
+              public graduation?: string,
+              public email?: string,
+              public institutes?: Institute[],
+              public partner?: {
                 firstName: string,
                 lastName: string,
                 sNumber: string,

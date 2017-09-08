@@ -2,11 +2,14 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Institute } from '../models/institute';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user.interface';
+import { User } from '../models/user';
 
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map'
 import { Registration } from '../models/registration';
+import { AlertService } from './alert.service';
+import { ApiService } from './api.service';
+import { ErrorDialogComponent } from '../app/error-dialog/error-dialog.component';
 
 // we have to get the user from the document
 declare let USER_FIRST_NAME: string;
@@ -94,7 +97,8 @@ export class RegistrationService {
 
   registrationDoneEvent = new EventEmitter();
 
-  constructor(private http: HttpClient) {
+  constructor(private api: ApiService,
+              private alert: AlertService) {
   }
 
   init(): Observable<[Registration, void]> {
@@ -103,28 +107,33 @@ export class RegistrationService {
 
   getUser(): Observable<void> {
     return Observable.create(observer => {
-      this._user = new User(
-        USER_FIRST_NAME,
-        USER_LAST_NAME,
-        USER_ACCOUNT,
-        USER_EMAIL,
-        'BA',
-        [],
-        null,
-        null
-      );
-      observer.next();
+      this.api.getUser(USER_ACCOUNT).subscribe(user => {
+        if (user.status === null) {
+          this._user = new User(
+            null,
+            USER_FIRST_NAME,
+            USER_LAST_NAME,
+            USER_ACCOUNT,
+            USER_EMAIL,
+            'BA',
+            [],
+            null,
+          );
+        } else {
+          this._user = user;
+        }
+        observer.next();
+      }, error => this.handleError(error))
     })
   }
 
   getRegistration(): Observable<Registration> {
     return Observable.create(observer => {
-        this.http.get('https://po-fp.physikelearning.de/api/registration')
-        .map(Registration.fromApiType)
+      this.api.getRegistration()
         .subscribe(res => {
           this._semester = res.semester;
           observer.next(res);
-        })
+        }, error => this.handleError(error));
     });
 
     // return Observable.create(observer => {
@@ -193,5 +202,12 @@ export class RegistrationService {
       }
       return r;
     }, []);
+  }
+
+  private handleError(message) {
+    this.alert.showDialog(ErrorDialogComponent, {
+      content: message,
+      isBackend: true
+    });
   }
 }

@@ -4,6 +4,7 @@ import { TranslateService } from './translate.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AlertService } from './alert.service';
 import { MdSnackBarModule } from '@angular/material';
+import { ApiService } from './api.service';
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,7 @@ import { MdSnackBarModule } from '@angular/material';
     RegistrationService,
     TranslateService,
     AlertService,
+    ApiService,
   ],
 })
 export class ServiceModule {
