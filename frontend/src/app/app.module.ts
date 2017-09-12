@@ -17,6 +17,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { RegisteredInfoComponent } from './registered-info/registered-info.component';
 import { UserInfoListComponent } from './user-info-list/user-info-list.component';
 import { InfoBoxComponent } from './info-box/info-box.component';
+import { NotIntimeComponent } from './not-intime/not-intime.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { InfoBoxComponent } from './info-box/info-box.component';
     RegisteredInfoComponent,
     UserInfoListComponent,
     InfoBoxComponent,
+    NotIntimeComponent,
   ],
   entryComponents: [
     RegistrationCompleteComponent,

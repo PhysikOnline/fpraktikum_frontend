@@ -1,6 +1,6 @@
 import { Record } from './record';
 
-interface InstituteApiModel {
+export interface InstituteApiModel {
   name: string;
   graduation: string;
   places: number;
@@ -8,11 +8,12 @@ interface InstituteApiModel {
 }
 
 export class Institute extends Record {
-  fromApiType(record: InstituteApiModel): void {
-    this.name = record.name;
-    this.graduation = record.graduation;
-    this.places = record.places;
-    this.semesterHalf = record.semester_half;
+  static fromApiType(record: InstituteApiModel): Institute {
+    return new Institute(
+      record.name,
+      record.graduation,
+      record.places,
+      record.semester_half);
   }
 
   toApiType(): InstituteApiModel {

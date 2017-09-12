@@ -6,7 +6,7 @@ export const APP_TEXT = {
 
     BA: 'Bachelor',
     MA: 'Master',
-    LA: 'Lehramt',
+    L: 'Lehramt',
     NAME: 'Name',
     PARTNER: 'PartnerIn',
     INSTITUTES: 'Institute',
@@ -65,11 +65,15 @@ export const APP_TEXT = {
     ERROR_TITLE_GENERIC: 'Oops, es ist ein Fehler aufgetreten!',
     ERROR_TITLE_BACKEND: 'Oops, es ist ein Fehler im Backend aufgetreten!',
     ERROR_BACKEND_DESC: 'Dies hat das Backend zurück geschickt:',
-    ERROR_HELP: 'Versuche es bitte erneut, falls es dann immer noch nicht funktioniert, kontaktiere bitte den Support.',
+    ERROR_HELP: 'Versuche es bitte erneut, falls es dann immer noch nicht funktioniert, kontaktiere bitte den ' +
+    '<a href="mailto:support@elearning.physik.uni-frankfurt.de">Support</a>.',
 
     INFO_BOX_TITLE: 'Anmeldung zum Fortgeschrittenen Praktikum',
     INFO_BOX_CONTENT: 'Entwickelt vom studentischen Projekt ' +
     '<a href="https://physikonline.uni-frankfurt.de" target="_blank">PhysikOnline</a> für den Fachbereich Physik.<br><br>' +
     'Falls du auf Probleme stößt oder Fragen hast, <a href="mailto:support@elearning.physik.uni-frankfurt.de">schreibe</a> uns.',
+
+    TOO_LATE: 'Die Anmeldung wurde am %0% beendet.',
+    TOO_EARLY: 'Die Anmeldung beginnt erst am %0%.'
   }
 };

@@ -125,7 +125,7 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   needsOnlyOneInstitute() {
-    return this.user.graduation === 'LA';
+    return this.user.graduation === 'L';
   }
 
   hasUserEnoughInstitutesSelected() {

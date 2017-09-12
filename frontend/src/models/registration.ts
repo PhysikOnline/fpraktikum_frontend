@@ -1,11 +1,11 @@
 import { Record } from './record';
-import { Institute } from './institute';
+import { Institute, InstituteApiModel } from './institute';
 
 interface RegistrationApiModel {
   semester: string;
   start_date: string;
   end_date: string;
-  institutes: Institute[];
+  institutes: InstituteApiModel[];
 }
 
 export class Registration extends Record {
@@ -14,7 +14,7 @@ export class Registration extends Record {
       record.semester,
       new Date(record.start_date),
       new Date(record.end_date),
-      record.institutes,
+      record.institutes.map(i => Institute.fromApiType(i)),
     );
   }
 
@@ -23,7 +23,7 @@ export class Registration extends Record {
       semester: this.semester,
       start_date: this.startDate.toISOString(),
       end_date: this.endDate.toISOString(),
-      institutes: this.institutes
+      institutes: this.institutes.map(i => i.toApiType())
     };
   }
 

@@ -6,6 +6,8 @@ import { User } from '../models/user';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MdDialog } from '@angular/material';
 import { InfoBoxComponent } from './info-box/info-box.component';
+import { DateService } from '../services/date.service';
+import { InTime } from '../models/in-time';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +25,8 @@ import { InfoBoxComponent } from './info-box/info-box.component';
 export class AppComponent {
   showView = false;
   user: User;
+  inTime: InTime = InTime.inTime;
+  inTimeEnum = InTime;
 
   constructor(private registrationService: RegistrationService,
               private alert: AlertService,
@@ -35,10 +39,21 @@ export class AppComponent {
       // this.alert.showSnack('SNACKBAR_GOT_DATA');
       this.showView = true;
       this.user = this.registrationService.user;
+      this.isInTime(this.registrationService.date)
     }, error => this.alert.showDialog(ErrorDialogComponent, {
       content: JSON.stringify(error),
       isBackend: true,
     }));
+  }
+
+  private isInTime(date) {
+    const now = DateService.now();
+    if (now < date.start) {
+      this.inTime = InTime.tooEarly;
+    }
+    if (now > date.end) {
+      this.inTime = InTime.tooLate;
+    }
   }
 
   onInfoBoxClick() {

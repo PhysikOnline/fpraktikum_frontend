@@ -89,7 +89,7 @@ export const REG = {
 export class RegistrationService {
 
   private _semester = '';
-  private _date: { start: string, end: string };
+  private _date: { start: Date, end: Date };
   private _user: User;
   private _institutes: Institute[] = [];
   private _partner: { name: string, sNumber: string };
@@ -107,23 +107,35 @@ export class RegistrationService {
 
   getUser(): Observable<void> {
     return Observable.create(observer => {
-      this.api.getUser(USER_ACCOUNT).subscribe(user => {
-        if (user.status === null) {
-          this._user = new User(
-            null,
-            USER_FIRST_NAME,
-            USER_LAST_NAME,
-            USER_ACCOUNT,
-            USER_EMAIL,
-            'BA',
-            [],
-            null,
-          );
-        } else {
-          this._user = user;
-        }
+      this._user = new User(
+        null,
+        USER_FIRST_NAME,
+        USER_LAST_NAME,
+        USER_ACCOUNT,
+        USER_EMAIL,
+        'BA',
+        [],
+        null,
+      );
         observer.next();
-      }, error => this.handleError(error))
+
+      // this.api.getUser(USER_ACCOUNT).subscribe(user => {
+      //   if (user.status === null) {
+      //     this._user = new User(
+      //       null,
+      //       USER_FIRST_NAME,
+      //       USER_LAST_NAME,
+      //       USER_ACCOUNT,
+      //       USER_EMAIL,
+      //       'BA',
+      //       [],
+      //       null,
+      //     );
+      //   } else {
+      //     this._user = user;
+      //   }
+      //   observer.next();
+      // }, error => this.handleError(error))
     })
   }
 
@@ -132,6 +144,12 @@ export class RegistrationService {
       this.api.getRegistration()
         .subscribe(res => {
           this._semester = res.semester;
+          this._date = {
+            start: res.startDate,
+            end: res.endDate,
+          };
+          this._institutes = res.institutes;
+          this._graduationAvailable = RegistrationService.getGraduationAvailable(this.institutes);
           observer.next(res);
         }, error => this.handleError(error));
     });
@@ -175,7 +193,7 @@ export class RegistrationService {
     return this._semester;
   }
 
-  get date(): { start: string; end: string } {
+  get date(): { start: Date; end: Date } {
     return this._date;
   }
 

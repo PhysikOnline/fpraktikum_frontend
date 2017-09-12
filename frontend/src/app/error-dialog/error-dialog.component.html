@@ -1,8 +1,8 @@
 <h2 md-dialog-title>{{ title | translate }}</h2>
 <md-dialog-content>
-  <p *ngIf="desc">{{ desc | translate }}</p>
+  <p *ngIf="desc" [innerHtml]="desc | translate"></p>
   <pre *ngIf="content" [innerHtml]="content"></pre>
-  <p>{{ 'ERROR_HELP' | translate }}</p>
+  <p [innerHtml]="'ERROR_HELP' | translate"></p>
 </md-dialog-content>
 <md-dialog-actions>
   <button md-raised-button md-dialog-close>{{ 'CLOSE' | translate }}</button>

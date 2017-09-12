@@ -1,0 +1,9 @@
+<div class="centered welcome-wrapper full-width">
+  <md-card id="welcome">
+    <md-card-title>{{ 'WELCOME' | translate }} {{ user.firstName }},</md-card-title>
+    <md-card-content>
+      <p *ngIf="isTooLate"><strong>{{ 'TOO_LATE' | translate:date }}</strong></p>
+      <p *ngIf="!isTooLate"><strong>{{ 'TOO_EARLY' | translate:date }}</strong></p>
+    </md-card-content>
+  </md-card>
+</div>

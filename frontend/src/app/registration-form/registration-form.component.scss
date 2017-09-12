@@ -1,18 +1,6 @@
-.welcome-wrapper {
-  max-width: 500px;
-  padding: 10px;
-}
 
-#welcome {
-  #welcome-button {
-    display: block;
-    margin: auto;
-  }
 
-  @media (max-width: 600px) {
-    width: 100%;
-  }
-}
+
 
 app-step {
   position: absolute;
