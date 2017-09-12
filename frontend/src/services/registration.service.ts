@@ -112,8 +112,8 @@ export class RegistrationService {
         USER_FIRST_NAME,
         USER_LAST_NAME,
         USER_ACCOUNT,
+        '',
         USER_EMAIL,
-        'BA',
         [],
         null,
       );
