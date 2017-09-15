@@ -4,7 +4,7 @@ import { Registration } from '../models/registration';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import { User } from '../models/user';
+import { User, UserApiModel } from '../models/user';
 
 @Injectable()
 export class ApiService {

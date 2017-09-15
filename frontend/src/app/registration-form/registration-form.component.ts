@@ -6,6 +6,7 @@ import { Institute } from '../../models/institute';
 import { AlertService } from '../../services/alert.service';
 import { RegistrationCompleteComponent } from '../registration-complete/registration-complete.component';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
+import { Partner } from '../../models/partner';
 
 const TOTAL_NUMBER_OF_STEPS = 4;
 
@@ -64,13 +65,12 @@ export class RegistrationFormComponent implements OnInit {
       this.advanceOneStep(index);
     } else {
       // TODO implement PartnerCheck routine
-      this.user.partner = {
-        firstName: 'Test',
-        lastName: this.partner.lastName,
-        sNumber: this.partner.sNumber,
-        email: '',
-        institutes: []
-      };
+      this.user.partner = new Partner(
+        'Test',
+        this.partner.lastName,
+        this.partner.sNumber,
+        '',
+    );
       this.advanceOneStep(index);
     }
   }

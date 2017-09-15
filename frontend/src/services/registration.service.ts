@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Institute } from '../models/institute';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user';
+import { User, UserApiModel } from '../models/user';
 
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map'
@@ -107,35 +107,35 @@ export class RegistrationService {
 
   getUser(): Observable<void> {
     return Observable.create(observer => {
-      this._user = new User(
-        null,
-        USER_FIRST_NAME,
-        USER_LAST_NAME,
-        USER_ACCOUNT,
-        '',
-        USER_EMAIL,
-        [],
-        null,
-      );
-        observer.next();
-
-      // this.api.getUser(USER_ACCOUNT).subscribe(user => {
-      //   if (user.status === null) {
-      //     this._user = new User(
-      //       null,
-      //       USER_FIRST_NAME,
-      //       USER_LAST_NAME,
-      //       USER_ACCOUNT,
-      //       USER_EMAIL,
-      //       'BA',
-      //       [],
-      //       null,
-      //     );
-      //   } else {
-      //     this._user = user;
-      //   }
+      // this._user = new User(
+      //   null,
+      //   '',
+      //   USER_FIRST_NAME,
+      //   USER_LAST_NAME,
+      //   USER_ACCOUNT,
+      //   USER_EMAIL,
+      //   [],
+      //   null,
+      // );
       //   observer.next();
-      // }, error => this.handleError(error))
+
+      this.api.getUser(USER_ACCOUNT).subscribe((user: User) => {
+        if (user.status === null) {
+          this._user = new User(
+            null,
+            'BA',
+            USER_FIRST_NAME,
+            USER_LAST_NAME,
+            USER_ACCOUNT,
+            USER_EMAIL,
+            [],
+            null,
+          );
+        } else {
+          this._user = user;
+        }
+        observer.next();
+      }, error => this.handleError(error))
     })
   }
 

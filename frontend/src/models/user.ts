@@ -1,62 +1,51 @@
-import { Institute } from './institute';
+import { Institute, InstituteApiModel } from './institute';
 import { Record } from './record';
+import { Partner, PartnerApiModel } from './partner';
 
 export interface UserApiModel {
-  firstName?: string;
-  lastName?: string;
-  sNumber?: string;
-  graduation?: string;
-  email?: string;
-  institutes?: Institute[];
+  user_firstname?: string;
+  user_lastname?: string;
+  user_login?: string;
+  user_email?: string;
+  institutes?: InstituteApiModel[];
   status: string;
-  partner?: {
-    firstName: string,
-    lastName: string,
-    sNumber: string,
-    email: string,
-    institutes: Institute[],
-  };
+  partner?: PartnerApiModel;
 }
 
 export class User extends Record {
-  fromApiType(record: UserApiModel): void {
-    this.firstName = record.firstName;
-    this.lastName = record.lastName;
-    this.sNumber = record.sNumber;
-    this.graduation = record.graduation;
-    this.email = record.email;
-    this.institutes = record.institutes;
-    this.status = record.status;
-    this.partner = record.partner;
+  static fromApiType(record: UserApiModel): User {
+    return new User(
+      record.status,
+      '',
+      record.user_firstname,
+      record.user_lastname,
+      record.user_login,
+      record.user_email,
+      record.institutes.map(i => Institute.fromApiType(i)),
+      Partner.fromApiType(record.partner),
+    );
   }
 
   toApiType(): UserApiModel {
     return {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      sNumber: this.sNumber,
-      graduation: this.graduation,
-      email: this.email,
-      institutes: this.institutes,
+      user_firstname: this.firstName,
+      user_lastname: this.lastName,
+      user_login: this.login,
+      user_email: this.email,
+      institutes: this.institutes.map(i => i.toApiType()),
       status: this.status,
-      partner: this.partner,
+      partner: this.partner.toApiType(),
     };
   }
 
   constructor(public status: string,
+              public graduation?: string,
               public firstName?: string,
               public lastName?: string,
-              public sNumber?: string,
-              public graduation?: string,
+              public login?: string,
               public email?: string,
               public institutes?: Institute[],
-              public partner?: {
-                firstName: string,
-                lastName: string,
-                sNumber: string,
-                email: string,
-                institutes: Institute[],
-              }) {
+              public partner?: Partner) {
     super();
   }
 }
