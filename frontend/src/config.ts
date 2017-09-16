@@ -4,4 +4,5 @@ export const CONFIG = {
     MA: 'MASTER',
     LA: 'TEACHING',
   },
+  API_URL: 'https://po-fp.physikelearning.de/api',
 }

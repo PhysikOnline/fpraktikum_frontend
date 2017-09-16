@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MdDialog, MdSnackBar } from '@angular/material';
 import { TranslateService } from './translate.service';
+import { QuestionDialogComponent } from '../app/question-dialog/question-dialog.component';
 
 @Injectable()
 export class AlertService {
@@ -17,15 +18,22 @@ export class AlertService {
     });
   }
 
-  showDialog(component: any, data: any): Promise<{}> {
+  showDialog(component: any, data: any): Promise<any> {
     return new Promise((res, rej) => {
       const dialog = this.dialog.open(component, {
         data: data,
         disableClose: true
       });
       dialog.afterClosed().subscribe(result => {
-        res();
+        res(result);
       });
+    });
+  }
+
+  showQuestionDialog(title: string, content?: string): Promise<any> {
+    return this.showDialog(QuestionDialogComponent, {
+      questionTitle: title,
+      questionContent: content,
     });
   }
 

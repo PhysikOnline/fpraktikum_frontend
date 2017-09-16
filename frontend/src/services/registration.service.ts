@@ -10,6 +10,7 @@ import { Registration } from '../models/registration';
 import { AlertService } from './alert.service';
 import { ApiService } from './api.service';
 import { ErrorDialogComponent } from '../app/error-dialog/error-dialog.component';
+import { Partner } from '../models/partner';
 
 // we have to get the user from the document
 declare let USER_FIRST_NAME: string;
@@ -107,35 +108,35 @@ export class RegistrationService {
 
   getUser(): Observable<void> {
     return Observable.create(observer => {
-      // this._user = new User(
-      //   null,
-      //   '',
-      //   USER_FIRST_NAME,
-      //   USER_LAST_NAME,
-      //   USER_ACCOUNT,
-      //   USER_EMAIL,
-      //   [],
-      //   null,
-      // );
-      //   observer.next();
-
-      this.api.getUser(USER_ACCOUNT).subscribe((user: User) => {
-        if (user.status === null) {
-          this._user = new User(
-            null,
-            'BA',
-            USER_FIRST_NAME,
-            USER_LAST_NAME,
-            USER_ACCOUNT,
-            USER_EMAIL,
-            [],
-            null,
-          );
-        } else {
-          this._user = user;
-        }
+      this._user = new User(
+        'partner',
+        '',
+        USER_FIRST_NAME,
+        USER_LAST_NAME,
+        USER_ACCOUNT,
+        USER_EMAIL,
+        [],
+        new Partner("Test", "Test", "s32847", "328dskjf"),
+      );
         observer.next();
-      }, error => this.handleError(error))
+
+      // this.api.getUser(USER_ACCOUNT).subscribe((user: User) => {
+      //   if (user.status === null) {
+      //     this._user = new User(
+      //       null,
+      //       'BA',
+      //       USER_FIRST_NAME,
+      //       USER_LAST_NAME,
+      //       USER_ACCOUNT,
+      //       USER_EMAIL,
+      //       [],
+      //       null,
+      //     );
+      //   } else {
+      //     this._user = user;
+      //   }
+      //   observer.next();
+      // }, error => this.handleError(error))
     })
   }
 
@@ -175,10 +176,18 @@ export class RegistrationService {
 
   registerUser(): Observable<void> {
     return Observable.create(observer => {
-      this.user.status = 'registered'
-      this.registrationDoneEvent.emit();
-      observer.next();
-    })
+      this.api.postUser(this.user).subscribe(user => {
+        this._user = user;
+        this.registrationDoneEvent.emit();
+        observer.next();
+      }, error => this.handleError(error));
+    });
+
+    // return Observable.create(observer => {
+    //   this.user.status = 'registered'
+    //   this.registrationDoneEvent.emit();
+    //   observer.next();
+    // })
   }
 
   signOutUser(): Observable<void> {
@@ -187,6 +196,14 @@ export class RegistrationService {
       this.user.status = null;
       observer.next();
     })
+  }
+
+  // checkPartner(): Observable<Partner> {
+  //
+  // }
+
+  acceptDecline(accept: boolean): Observable<void> {
+    return this.api.acceptDecline(this.user, accept);
   }
 
   get semester(): string {

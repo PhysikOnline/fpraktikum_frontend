@@ -16,8 +16,13 @@ import { RatingComponent } from './rating/rating.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { RegisteredInfoComponent } from './registered-info/registered-info.component';
 import { UserInfoListComponent } from './user-info-list/user-info-list.component';
-import { InfoBoxComponent } from './info-box/info-box.component';
+import { InfoBoxComponent } from './info-box-dialog/info-box.component';
 import { NotIntimeComponent } from './not-intime/not-intime.component';
+import { PartnerInfoComponent } from './partner-info/partner-info.component';
+import { TemplateErrorComponent } from './template-error/template-error.component';
+import { QuestionDialogComponent } from './question-dialog/question-dialog.component';
+import { FooterComponent } from './footer/footer.component';
+import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
 
 @NgModule({
   declarations: [
@@ -33,11 +38,17 @@ import { NotIntimeComponent } from './not-intime/not-intime.component';
     UserInfoListComponent,
     InfoBoxComponent,
     NotIntimeComponent,
+    PartnerInfoComponent,
+    TemplateErrorComponent,
+    QuestionDialogComponent,
+    FooterComponent,
+    LanguageSwitcherComponent,
   ],
   entryComponents: [
     RegistrationCompleteComponent,
     ErrorDialogComponent,
     InfoBoxComponent,
+    QuestionDialogComponent
   ],
   imports: [
     BrowserModule,

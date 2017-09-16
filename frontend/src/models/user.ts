@@ -34,7 +34,7 @@ export class User extends Record {
       user_email: this.email,
       institutes: this.institutes.map(i => i.toApiType()),
       status: this.status,
-      partner: this.partner.toApiType(),
+      partner: this.partner ? this.partner.toApiType() : null,
     };
   }
 

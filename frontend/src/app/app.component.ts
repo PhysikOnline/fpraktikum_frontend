@@ -5,7 +5,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { User } from '../models/user';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MdDialog } from '@angular/material';
-import { InfoBoxComponent } from './info-box/info-box.component';
+import { InfoBoxComponent } from './info-box-dialog/info-box.component';
 import { DateService } from '../services/date.service';
 import { InTime } from '../models/in-time';
 
@@ -29,8 +29,7 @@ export class AppComponent {
   inTimeEnum = InTime;
 
   constructor(private registrationService: RegistrationService,
-              private alert: AlertService,
-              private dialog: MdDialog) {
+              private alert: AlertService) {
     this.initRegistrationService();
   }
 
@@ -56,7 +55,5 @@ export class AppComponent {
     }
   }
 
-  onInfoBoxClick() {
-    this.dialog.open(InfoBoxComponent);
-  }
+
 }
