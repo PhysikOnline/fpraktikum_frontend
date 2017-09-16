@@ -1,0 +1,8 @@
+<md-menu #appMenu="mdMenu">
+  <button md-menu-item (click)="switchLang('en')">English</button>
+  <button md-menu-item (click)="switchLang('de')">Deutsch</button>
+</md-menu>
+
+<button md-icon-button [mdMenuTriggerFor]="appMenu">
+  <i class="material-icons md-light">language</i>
+</button>
