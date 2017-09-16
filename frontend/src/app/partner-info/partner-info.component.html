@@ -1,0 +1,13 @@
+<app-step [nextButtonName]="''" [backButtonName]="''"
+          [progressValue]="100" [stepName]="'REG_INFO_TITLE'">
+  <p *ngIf="user.partner; else elseBlock">{{ 'PARTNER_ACCEPT_INFO' | translate:user.partner.firstName }}</p>
+  <ng-template #elseBlock>
+    <app-template-error [error]="'PARTNER_ACCEPT_ERROR' | translate"></app-template-error>
+  </ng-template>
+  <app-user-info-list [user]="user"></app-user-info-list>
+  <div class="button-bottom">
+    <button md-raised-button color="primary" (click)="accept()">{{ 'PARTNER_ACCEPT' | translate }}</button>
+    <button md-raised-button color="warn" (click)="decline()">{{ 'PARTNER_DECLINE' | translate }}</button>
+  </div>
+
+</app-step>
