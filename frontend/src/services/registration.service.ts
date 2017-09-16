@@ -109,7 +109,7 @@ export class RegistrationService {
   getUser(): Observable<void> {
     return Observable.create(observer => {
       this._user = new User(
-        'partner',
+        '',
         '',
         USER_FIRST_NAME,
         USER_LAST_NAME,

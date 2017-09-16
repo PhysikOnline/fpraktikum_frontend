@@ -34,10 +34,10 @@
   <p>{{ 'REG_PARTNER_STEP_DESC2' | translate }}</p>
 
   <md-input-container class="input-container">
-    <input mdInput placeholder="S-Nummer" [(ngModel)]="partner.sNumber">
+    <input mdInput [placeholder]="'S_NUMBER' | translate" [(ngModel)]="partner.sNumber">
   </md-input-container>
   <md-input-container class="input-container">
-    <input mdInput placeholder="Nachname" [(ngModel)]="partner.lastName">
+    <input mdInput [placeholder]="'LAST_NAME' | translate" [(ngModel)]="partner.lastName">
     <md-hint align="start">{{ 'INPUT_PARTNER_LASTNAME_HINT' | translate }}</md-hint>
   </md-input-container>
 </app-step>
@@ -50,8 +50,8 @@
 
   <p>
     {{ 'REG_INSTITUTES_STEP_DESC' |
-    translate:(canSelectOnlyOneInstitute() ? 'ein' : 'zwei')
-    :(canSelectOnlyOneInstitute() ? '' : 'e') }}
+    translate:(canSelectOnlyOneInstitute() ? ('ONE' | translate) : ('TWO' | translate))
+    :(canSelectOnlyOneInstitute() ? '' : ('INSTITUTE_PLURAL_SUFFIX' | translate)) }}
   </p>
 
   <div class="institute-form" *ngIf="!needsOnlyOneInstitute()">
