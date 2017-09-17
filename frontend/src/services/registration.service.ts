@@ -11,6 +11,7 @@ import { AlertService } from './alert.service';
 import { ApiService } from './api.service';
 import { ErrorDialogComponent } from '../app/error-dialog/error-dialog.component';
 import { Partner } from '../models/partner';
+import { ChosenPartner } from '../models/chosen-partner';
 
 // we have to get the user from the document
 declare let USER_FIRST_NAME: string;
@@ -89,12 +90,13 @@ export const REG = {
 @Injectable()
 export class RegistrationService {
 
-  private _semester = '';
-  private _date: { start: Date, end: Date };
-  private _user: User;
-  private _institutes: Institute[] = [];
-  private _partner: { name: string, sNumber: string };
-  private _graduationAvailable: string[] = [];
+  semester = '';
+  date: { start: Date, end: Date };
+  user: User;
+  institutes: Institute[] = [];
+  partner: Partner;
+  graduationAvailable: string[] = [];
+  partnerStatus: ChosenPartner;
 
   registrationDoneEvent = new EventEmitter();
 
@@ -108,35 +110,35 @@ export class RegistrationService {
 
   getUser(): Observable<void> {
     return Observable.create(observer => {
-      this._user = new User(
-        '',
-        '',
-        USER_FIRST_NAME,
-        USER_LAST_NAME,
-        USER_ACCOUNT,
-        USER_EMAIL,
-        [],
-        new Partner("Test", "Test", "s32847", "328dskjf"),
-      );
-        observer.next();
+    //   this._user = new User(
+    //     '',
+    //     '',
+    //     USER_FIRST_NAME,
+    //     USER_LAST_NAME,
+    //     USER_ACCOUNT,
+    //     USER_EMAIL,
+    //     [],
+    //     new Partner("Test", "Test", "s32847", "328dskjf"),
+    //   );
+    //     observer.next();
 
-      // this.api.getUser(USER_ACCOUNT).subscribe((user: User) => {
-      //   if (user.status === null) {
-      //     this._user = new User(
-      //       null,
-      //       'BA',
-      //       USER_FIRST_NAME,
-      //       USER_LAST_NAME,
-      //       USER_ACCOUNT,
-      //       USER_EMAIL,
-      //       [],
-      //       null,
-      //     );
-      //   } else {
-      //     this._user = user;
-      //   }
-      //   observer.next();
-      // }, error => this.handleError(error))
+      this.api.getUser(USER_ACCOUNT).subscribe((user: User) => {
+        if (user.status === null) {
+          this.user = new User(
+            null,
+            '',
+            USER_FIRST_NAME,
+            USER_LAST_NAME,
+            USER_ACCOUNT,
+            USER_EMAIL,
+            [],
+            null,
+          );
+        } else {
+          this.user = user;
+        }
+        observer.next();
+      }, error => this.handleError(error))
     })
   }
 
@@ -144,13 +146,13 @@ export class RegistrationService {
     return Observable.create(observer => {
       this.api.getRegistration()
         .subscribe(res => {
-          this._semester = res.semester;
-          this._date = {
+          this.semester = res.semester;
+          this.date = {
             start: res.startDate,
             end: res.endDate,
           };
-          this._institutes = res.institutes;
-          this._graduationAvailable = RegistrationService.getGraduationAvailable(this.institutes);
+          this.institutes = res.institutes;
+          this.graduationAvailable = RegistrationService.getGraduationAvailable(this.institutes);
           observer.next(res);
         }, error => this.handleError(error));
     });
@@ -177,10 +179,13 @@ export class RegistrationService {
   registerUser(): Observable<void> {
     return Observable.create(observer => {
       this.api.postUser(this.user).subscribe(user => {
-        this._user = user;
+        this.user = user;
         this.registrationDoneEvent.emit();
         observer.next();
-      }, error => this.handleError(error));
+      }, error => {
+        this.handleError(error);
+        observer.error(error);
+      });
     });
 
     // return Observable.create(observer => {
@@ -198,36 +203,27 @@ export class RegistrationService {
     })
   }
 
-  // checkPartner(): Observable<Partner> {
-  //
-  // }
+  // TODO
+  checkPartner(lastName: string, login: string): Observable<Partner> {
+    this.partnerStatus = null;
+    return Observable.create(observer => {
+      setTimeout(() => {
+        this.partner = new Partner(
+          'Test',
+          lastName,
+          login,
+          '',
+        );
+
+        this.user.partner = this.partner;
+        this.partnerStatus = ChosenPartner.doesNotExist;
+        observer.next(this.partner);
+      }, 500)
+    });
+  }
 
   acceptDecline(accept: boolean): Observable<void> {
     return this.api.acceptDecline(this.user, accept);
-  }
-
-  get semester(): string {
-    return this._semester;
-  }
-
-  get date(): { start: Date; end: Date } {
-    return this._date;
-  }
-
-  get user(): User {
-    return this._user;
-  }
-
-  get institutes(): Institute[] {
-    return this._institutes;
-  }
-
-  get partner(): { name: string; sNumber: string } {
-    return this._partner;
-  }
-
-  get graduationAvailable(): string[] {
-    return this._graduationAvailable;
   }
 
   static getGraduationAvailable(institutes: Institute[]): string[] {

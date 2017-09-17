@@ -9,11 +9,14 @@ export class StepComponent implements OnInit {
   @Input() progressValue = 10;
   @Input() nextButtonName = 'Next';
   @Input() backButtonName = 'Back';
+  @Input() resetButtonName = '';
   @Input() stepName = 'Step';
   @Input() nextDisables = false;
+  @Input() stepActionHtml: string;
 
   @Output() stepNext = new EventEmitter();
   @Output() stepBack = new EventEmitter();
+  @Output() reset = new EventEmitter();
 
   constructor() { }
 

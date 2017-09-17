@@ -26,27 +26,30 @@
 
 <!-- Choose partner -->
 <app-step [@stepState]="stepStates[1]" (stepNext)="checkPartnerAndAdvanceStep(2)"
-          (stepBack)="toggleStep(1)" [progressValue]="progress[1]"
-          [nextButtonName]="partner.lastName && partner.sNumber ? 'BUTTON_NEXT' : 'BUTTON_SKIP'"
-          [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_PARTNER_STEP_TITLE'">
+          (stepBack)="toggleStep(1)" [progressValue]="checkingPartner ? -1 : progress[1]"
+          [nextButtonName]="wasPartnerEntered() ? 'BUTTON_NEXT' : 'BUTTON_SKIP'"
+          [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_PARTNER_STEP_TITLE'"
+          [nextDisables]="!isPartnerOk()" [resetButtonName]="'RESET'" (reset)="resetPartner()">
 
   <p>{{ 'REG_PARTNER_STEP_DESC' | translate }}</p>
   <p>{{ 'REG_PARTNER_STEP_DESC2' | translate }}</p>
 
   <md-input-container class="input-container">
-    <input mdInput [placeholder]="'S_NUMBER' | translate" [(ngModel)]="partner.sNumber">
+    <input mdInput [placeholder]="'S_NUMBER' | translate" [(ngModel)]="partner.sNumber" (keyup)="checkPartner()">
   </md-input-container>
   <md-input-container class="input-container">
-    <input mdInput [placeholder]="'LAST_NAME' | translate" [(ngModel)]="partner.lastName">
+    <input mdInput [placeholder]="'LAST_NAME' | translate" [(ngModel)]="partner.lastName" (keyup)="checkPartner()">
     <md-hint align="start">{{ 'INPUT_PARTNER_LASTNAME_HINT' | translate }}</md-hint>
   </md-input-container>
+  <app-chosen-partner-info style="margin-top: 30px" *ngIf="wasPartnerEntered() && registrationService.partnerStatus !== undefined"></app-chosen-partner-info>
 </app-step>
 
 <!-- Choose institutes -->
 <app-step [@stepState]="stepStates[2]" (stepNext)="advanceOneStep(3)"
           (stepBack)="toggleStep(2)" [progressValue]="progress[2]"
           [nextButtonName]="'BUTTON_NEXT'" [nextDisables]="!hasUserEnoughInstitutesSelected()"
-          [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_INSTITUTES_STEP_TITLE'">
+          [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_INSTITUTES_STEP_TITLE'"
+          [resetButtonName]="'RESET'" (reset)="user.institutes = []">
 
   <p>
     {{ 'REG_INSTITUTES_STEP_DESC' |
@@ -81,14 +84,11 @@
       </md-radio-button>
     </md-radio-group>
   </div>
-  <button md-raised-button (click)="user.institutes = []"
-          class="reset-button" [disabled]="user.institutes.length === 0">{{ 'RESET' | translate }}
-  </button>
 </app-step>
 
 <!-- Check registration and send -->
 <app-step [@stepState]="stepStates[3]" (stepNext)="advanceOneStep(4)"
-          (stepBack)="toggleStep(3)" [progressValue]="progress[3]"
+          (stepBack)="toggleStep(3)" [progressValue]="submitting ? -1 : progress[3]"
           [nextButtonName]="'BUTTON_SEND'"
           [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_CHECK_STEP_TITLE'">
 

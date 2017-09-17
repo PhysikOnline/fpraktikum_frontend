@@ -7,6 +7,9 @@ import { AlertService } from '../../services/alert.service';
 import { RegistrationCompleteComponent } from '../registration-complete/registration-complete.component';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { Partner } from '../../models/partner';
+import { ChosenPartner } from '../../models/chosen-partner';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 const TOTAL_NUMBER_OF_STEPS = 4;
 
@@ -41,11 +44,18 @@ export class RegistrationFormComponent implements OnInit {
   } = {lastName: null, sNumber: null};
   onlyOneInstitute = false;
 
+  checkingPartnerSub: Subscription;
+  checkingPartner = false;
+
+  submittingSub: Subscription;
+  submitting = false;
+
   stepStates = Array.from(Array(TOTAL_NUMBER_OF_STEPS)).map(e => 'inactive');
   progress = Array.from(Array(TOTAL_NUMBER_OF_STEPS)).map((e, index) => 100 / TOTAL_NUMBER_OF_STEPS * (index + 1));
 
-  constructor(private registrationService: RegistrationService,
+  constructor(public registrationService: RegistrationService,
               private alert: AlertService) {
+    this.stepStates[1] = 'active';
   }
 
   ngOnInit() {
@@ -61,18 +71,42 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   checkPartnerAndAdvanceStep(index) {
-    if (!(this.partner.lastName && this.partner.sNumber)) {
+    if (!this.wasPartnerEntered()) {
       this.advanceOneStep(index);
     } else {
       // TODO implement PartnerCheck routine
-      this.user.partner = new Partner(
-        'Test',
-        this.partner.lastName,
-        this.partner.sNumber,
-        '',
-    );
       this.advanceOneStep(index);
     }
+  }
+
+  wasPartnerEntered() {
+    return this.partner.lastName && this.partner.sNumber;
+  }
+
+  resetPartner() {
+    this.partner.lastName = null;
+    this.partner.sNumber = null;
+    this.user.partner = null;
+  }
+
+  checkPartner() {
+    if (this.checkingPartnerSub) {
+      this.checkingPartnerSub.unsubscribe();
+    }
+    if (this.wasPartnerEntered()) {
+      this.checkingPartner = true;
+      this.checkingPartnerSub = this.registrationService.checkPartner(this.partner.lastName, this.partner.sNumber).subscribe(() => {
+        this.checkingPartner = false;
+      });
+    } else {
+      this.checkingPartner = false;
+    }
+  }
+
+  isPartnerOk() {
+    return !this.wasPartnerEntered()
+      || this.registrationService.partnerStatus === ChosenPartner.registeredAndFree
+      || this.registrationService.partnerStatus === ChosenPartner.notRegistered;
   }
 
   advanceOneStep(index) {
@@ -84,12 +118,13 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   registrationEnd() {
-    this.registrationService.registerUser().subscribe(() => {
+    this.submitting = true;
+    this.submittingSub = this.registrationService.registerUser().subscribe(() => {
       this.alert.showDialog(RegistrationCompleteComponent, {});
-    }, error => this.alert.showDialog(ErrorDialogComponent, {
-      content: JSON.stringify(error),
-      isBackend: true,
-    }));
+      this.submitting = false;
+    }, error => {
+      this.submitting = false;
+    });
   }
 
   toggleStep(index) {

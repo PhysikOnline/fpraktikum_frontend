@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import {
   MdButtonModule, MdCardModule, MdCheckboxModule, MdDialogModule, MdInputModule, MdListModule, MdMenuModule,
-  MdProgressBarModule,
+  MdProgressBarModule, MdProgressSpinnerModule,
   MdRadioModule, MdSlideToggleModule
 } from '@angular/material';
 
@@ -16,6 +16,7 @@ import {
     MdSlideToggleModule,
     MdListModule,
     MdMenuModule,
+    MdProgressSpinnerModule,
   ],
   exports: [
     MdButtonModule,
@@ -28,6 +29,7 @@ import {
     MdListModule,
     MdDialogModule,
     MdMenuModule,
+    MdProgressSpinnerModule,
   ]
 })
 export class MaterialModule {

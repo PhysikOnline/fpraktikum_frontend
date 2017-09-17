@@ -10,24 +10,34 @@
   }
 
   .step-card {
-    min-height: 60%;
-  }
+    position: relative;
 
-  .step-content {
-    margin: 30px 0;
-    min-height: 400px;
-  }
+    .step-content {
+      position: relative;
 
-  .step-actions {
-    position: absolute;
-    bottom: 5%;
-    padding-left: 16px;
-  }
+      // ugly, needed because radio btn effect gets clipped by overflow-y (dunno why...)
+      transform: translate(-30px);
+      padding: 10px 0 30px 30px;
+      margin-right: -30px;
 
-  .step-footer {
-    md-progress-bar {
-      position: absolute;
-      bottom: 0;
+      @media (max-width: 600px){
+        padding-top: 0;
+      }
+      min-height: 40vh;
+      max-height: 60vh;
+      overflow-y: auto;
+      overflow-x: visible;
+    }
+
+    .step-actions {
+      margin-bottom: 30px;
+    }
+
+    .step-footer {
+      md-progress-bar {
+        position: absolute;
+        bottom: 0;
+      }
     }
   }
 }

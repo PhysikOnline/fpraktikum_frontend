@@ -9,6 +9,7 @@ export interface PartnerApiModel {
 
 export class Partner extends Record {
   static fromApiType(record: PartnerApiModel): Partner {
+    if (!record) return null;
     return new Partner(
       record.user_firstname,
       record.user_lastname,

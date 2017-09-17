@@ -3,15 +3,23 @@
     <md-card-title>
       {{ stepName | translate }}
     </md-card-title>
-    <md-card-content class="step-content">
+    <div class="step-content">
       <ng-content></ng-content>
-    </md-card-content>
-    <md-card-actions class="step-actions">
-      <button md-raised-button color="primary" (click)="stepNext.emit()" [disabled]="nextDisables">{{ nextButtonName | translate }}</button>
-      <button md-button *ngIf="backButtonName" (click)="stepBack.emit()">{{ backButtonName | translate }}</button>
-    </md-card-actions>
+    </div>
+    <div class="step-actions">
+      <button md-raised-button color="primary" (click)="stepNext.emit()" [disabled]="nextDisables">
+        {{ nextButtonName | translate }}
+      </button>
+      <button md-raised-button color="accent" *ngIf="backButtonName" (click)="stepBack.emit()">
+        {{ backButtonName | translate }}
+      </button>
+      <button md-raised-button *ngIf="resetButtonName" (click)="reset.emit()">
+        {{ resetButtonName | translate }}
+      </button>
+    </div>
     <md-card-footer class="step-footer">
-      <md-progress-bar [value]="progressValue"></md-progress-bar>
+      <md-progress-bar [mode]="progressValue === -1 ? 'indeterminate' : 'determinate'"
+                       [value]="progressValue"></md-progress-bar>
     </md-card-footer>
   </md-card>
 </div>

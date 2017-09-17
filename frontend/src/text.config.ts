@@ -20,8 +20,8 @@ export const APP_TEXT = {
     ERROR: 'Fehler',
     YES: 'Ja',
     NO: 'Nein',
-    ONE: 'one',
-    TWO: 'two',
+    ONE: 'ein',
+    TWO: 'zwei',
 
     S_NUMBER: 's-Nummer',
     LAST_NAME: 'Nachname',
@@ -43,6 +43,14 @@ export const APP_TEXT = {
     REG_PARTNER_STEP_DESC2: 'Deine Partnerin/dein Partner kann dich auch nachträglich auswählen. ' +
     'Falls du die s-Nummer also nicht weißt, überspringe diesen Schritt einfach.',
     INPUT_PARTNER_LASTNAME_HINT: 'Der Nachname muss mit dem im Profil übereinstimmen!',
+    PARTNER_IS_FREE_TITLE: '%0% ist bereits registriert und hat noch keinen Partner/keine Partnerin.',
+    PARTNER_IS_FREE_CONTENT: 'Hier sind die Daten von %0%, du musst natürlich die gleichen Institute übernehmen.',
+    PARTNER_IS_NOT_REGISTERED_TITLE: '%0% ist noch nicht registriert.',
+    PARTNER_IS_NOT_REGISTERED_CONTENT: 'Du kannst sie/ihn als PartnerIn anmelden.',
+    PARTNER_DOES_NOT_EXIST_TITLE: 'Wir konnten %0% mit %1% nicht in der Datenbank finden!',
+    PARTNER_DOES_NOT_EXIST_CONTENT: 'Bitte versuch es erneut.',
+    PARTNER_HAS_PARTNER_TITLE: '%0% hat bereits einen Partner/eine Partnerin.',
+    PARTNER_HAS_PARTNER_CONTENT: '',
 
     REG_INSTITUTES_STEP_TITLE: 'Institute',
     REG_INSTITUTES_STEP_DESC: 'Nun kommen wir zum wichtigsten Schritt: Bitte wähle %0% Institut%1% aus.',

@@ -49,7 +49,7 @@ export class ApiService {
   }
 
   private handleError(error): Observable<any> {
-    let message = '';
+    let message = JSON.stringify(error);
 
     if (error instanceof HttpErrorResponse) {
       if (error.error) {

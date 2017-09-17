@@ -14,6 +14,8 @@ export interface UserApiModel {
 
 export class User extends Record {
   static fromApiType(record: UserApiModel): User {
+    if (!record) return null;
+    const institutes = record.institutes ? record.institutes.map(i => Institute.fromApiType(i)) : null;
     return new User(
       record.status,
       '',
@@ -21,7 +23,7 @@ export class User extends Record {
       record.user_lastname,
       record.user_login,
       record.user_email,
-      record.institutes.map(i => Institute.fromApiType(i)),
+      institutes,
       Partner.fromApiType(record.partner),
     );
   }

@@ -12,6 +12,9 @@ import { TranslateService } from '../../services/translate.service';
 export class RegisteredInfoComponent implements OnInit {
   user: User;
 
+  stepActionHtml = `<button md-raised-button color="warn" (click)="signOut()"
+class="button-bottom">{{ 'SIGN_OUT' | translate }}</button>`
+
   constructor(private registrationService: RegistrationService,
               private alert: AlertService,
               private translate: TranslateService) {

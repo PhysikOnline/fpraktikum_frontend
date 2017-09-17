@@ -23,6 +23,7 @@ import { TemplateErrorComponent } from './template-error/template-error.componen
 import { QuestionDialogComponent } from './question-dialog/question-dialog.component';
 import { FooterComponent } from './footer/footer.component';
 import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
+import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner-info.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { LanguageSwitcherComponent } from './language-switcher/language-switcher
     QuestionDialogComponent,
     FooterComponent,
     LanguageSwitcherComponent,
+    ChosenPartnerInfoComponent,
   ],
   entryComponents: [
     RegistrationCompleteComponent,
