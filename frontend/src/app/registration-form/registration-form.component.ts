@@ -29,6 +29,16 @@ const TOTAL_NUMBER_OF_STEPS = 4;
       })),
       transition('inactive => active', animate('300ms ease-in')),
       transition('active => inactive', animate('300ms ease-out'))
+    ]),
+    trigger('blur', [
+      state('void', style({
+        transform: 'opacity(0)'
+      })),
+      state('*', style({
+        transform: 'opacity(100)'
+      })),
+      transition('void => *', animate('300ms ease-in')),
+      transition('* => void', animate('300ms ease-out'))
     ])
   ]
 })

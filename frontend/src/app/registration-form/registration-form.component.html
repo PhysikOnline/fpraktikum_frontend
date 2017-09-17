@@ -41,7 +41,7 @@
     <input mdInput [placeholder]="'LAST_NAME' | translate" [(ngModel)]="partner.lastName" (keyup)="checkPartner()">
     <md-hint align="start">{{ 'INPUT_PARTNER_LASTNAME_HINT' | translate }}</md-hint>
   </md-input-container>
-  <app-chosen-partner-info style="margin-top: 30px" *ngIf="wasPartnerEntered() && registrationService.partnerStatus !== undefined"></app-chosen-partner-info>
+  <app-chosen-partner-info [@blur]="''" style="margin-top: 30px" *ngIf="wasPartnerEntered() && registrationService.partnerStatus !== undefined"></app-chosen-partner-info>
 </app-step>
 
 <!-- Choose institutes -->
