@@ -4,7 +4,8 @@ export interface InstituteApiModel {
   name: string;
   graduation: string;
   places: number;
-  semester_half: number;
+  semesterhalf: number;
+  notes?: string;
 }
 
 export class Institute extends Record {
@@ -13,7 +14,8 @@ export class Institute extends Record {
       record.name,
       record.graduation,
       record.places,
-      record.semester_half);
+      record.semesterhalf,
+      record.notes);
   }
 
   toApiType(): InstituteApiModel {
@@ -21,14 +23,16 @@ export class Institute extends Record {
       name: this.name,
       graduation: this.graduation,
       places: this.places,
-      semester_half: this.semesterHalf,
+      semesterhalf: this.semesterHalf,
+      notes: this.notes,
     };
   }
 
   constructor(public name: string,
               public graduation: string,
               public places: number,
-              public semesterHalf: number) {
+              public semesterHalf: number,
+              public notes?: string) {
     super();
   }
 }

@@ -1,7 +1,3 @@
-
-
-
-
 app-step {
   position: absolute;
   width: 100%;
@@ -15,13 +11,14 @@ app-step {
   margin-top: 5px;
 }
 
+.institute-notes {
+  font-size: smaller;
+  color: grey;
+}
+
 .input-container {
   display: block;
   margin-top: 10px;
-}
-
-.reset-button {
-  margin-top: 20px;
 }
 
 .mat-slide-toggle-label {

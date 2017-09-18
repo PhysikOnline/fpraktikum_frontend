@@ -1,7 +1,7 @@
 <div *ngIf="inTime === inTimeEnum.inTime" class="full-sized">
   <main class="view-wrapper" *ngIf="showView">
     <app-registration-form [@fadeIn] *ngIf="!user.status"></app-registration-form>
-    <app-registered-info [@fadeIn] *ngIf="user.status === 'registered'"></app-registered-info>
+    <app-registered-info [@fadeIn] *ngIf="user.status === 'registrant'"></app-registered-info>
     <app-partner-info [@fadeIn] *ngIf="user.status === 'partner'"></app-partner-info>
   </main>
   <div class="sk-spinner" *ngIf="!showView">

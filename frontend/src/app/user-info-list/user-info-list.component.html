@@ -24,4 +24,8 @@
     <div class="list-identifier">{{ 'INSTITUTES' | translate }}</div>
     <div *ngFor="let i of user.institutes" class="list-institute">{{ i.name }}</div>
   </md-list-item>
+  <md-list-item class="user-info-list-item">
+    <div class="list-identifier">{{ 'NOTES' | translate }}</div>
+    <div class="list-content">{{ user.notes }}</div>
+  </md-list-item>
 </md-list>

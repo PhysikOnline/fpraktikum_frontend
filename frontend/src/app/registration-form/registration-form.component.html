@@ -25,7 +25,7 @@
 </app-step>
 
 <!-- Choose partner -->
-<app-step [@stepState]="stepStates[1]" (stepNext)="checkPartnerAndAdvanceStep(2)"
+<app-step [@stepState]="stepStates[1]" (stepNext)="advanceOneStep(2)"
           (stepBack)="toggleStep(1)" [progressValue]="checkingPartner ? -1 : progress[1]"
           [nextButtonName]="wasPartnerEntered() ? 'BUTTON_NEXT' : 'BUTTON_SKIP'"
           [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_PARTNER_STEP_TITLE'"
@@ -41,7 +41,7 @@
     <input mdInput [placeholder]="'LAST_NAME' | translate" [(ngModel)]="partner.lastName" (keyup)="checkPartner()">
     <md-hint align="start">{{ 'INPUT_PARTNER_LASTNAME_HINT' | translate }}</md-hint>
   </md-input-container>
-  <app-chosen-partner-info [@blur]="''" style="margin-top: 30px" *ngIf="wasPartnerEntered() && registrationService.partnerStatus !== undefined"></app-chosen-partner-info>
+  <app-chosen-partner-info style="margin-top: 30px" *ngIf="wasPartnerEntered() && registrationService.partnerStatus !== undefined"></app-chosen-partner-info>
 </app-step>
 
 <!-- Choose institutes -->
@@ -49,7 +49,7 @@
           (stepBack)="toggleStep(2)" [progressValue]="progress[2]"
           [nextButtonName]="'BUTTON_NEXT'" [nextDisables]="!hasUserEnoughInstitutesSelected()"
           [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_INSTITUTES_STEP_TITLE'"
-          [resetButtonName]="'RESET'" (reset)="user.institutes = []">
+          [resetButtonName]="'RESET'" (reset)="user.institutes = []; onlyOneInstitute = false">
 
   <p>
     {{ 'REG_INSTITUTES_STEP_DESC' |
@@ -62,33 +62,45 @@
     </md-slide-toggle>
     <p>1. {{ 'SEMESTER_HALF' | translate }}</p>
     <md-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(1)">
-      <md-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 1)"
+      <md-radio-button class="radio-button-vertical" [disabled]="fixInstitutes || shouldOptionBeDisabled(institute.name, 1)"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation:1" [value]="institute">
-        {{ institute.name }}
+        {{ institute.name }} <md-chip-list><md-chip selectable="false">{{ institute.places }}</md-chip></md-chip-list> <span class="institute-notes">{{ institute.notes }}</span>
       </md-radio-button>
     </md-radio-group>
     <p>2. {{ 'SEMESTER_HALF' | translate }}</p>
     <md-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(2)">
-      <md-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 2)"
+      <md-radio-button class="radio-button-vertical" [disabled]="fixInstitutes || shouldOptionBeDisabled(institute.name, 2)"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation:2" [value]="institute">
-        {{ institute.name }}
+        {{ institute.name }} <md-chip selectable="false">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
       </md-radio-button>
     </md-radio-group>
   </div>
 
   <div class="institute-form" *ngIf="needsOnlyOneInstitute()">
     <md-radio-group [(ngModel)]="user.institutes[0]">
-      <md-radio-button class="radio-button-vertical"
+      <md-radio-button class="radio-button-vertical" [disabled]="fixInstitutes"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation" [value]="institute">
-        {{ institute.name }}
+        {{ institute.name }} <span class="institute-notes">{{ institute.notes }}</span>
       </md-radio-button>
     </md-radio-group>
   </div>
 </app-step>
 
-<!-- Check registration and send -->
+<!-- Enter notes -->
 <app-step [@stepState]="stepStates[3]" (stepNext)="advanceOneStep(4)"
           (stepBack)="toggleStep(3)" [progressValue]="submitting ? -1 : progress[3]"
+          [nextButtonName]="'BUTTON_NEXT'"
+          [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_NOTES_STEP_TITLE'">
+
+  <p>{{ 'REG_NOTES_STEP_DESC' | translate }}</p>
+  <md-form-field>
+    <textarea mdInput rows="5" [placeholder]="'REG_NOTES_INPUT_PLACEHOLDER' | translate" [(ngModel)]="user.notes"></textarea>
+  </md-form-field>
+</app-step>
+
+<!-- Check registration and send -->
+<app-step [@stepState]="stepStates[4]" (stepNext)="advanceOneStep(5)"
+          (stepBack)="toggleStep(4)" [progressValue]="submitting ? -1 : progress[4]"
           [nextButtonName]="'BUTTON_SEND'"
           [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_CHECK_STEP_TITLE'">
 

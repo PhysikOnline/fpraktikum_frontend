@@ -11,7 +11,7 @@ import { ChosenPartner } from '../../models/chosen-partner';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-const TOTAL_NUMBER_OF_STEPS = 4;
+const TOTAL_NUMBER_OF_STEPS = 5;
 
 @Component({
   selector: 'app-registration-form',
@@ -29,16 +29,6 @@ const TOTAL_NUMBER_OF_STEPS = 4;
       })),
       transition('inactive => active', animate('300ms ease-in')),
       transition('active => inactive', animate('300ms ease-out'))
-    ]),
-    trigger('blur', [
-      state('void', style({
-        transform: 'opacity(0)'
-      })),
-      state('*', style({
-        transform: 'opacity(100)'
-      })),
-      transition('void => *', animate('300ms ease-in')),
-      transition('* => void', animate('300ms ease-out'))
     ])
   ]
 })
@@ -56,6 +46,7 @@ export class RegistrationFormComponent implements OnInit {
 
   checkingPartnerSub: Subscription;
   checkingPartner = false;
+  fixInstitutes = false;
 
   submittingSub: Subscription;
   submitting = false;
@@ -80,15 +71,6 @@ export class RegistrationFormComponent implements OnInit {
     this.stepStates[0] = 'active';
   }
 
-  checkPartnerAndAdvanceStep(index) {
-    if (!this.wasPartnerEntered()) {
-      this.advanceOneStep(index);
-    } else {
-      // TODO implement PartnerCheck routine
-      this.advanceOneStep(index);
-    }
-  }
-
   wasPartnerEntered() {
     return this.partner.lastName && this.partner.sNumber;
   }
@@ -103,14 +85,26 @@ export class RegistrationFormComponent implements OnInit {
     if (this.checkingPartnerSub) {
       this.checkingPartnerSub.unsubscribe();
     }
+    if (this.isPartnerSameAsUser()) {
+      this.registrationService.partnerStatus = ChosenPartner.sameAsUser;
+      return;
+    }
     if (this.wasPartnerEntered()) {
       this.checkingPartner = true;
+      this.fixInstitutes = false;
       this.checkingPartnerSub = this.registrationService.checkPartner(this.partner.lastName, this.partner.sNumber).subscribe(() => {
+        if (this.registrationService.partnerStatus === ChosenPartner.registeredAndFree) {
+          this.fixInstitutes = true;
+        }
         this.checkingPartner = false;
       });
     } else {
       this.checkingPartner = false;
     }
+  }
+
+  isPartnerSameAsUser() {
+    return this.user.login === this.partner.sNumber;
   }
 
   isPartnerOk() {
@@ -153,6 +147,10 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   shouldOptionBeDisabled(instituteName, semesterHalf) {
+    const institute = this.institutes.find(i => i.name === instituteName && i.semesterHalf === semesterHalf);
+    if (institute && !this.hasInstituteEnoughPlaces(institute)) {
+      return true;
+    }
     const otherSemesterHalf = semesterHalf % 2 + 1;
     const otherInstitute = this.findInstituteByHalf(otherSemesterHalf);
     if (this.canSelectOnlyOneInstitute()) {
@@ -163,6 +161,14 @@ export class RegistrationFormComponent implements OnInit {
 
   findInstituteByHalf(semesterHalf) {
     return this.user.institutes.find(i => i.semesterHalf === semesterHalf);
+  }
+
+  hasInstituteEnoughPlaces(institute: Institute) {
+    return institute.places > this.placesNeeded();
+  }
+
+  placesNeeded() {
+    return this.user.partner ? 2 : 1;
   }
 
   canSelectOnlyOneInstitute() {

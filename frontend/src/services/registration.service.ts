@@ -1,8 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Institute } from '../models/institute';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient } from '@angular/common/http';
-import { User, UserApiModel } from '../models/user';
+import { User } from '../models/user';
 
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map'
@@ -18,6 +17,7 @@ declare let USER_FIRST_NAME: string;
 declare let USER_LAST_NAME: string;
 declare let USER_ACCOUNT: string;
 declare let USER_EMAIL: string;
+declare let USER_MATRIKEL: string;
 
 export const REG = {
   semester: 'WS17',
@@ -131,6 +131,8 @@ export class RegistrationService {
             USER_LAST_NAME,
             USER_ACCOUNT,
             USER_EMAIL,
+            USER_MATRIKEL,
+            '',
             [],
             null,
           );
@@ -168,7 +170,7 @@ export class RegistrationService {
     //       i.name,
     //       i.graduation,
     //       i.places,
-    //       i.semester_half
+    //       i.semesterhalf
     //     );
     //   });
     //   this._graduationAvailable = RegistrationService.getGraduationAvailable(this.institutes);
@@ -183,8 +185,7 @@ export class RegistrationService {
         this.registrationDoneEvent.emit();
         observer.next();
       }, error => {
-        this.handleError(error);
-        observer.error(error);
+        this.handleError(error, observer);
       });
     });
 
@@ -197,29 +198,49 @@ export class RegistrationService {
 
   signOutUser(): Observable<void> {
     return Observable.create(observer => {
-      this.registrationDoneEvent.emit();
-      this.user.status = null;
-      observer.next();
-    })
+      this.api.signOut(this.user).subscribe(() => {
+        this.reload().subscribe(() => {
+          this.registrationDoneEvent.emit();
+          observer.next();
+        }, error => this.handleError(error, observer));
+      }, error => this.handleError(error, observer))
+    });
+    // return Observable.create(observer => {
+    //   this.registrationDoneEvent.emit();
+    //   this.user.status = null;
+    //   observer.next();
+    // })
   }
 
   // TODO
   checkPartner(lastName: string, login: string): Observable<Partner> {
     this.partnerStatus = null;
     return Observable.create(observer => {
-      setTimeout(() => {
-        this.partner = new Partner(
-          'Test',
-          lastName,
-          login,
-          '',
-        );
-
-        this.user.partner = this.partner;
-        this.partnerStatus = ChosenPartner.doesNotExist;
-        observer.next(this.partner);
-      }, 500)
+      // setTimeout(() => {
+      //   this.partner = new Partner(
+      //     'Test',
+      //     lastName,
+      //     login,
+      //     '',
+      //   );
+      //
+      //   this.user.partner = this.partner;
+      //   this.partnerStatus = ChosenPartner.doesNotExist;
+      //   observer.next(this.partner);
+      // }, 500)
+      this.api.checkPartner(lastName, login).subscribe(res => {
+        console.log(res);
+        this.partnerStatus = ChosenPartner.registeredAndFree;
+        this.user.institutes = [this.institutes[0]];
+        observer.next();
+      }, error => {
+        this.handleError(error)
+      })
     });
+  }
+
+  private reload(): Observable<[Registration, void]> {
+    return Observable.combineLatest(this.getRegistration(), this.getUser());
   }
 
   acceptDecline(accept: boolean): Observable<void> {
@@ -235,10 +256,11 @@ export class RegistrationService {
     }, []);
   }
 
-  private handleError(message) {
+  private handleError(message, observer?) {
     this.alert.showDialog(ErrorDialogComponent, {
       content: message,
       isBackend: true
     });
+    observer.error(message);
   }
 }

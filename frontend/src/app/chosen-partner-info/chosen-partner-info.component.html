@@ -20,3 +20,6 @@
   <md-card-title>{{ 'PARTNER_HAS_PARTNER_TITLE' | translate:registrationService.partner.firstName }}</md-card-title>
   <md-card-content>{{ 'PARTNER_HAS_PARTNER_CONTENT' | translate }}</md-card-content>
 </md-card>
+<md-card class="partner-same-as-user" *ngIf="registrationService.partnerStatus === chosenPartnerEnum.sameAsUser">
+  <md-card-title>{{ 'PARTNER_SAME_AS_TITLE' | translate }}</md-card-title>
+</md-card>

@@ -48,9 +48,10 @@ export const APP_TEXT = {
     PARTNER_IS_NOT_REGISTERED_TITLE: '%0% ist noch nicht registriert.',
     PARTNER_IS_NOT_REGISTERED_CONTENT: 'Du kannst sie/ihn als PartnerIn anmelden.',
     PARTNER_DOES_NOT_EXIST_TITLE: 'Wir konnten %0% mit %1% nicht in der Datenbank finden!',
-    PARTNER_DOES_NOT_EXIST_CONTENT: 'Bitte versuch es erneut.',
+    PARTNER_DOES_NOT_EXIST_CONTENT: 'Bitte versuche es erneut.',
     PARTNER_HAS_PARTNER_TITLE: '%0% hat bereits einen Partner/eine Partnerin.',
     PARTNER_HAS_PARTNER_CONTENT: '',
+    PARTNER_SAME_AS_TITLE: 'Du kannst dich nicht selber als Partner angeben ;)',
 
     REG_INSTITUTES_STEP_TITLE: 'Institute',
     REG_INSTITUTES_STEP_DESC: 'Nun kommen wir zum wichtigsten Schritt: Bitte wähle %0% Institut%1% aus.',

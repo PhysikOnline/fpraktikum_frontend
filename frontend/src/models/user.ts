@@ -6,7 +6,9 @@ export interface UserApiModel {
   user_firstname?: string;
   user_lastname?: string;
   user_login?: string;
-  user_email?: string;
+  user_mail?: string;
+  user_matrikel?: string;
+  notes?: string,
   institutes?: InstituteApiModel[];
   status: string;
   partner?: PartnerApiModel;
@@ -16,13 +18,16 @@ export class User extends Record {
   static fromApiType(record: UserApiModel): User {
     if (!record) return null;
     const institutes = record.institutes ? record.institutes.map(i => Institute.fromApiType(i)) : null;
+    const graduation = institutes ? institutes[0].graduation : '';
     return new User(
       record.status,
-      '',
+      graduation,
       record.user_firstname,
       record.user_lastname,
       record.user_login,
-      record.user_email,
+      record.user_mail,
+      record.user_matrikel,
+      record.notes,
       institutes,
       Partner.fromApiType(record.partner),
     );
@@ -33,7 +38,9 @@ export class User extends Record {
       user_firstname: this.firstName,
       user_lastname: this.lastName,
       user_login: this.login,
-      user_email: this.email,
+      user_mail: this.email,
+      user_matrikel: this.matrikel,
+      notes: this.notes,
       institutes: this.institutes.map(i => i.toApiType()),
       status: this.status,
       partner: this.partner ? this.partner.toApiType() : null,
@@ -46,6 +53,8 @@ export class User extends Record {
               public lastName?: string,
               public login?: string,
               public email?: string,
+              public matrikel?: string,
+              public notes?: string,
               public institutes?: Institute[],
               public partner?: Partner) {
     super();
