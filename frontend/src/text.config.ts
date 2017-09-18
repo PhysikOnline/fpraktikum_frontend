@@ -84,7 +84,7 @@ export const APP_TEXT = {
     ERROR_TITLE_BACKEND: 'Oops, es ist ein Fehler im Backend aufgetreten!',
     ERROR_BACKEND_DESC: 'Dies hat das Backend zurück geschickt:',
     ERROR_HELP: 'Versuche es bitte erneut, falls es dann immer noch nicht funktioniert, kontaktiere bitte den ' +
-    '<a href="mailto:support@elearning.physik.uni-frankfurt.de">Support</a>.',
+    '<a href="mailto:support@elearning.physik.uni-frankfurt.de&subject=Fehler beim FP&body=%0%">Support</a>.',
 
     INFO_BOX_TITLE: 'Anmeldung zum Fortgeschrittenen Praktikum',
     INFO_BOX_CONTENT: 'Entwickelt vom studentischen Projekt ' +

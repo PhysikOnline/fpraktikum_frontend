@@ -182,6 +182,7 @@ export class RegistrationService {
     return Observable.create(observer => {
       this.api.postUser(this.user).subscribe(user => {
         this.user = user;
+        this.user.status = 'registrant';
         this.registrationDoneEvent.emit();
         observer.next();
       }, error => {

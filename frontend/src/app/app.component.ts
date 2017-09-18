@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RegistrationService } from '../services/registration.service';
 import { AlertService } from '../services/alert.service';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
@@ -22,27 +22,20 @@ import { InTime } from '../models/in-time';
     ])
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   showView = false;
-  user: User;
   inTime: InTime = InTime.inTime;
   inTimeEnum = InTime;
 
-  constructor(private registrationService: RegistrationService,
-              private alert: AlertService) {
+  constructor(public registrationService: RegistrationService) {
     this.initRegistrationService();
   }
 
   private initRegistrationService() {
     this.registrationService.init().subscribe(([registration, user]) => {
-      // this.alert.showSnack('SNACKBAR_GOT_DATA');
       this.showView = true;
-      this.user = this.registrationService.user;
       this.isInTime(this.registrationService.date)
-    }, error => this.alert.showDialog(ErrorDialogComponent, {
-      content: JSON.stringify(error),
-      isBackend: true,
-    }));
+    });
   }
 
   private isInTime(date) {
@@ -55,5 +48,6 @@ export class AppComponent {
     }
   }
 
-
+  ngOnInit() {
+  }
 }

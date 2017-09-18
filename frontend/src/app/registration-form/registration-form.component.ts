@@ -56,7 +56,8 @@ export class RegistrationFormComponent implements OnInit {
 
   constructor(public registrationService: RegistrationService,
               private alert: AlertService) {
-    this.stepStates[1] = 'active';
+    //this.stepStates[1] = 'active';
+    this.startRegistration();
   }
 
   ngOnInit() {
@@ -147,7 +148,7 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   shouldOptionBeDisabled(instituteName, semesterHalf) {
-    const institute = this.institutes.find(i => i.name === instituteName && i.semesterHalf === semesterHalf);
+    const institute = this.institutes.find(i => i.name === instituteName && i.semesterHalf === semesterHalf && i.graduation === this.user.graduation);
     if (institute && !this.hasInstituteEnoughPlaces(institute)) {
       return true;
     }
@@ -164,7 +165,7 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   hasInstituteEnoughPlaces(institute: Institute) {
-    return institute.places > this.placesNeeded();
+    return institute.places >= this.placesNeeded();
   }
 
   placesNeeded() {

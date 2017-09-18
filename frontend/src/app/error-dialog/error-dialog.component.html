@@ -2,7 +2,7 @@
 <md-dialog-content>
   <p *ngIf="desc" [innerHtml]="desc | translate"></p>
   <pre *ngIf="content">{{ content | json }}</pre>
-  <p [innerHtml]="'ERROR_HELP' | translate"></p>
+  <p [innerHtml]="'ERROR_HELP' | translate:(content)"></p>
 </md-dialog-content>
 <md-dialog-actions>
   <button md-raised-button md-dialog-close>{{ 'CLOSE' | translate }}</button>

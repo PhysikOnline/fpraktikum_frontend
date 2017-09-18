@@ -6,12 +6,14 @@ import { AlertService } from './alert.service';
 import { MdSnackBarModule } from '@angular/material';
 import { ApiService } from './api.service';
 import { DateService } from './date.service';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [],
   imports: [
     HttpClientModule,
-    MdSnackBarModule
+    MdSnackBarModule,
+    HttpModule,
   ],
   providers: [
     RegistrationService,

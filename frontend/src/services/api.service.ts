@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Registration } from '../models/registration';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { User, UserApiModel } from '../models/user';
@@ -9,11 +9,12 @@ import { CONFIG } from '../config';
 import { Partner } from '../models/partner';
 import { AcceptDecline } from '../models/AcceptDecline';
 import { Params } from '@angular/router';
+import { Http, RequestOptions } from '@angular/http';
 
 @Injectable()
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private http2: Http) { }
 
   getRegistration(): Observable<Registration> {
     return this.http.get(`${CONFIG.API_URL}/registration/`)
@@ -35,7 +36,9 @@ export class ApiService {
   }
 
   signOut(user: User): Observable<void> {
-    return this.http.delete(`${CONFIG.API_URL}/register/`, user.toApiType())
+    return this.http2.delete(`${CONFIG.API_URL}/register/`, {
+      body: user.toApiType()
+    })
       .catch(this.handleError);
   }
 
