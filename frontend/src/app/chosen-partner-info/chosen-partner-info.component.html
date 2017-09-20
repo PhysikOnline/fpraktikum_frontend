@@ -2,13 +2,18 @@
   <md-card-title>{{ 'PARTNER_IS_FREE_TITLE' | translate:registrationService.partner.firstName }}</md-card-title>
   <md-card-content>
     {{ 'PARTNER_IS_FREE_CONTENT' | translate:registrationService.partner.firstName }}
-    <app-user-info-list [user]="registrationService.partner"></app-user-info-list>
+    <app-user-info-list [user]="registrationService.fullPartner"></app-user-info-list>
   </md-card-content>
 </md-card>
 <md-card class="partner-not-registered" *ngIf="registrationService.partnerStatus === chosenPartnerEnum.notRegistered">
   <md-card-title>{{ 'PARTNER_IS_NOT_REGISTERED_TITLE' | translate:registrationService.partner.firstName }}
   </md-card-title>
   <md-card-content>{{ 'PARTNER_IS_NOT_REGISTERED_CONTENT' | translate }}</md-card-content>
+</md-card>
+<md-card class="partner-not-registered" *ngIf="registrationService.partnerStatus === chosenPartnerEnum.hasDifferentGraduation">
+  <md-card-title>{{ 'PARTNER_IS_DIFFERENT_GRADUATION_TITLE' | translate:registrationService.partner.firstName:(registrationService.fullPartner.graduation | translate) }}
+  </md-card-title>
+  <md-card-content>{{ 'PARTNER_IS_DIFFERENT_GRADUATION_CONTENT' | translate:registrationService.partner.firstName }}</md-card-content>
 </md-card>
 <md-card class="partner-does-not-exist" *ngIf="registrationService.partnerStatus === chosenPartnerEnum.doesNotExist">
   <md-card-title>{{ 'PARTNER_DOES_NOT_EXIST_TITLE' |

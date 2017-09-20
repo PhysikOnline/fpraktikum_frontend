@@ -45,9 +45,9 @@
 </app-step>
 
 <!-- Choose institutes -->
-<app-step [@stepState]="stepStates[2]" (stepNext)="advanceOneStep(3)"
+<app-step [@stepState]="stepStates[2]" (stepNext)="instituteStepNext(3)"
           (stepBack)="toggleStep(2)" [progressValue]="progress[2]"
-          [nextButtonName]="'BUTTON_NEXT'" [nextDisables]="!hasUserEnoughInstitutesSelected()"
+          [nextButtonName]="onWaitingList ? 'SEND' : 'BUTTON_NEXT'" [nextDisables]="instituteNextButtonDisable()"
           [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_INSTITUTES_STEP_TITLE'"
           [resetButtonName]="'RESET'" (reset)="user.institutes = []; onlyOneInstitute = false">
 
@@ -84,6 +84,12 @@
         {{ institute.name }} <md-chip selectable="false">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
       </md-radio-button>
     </md-radio-group>
+  </div>
+
+  <div *ngIf="showWaitingList" style="margin-top: 20px">
+    <p>{{ 'REG_INSTITUTES_STEP_WAITINGLIST_DESC' | translate:(user.partner ? ('REG_INSTITUTES_STEP_WAITINGLIST_DESC_PARTNER' | translate) : '') }}</p>
+    <md-slide-toggle [(ngModel)]="onWaitingList">{{ 'REG_INSTITUTES_STEP_WAITINGLIST_BTN' | translate }}
+    </md-slide-toggle>
   </div>
 </app-step>
 

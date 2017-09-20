@@ -40,7 +40,16 @@ export class RegistrationFormComponent implements OnInit {
     lastName: string,
     sNumber: string,
   } = {lastName: null, sNumber: null};
-  onlyOneInstitute = false;
+  set onlyOneInstitute(input: boolean) {
+    this._onlyOneInstitute = input;
+    this.onWaitingList = false;
+    this.showWaitingList = this.calShowWaitingList();
+  }
+
+  _onlyOneInstitute = false;
+
+  onWaitingList = false
+  showWaitingList = false;
 
   public partnerKeyUp = new Subject<string>();
   checkingPartnerSub: Subscription;
@@ -93,11 +102,11 @@ export class RegistrationFormComponent implements OnInit {
       this.fixInstitutes = false;
       this.checkingPartnerSub = this.registrationService.checkPartner(this.partner.lastName, this.partner.sNumber)
         .subscribe(() => {
-        if (this.registrationService.partnerStatus === ChosenPartner.registeredAndFree) {
-          this.fixInstitutes = true;
-        }
-        this.checkingPartner = false;
-      }, () => this.checkingPartner = false);
+          if (this.registrationService.partnerStatus === ChosenPartner.registeredAndFree) {
+            this.fixInstitutes = true;
+          }
+          this.checkingPartner = false;
+        }, () => this.checkingPartner = false);
     } else {
       this.checkingPartner = false;
     }
@@ -115,8 +124,19 @@ export class RegistrationFormComponent implements OnInit {
   partnerStepNext(index: number) {
     if (this.isPartnerOk()) {
       this.registrationService.savePartner();
+      if (this.registrationService.partnerStatus === ChosenPartner.registeredAndFree) {
+        index++;
+      }
     }
     this.advanceOneStep(index);
+  }
+
+  instituteStepNext(index: number) {
+    if (this.onWaitingList) {
+
+    } else {
+      this.advanceOneStep(index);
+    }
   }
 
   advanceOneStep(index) {
@@ -153,6 +173,7 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   shouldOptionBeDisabled(instituteName, semesterHalf) {
+    if (this.onWaitingList) return true;
     const institute = this.institutes.find(i => i.name === instituteName && i.semesterHalf === semesterHalf && i.graduation === this.user.graduation);
     if (institute && !this.hasInstituteEnoughPlaces(institute)) {
       return true;
@@ -177,8 +198,12 @@ export class RegistrationFormComponent implements OnInit {
     return this.user.partner ? 2 : 1;
   }
 
+  instituteNextButtonDisable() {
+    return !this.hasUserEnoughInstitutesSelected() && !this.onWaitingList;
+  }
+
   canSelectOnlyOneInstitute() {
-    return this.needsOnlyOneInstitute() || this.onlyOneInstitute;
+    return this.needsOnlyOneInstitute() || this._onlyOneInstitute;
   }
 
   needsOnlyOneInstitute() {
@@ -196,10 +221,27 @@ export class RegistrationFormComponent implements OnInit {
   graduationChange(graduationEvent) {
     this.resetRegistration();
     this.user.graduation = graduationEvent.value;
+    this.showWaitingList = this.calShowWaitingList();
   }
 
   resetRegistration() {
     this.user.graduation = null;
     this.user.institutes = [];
+  }
+
+  calShowWaitingList() {
+    if (this.canSelectOnlyOneInstitute()) {
+      return !this.institutes.some(i => i.graduation === this.user.graduation && i.places > 0);
+    } else {
+      const freeInstitutes1 = this.institutes.filter(i => i.places > 0 && i.graduation === this.user.graduation && i.semesterHalf === 1);
+      const freeInstitutes2 = this.institutes.filter(i => i.places > 0 && i.graduation === this.user.graduation && i.semesterHalf === 2);
+      console.log(freeInstitutes1, freeInstitutes2)
+      return !(
+        freeInstitutes1.length > 0 && freeInstitutes2.length > 0
+        && (
+          freeInstitutes1.some(i => !freeInstitutes2.find(i2 => i2.name === i.name))
+          || freeInstitutes2.some(i => !freeInstitutes1.find(i2 => i2.name === i.name))
+        ));
+    }
   }
 }

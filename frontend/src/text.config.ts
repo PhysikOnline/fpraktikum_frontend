@@ -44,15 +44,18 @@ export const APP_TEXT = {
     REG_PARTNER_STEP_DESC2: 'Deine Partnerin/dein Partner kann dich auch nachträglich auswählen. ' +
     'Falls du die s-Nummer also nicht weißt, überspringe diesen Schritt einfach.',
     INPUT_PARTNER_LASTNAME_HINT: 'Der Nachname muss mit dem im Profil übereinstimmen!',
+
     PARTNER_IS_FREE_TITLE: '%0% ist bereits registriert und hat noch keinen Partner/keine Partnerin.',
     PARTNER_IS_FREE_CONTENT: 'Hier sind die Daten von %0%, du musst natürlich die gleichen Institute übernehmen.',
     PARTNER_IS_NOT_REGISTERED_TITLE: '%0% ist noch nicht registriert.',
     PARTNER_IS_NOT_REGISTERED_CONTENT: 'Du kannst sie/ihn als PartnerIn anmelden.',
-    PARTNER_DOES_NOT_EXIST_TITLE: 'Wir konnten %0% mit %1% nicht in der Datenbank finden!',
+    PARTNER_DOES_NOT_EXIST_TITLE: 'Wir konnten "%1%" mit %0% als Nachname nicht in der Datenbank finden!',
     PARTNER_DOES_NOT_EXIST_CONTENT: 'Bitte versuche es erneut.',
     PARTNER_HAS_PARTNER_TITLE: '%0% hat bereits einen Partner/eine Partnerin.',
     PARTNER_HAS_PARTNER_CONTENT: '',
     PARTNER_SAME_AS_TITLE: 'Du kannst dich nicht selber als Partner angeben ;)',
+    PARTNER_IS_DIFFERENT_GRADUATION_TITLE: '%0% hat einen anderen Studiengang (%1%) als du angegeben.',
+    PARTNER_IS_DIFFERENT_GRADUATION_CONTENT: 'Leider ist es daher nicht möglich, %0% als PartnerIn auszuwählen.',
 
     REG_INSTITUTES_STEP_TITLE: 'Institute',
     REG_INSTITUTES_STEP_DESC: 'Nun kommen wir zum wichtigsten Schritt: Bitte wähle %0% Institut%1% aus.',
@@ -61,17 +64,21 @@ export const APP_TEXT = {
     '(z.B. weil du bereits ein Institut bestanden hast).',
     SEMESTER_HALF: 'Semesterhälfte',
 
+    REG_INSTITUTES_STEP_WAITINGLIST_DESC: 'Leider sind nicht genügend Plätze frei, du kannst dich aber auf die Warteliste schreiben lassen%0%:',
+    REG_INSTITUTES_STEP_WAITINGLIST_DESC_PARTNER: ' (dabei wird dein Partner/deine Partnerin nicht mit angemeldet!)',
+    REG_INSTITUTES_STEP_WAITINGLIST_BTN: 'Warteliste',
+
     REG_NOTES_STEP_TITLE: 'Bemerkungen',
     REG_NOTES_STEP_DESC: 'Hier kannst du optional Bemerkungen zu deiner Anmeldung eingeben.',
+
     REG_NOTES_INPUT_PLACEHOLDER: 'Deine Bemerkungen',
-
     REG_CHECK_STEP_TITLE: 'Auswahl überprüfen',
-    REG_CHECK_STEP_DESC: 'Bitte kontrolliere deine Daten, dann kannst du die Anmeldung abschicken.',
 
+    REG_CHECK_STEP_DESC: 'Bitte kontrolliere deine Daten, dann kannst du die Anmeldung abschicken.',
     REG_COMPLETE_TITLE: 'Anmeldung abgeschlossen!',
     REG_COMPLETE_CONTENT: 'Wir haben dir %0% eine Bestätigungs-Mail geschickt.',
-    AND_YOUR_PARTNER: 'und deiner Partnerin/deinem Partner',
 
+    AND_YOUR_PARTNER: 'und deiner Partnerin/deinem Partner',
     RATING_TITLE: 'Wie hat dir die Anmeldung gefallen? (optional)',
     RATING_DETAIL_LABEL: 'Feedback',
     RATING_THANKS_GOOD: 'Wir mögen dich auch :)',
@@ -81,6 +88,7 @@ export const APP_TEXT = {
     RATING_DETAIL_MIDDLE: 'Erzählst du uns noch kurz, was eher gut und was nicht so gut gelaufen ist?',
     RATING_DETAIL_BAD: 'Erzählst du uns noch kurz, was wir besser machen können?',
     RATING_SEND_CONFIRM: 'Dein Feedback wurde gespeichert.',
+
     RATING_SEND_ERROR: 'Dein Feedback kannte leider nicht gespeichert werden!',
 
     REG_INFO_TITLE: 'Anmeldedaten',

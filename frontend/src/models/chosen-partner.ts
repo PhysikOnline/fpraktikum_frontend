@@ -4,4 +4,5 @@ export enum ChosenPartner {
   hasPartner,
   notRegistered,
   sameAsUser,
+  hasDifferentGraduation,
 }

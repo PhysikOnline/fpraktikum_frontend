@@ -57,6 +57,10 @@ export class ApiService {
       .catch(this.handleError);
   }
 
+  waitingList(user: User): Observable<void> {
+    return Observable.create([{}]);
+  }
+
   setRating(stars: number, feedback: string): Observable<any> {
     const body = new FormData();
     body.append('stars', stars.toString());

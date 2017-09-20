@@ -12,6 +12,7 @@ import { ErrorDialogComponent } from '../app/error-dialog/error-dialog.component
 import { Partner } from '../models/partner';
 import { ChosenPartner } from '../models/chosen-partner';
 import { UserType } from '../models/user-type';
+import { observable } from 'rxjs/symbol/observable';
 
 // we have to get the user from the document
 declare let USER_FIRST_NAME: string;
@@ -100,6 +101,8 @@ export class RegistrationService {
   partnerStatus: ChosenPartner;
 
   registrationDoneEvent = new EventEmitter();
+
+  fullPartner: User;
 
   constructor(private api: ApiService,
               private alert: AlertService) {
@@ -199,8 +202,22 @@ export class RegistrationService {
     });
   }
 
+  writeOnWaitinglist(): Observable<void> {
+    return Observable.create(observer => {
+      this.api.waitingList(this.user).subscribe(() => {
+        this.reload().subscribe(() => {
+          this.registrationDoneEvent.emit();
+          observer.next();
+        }, error => this.handleError(error, observer));
+      }, error => this.handleError(error, observer));
+    })
+  }
+
   savePartner() {
     this.user.partner = this.partner;
+    if (this.partnerStatus === ChosenPartner.registeredAndFree) {
+      this.user.institutes = this.fullPartner.institutes;
+    }
   }
 
   deletePartner() {
@@ -235,9 +252,12 @@ export class RegistrationService {
   }
 
   private setPartnerData(partner: User) {
+    this.fullPartner = partner;
     this.partner = Partner.fromUser(partner);
     if (partner.status === UserType.notRegistered) {
       this.partnerStatus = ChosenPartner.notRegistered;
+    } else if (partner.graduation !== this.user.graduation) {
+      this.partnerStatus = ChosenPartner.hasDifferentGraduation;
     } else if (partner.partner) {
       this.partnerStatus = ChosenPartner.hasPartner;
     } else {
