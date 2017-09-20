@@ -4,13 +4,14 @@ import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user';
 
 import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
 import { Registration } from '../models/registration';
 import { AlertService } from './alert.service';
 import { ApiService } from './api.service';
 import { ErrorDialogComponent } from '../app/error-dialog/error-dialog.component';
 import { Partner } from '../models/partner';
 import { ChosenPartner } from '../models/chosen-partner';
+import { UserType } from '../models/user-type';
 
 // we have to get the user from the document
 declare let USER_FIRST_NAME: string;
@@ -105,23 +106,11 @@ export class RegistrationService {
   }
 
   init(): Observable<[Registration, void]> {
-    return Observable.combineLatest(this.getRegistration(), this.getUser());
+    return this.reload();
   }
 
   getUser(): Observable<void> {
     return Observable.create(observer => {
-    //   this._user = new User(
-    //     '',
-    //     '',
-    //     USER_FIRST_NAME,
-    //     USER_LAST_NAME,
-    //     USER_ACCOUNT,
-    //     USER_EMAIL,
-    //     [],
-    //     new Partner("Test", "Test", "s32847", "328dskjf"),
-    //   );
-    //     observer.next();
-
       this.api.getUser(USER_ACCOUNT).subscribe((user: User) => {
         if (user.status === null) {
           this.user = new User(
@@ -140,8 +129,8 @@ export class RegistrationService {
           this.user = user;
         }
         observer.next();
-      }, error => this.handleError(error))
-    })
+      }, error => this.handleError(error));
+    });
   }
 
   getRegistration(): Observable<Registration> {
@@ -158,24 +147,6 @@ export class RegistrationService {
           observer.next(res);
         }, error => this.handleError(error));
     });
-
-    // return Observable.create(observer => {
-    //   this._semester = REG.semester;
-    //   this._date = {
-    //     start: REG.start_date,
-    //     end: REG.end_date
-    //   };
-    //   this._institutes = REG.institutes.map(i => {
-    //     return new Institute(
-    //       i.name,
-    //       i.graduation,
-    //       i.places,
-    //       i.semesterhalf
-    //     );
-    //   });
-    //   this._graduationAvailable = RegistrationService.getGraduationAvailable(this.institutes);
-    //   observer.next();
-    // });
   }
 
   registerUser(): Observable<void> {
@@ -189,12 +160,6 @@ export class RegistrationService {
         this.handleError(error, observer);
       });
     });
-
-    // return Observable.create(observer => {
-    //   this.user.status = 'registered'
-    //   this.registrationDoneEvent.emit();
-    //   observer.next();
-    // })
   }
 
   signOutUser(): Observable<void> {
@@ -204,40 +169,42 @@ export class RegistrationService {
           this.registrationDoneEvent.emit();
           observer.next();
         }, error => this.handleError(error, observer));
-      }, error => this.handleError(error, observer))
+      }, error => this.handleError(error, observer));
     });
-    // return Observable.create(observer => {
-    //   this.registrationDoneEvent.emit();
-    //   this.user.status = null;
-    //   observer.next();
-    // })
   }
 
   // TODO
   checkPartner(lastName: string, login: string): Observable<Partner> {
     this.partnerStatus = null;
     return Observable.create(observer => {
-      // setTimeout(() => {
-      //   this.partner = new Partner(
-      //     'Test',
-      //     lastName,
-      //     login,
-      //     '',
-      //   );
-      //
-      //   this.user.partner = this.partner;
-      //   this.partnerStatus = ChosenPartner.doesNotExist;
-      //   observer.next(this.partner);
-      // }, 500)
-      this.api.checkPartner(lastName, login).subscribe(res => {
-        console.log(res);
-        this.partnerStatus = ChosenPartner.registeredAndFree;
-        this.user.institutes = [this.institutes[0]];
+      this.api.checkPartner(lastName, login).subscribe(partner => {
+        if (partner) {
+          this.setPartnerData(partner);
+        } else {
+          this.partner = new Partner('', lastName, login, '', '');
+          this.partnerStatus = ChosenPartner.doesNotExist;
+        }
         observer.next();
       }, error => {
-        this.handleError(error)
-      })
+        if (error.status === 'registrant') {
+          this.setPartnerData(User.fromApiType(error));
+        } else if (error.error === 'Dieser User existiert nicht im Elearning System.') {
+          this.partner = new Partner('', lastName, login, '', '');
+          this.partnerStatus = ChosenPartner.doesNotExist;
+        } else {
+          this.handleError(error);
+        }
+        observer.error(error);
+      });
     });
+  }
+
+  savePartner() {
+    this.user.partner = this.partner;
+  }
+
+  deletePartner() {
+    this.user.partner = null;
   }
 
   private reload(): Observable<[Registration, void]> {
@@ -253,7 +220,7 @@ export class RegistrationService {
       if (r.indexOf(i.graduation) === -1) {
         r.push(i.graduation);
       }
-      return r;
+      return r.sort();
     }, []);
   }
 
@@ -262,6 +229,19 @@ export class RegistrationService {
       content: message,
       isBackend: true
     });
-    observer.error(message);
+    if (observer) {
+      observer.error(message);
+    }
+  }
+
+  private setPartnerData(partner: User) {
+    this.partner = Partner.fromUser(partner);
+    if (partner.status === UserType.notRegistered) {
+      this.partnerStatus = ChosenPartner.notRegistered;
+    } else if (partner.partner) {
+      this.partnerStatus = ChosenPartner.hasPartner;
+    } else {
+      this.partnerStatus = ChosenPartner.registeredAndFree;
+    }
   }
 }

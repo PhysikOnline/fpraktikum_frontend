@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InfoBoxComponent } from '../info-box-dialog/info-box.component';
 import { MdDialog } from '@angular/material';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-footer',
@@ -9,13 +10,17 @@ import { MdDialog } from '@angular/material';
 })
 export class FooterComponent implements OnInit {
 
-  constructor(private dialog: MdDialog) { }
+  constructor(private alert: AlertService) {
+  }
 
   ngOnInit() {
   }
 
   onInfoBoxClick() {
-    this.dialog.open(InfoBoxComponent);
+    this.alert.showDialog(InfoBoxComponent, {
+      title: 'INFO_BOX_TITLE',
+      content: 'INFO_BOX_CONTENT',
+    });
   }
 
 }

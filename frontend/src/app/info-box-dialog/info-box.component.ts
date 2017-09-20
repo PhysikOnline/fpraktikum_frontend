@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MD_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-info-box',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfoBoxComponent implements OnInit {
 
-  constructor() { }
+  public title: string;
+  public content: string;
+
+  constructor(@Inject(MD_DIALOG_DATA) public data: any) {
+    this.title = this.data.title;
+    this.content = this.data.content;
+  }
 
   ngOnInit() {
   }

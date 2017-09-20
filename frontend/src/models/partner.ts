@@ -1,10 +1,12 @@
 import { Record } from './record';
+import { User } from './user';
 
 export interface PartnerApiModel {
   user_firstname: string;
   user_lastname: string;
   user_login: string;
-  user_email: string;
+  user_mail: string;
+  user_matrikel: string;
 }
 
 export class Partner extends Record {
@@ -14,8 +16,19 @@ export class Partner extends Record {
       record.user_firstname,
       record.user_lastname,
       record.user_login,
-      record.user_email,
+      record.user_mail,
+      record.user_matrikel,
     );
+  }
+
+  static fromUser(user: User): Partner {
+    return new Partner(
+      user.firstName,
+      user.lastName,
+      user.login,
+      user.email,
+      user.matrikel,
+    )
   }
 
   toApiType(): PartnerApiModel {
@@ -23,14 +36,16 @@ export class Partner extends Record {
       user_firstname: this.firstName,
       user_lastname: this.lastName,
       user_login: this.login,
-      user_email: this.email,
+      user_mail: this.email,
+      user_matrikel: this.matrikel,
     };
   }
 
   constructor(public firstName: string,
               public lastName: string,
               public login: string,
-              public email: string) {
+              public email: string,
+              public matrikel: string) {
     super();
   }
 }

@@ -5,11 +5,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Institute } from '../../models/institute';
 import { AlertService } from '../../services/alert.service';
 import { RegistrationCompleteComponent } from '../registration-complete/registration-complete.component';
-import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
-import { Partner } from '../../models/partner';
 import { ChosenPartner } from '../../models/chosen-partner';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 
 const TOTAL_NUMBER_OF_STEPS = 5;
 
@@ -44,6 +42,7 @@ export class RegistrationFormComponent implements OnInit {
   } = {lastName: null, sNumber: null};
   onlyOneInstitute = false;
 
+  public partnerKeyUp = new Subject<string>();
   checkingPartnerSub: Subscription;
   checkingPartner = false;
   fixInstitutes = false;
@@ -56,8 +55,6 @@ export class RegistrationFormComponent implements OnInit {
 
   constructor(public registrationService: RegistrationService,
               private alert: AlertService) {
-    //this.stepStates[1] = 'active';
-    this.startRegistration();
   }
 
   ngOnInit() {
@@ -65,6 +62,7 @@ export class RegistrationFormComponent implements OnInit {
     this.semester = this.registrationService.semester;
     this.institutes = this.registrationService.institutes;
     this.graduationsArray = this.registrationService.graduationAvailable;
+    this.partnerKeyUp.debounceTime(500).subscribe(() => this.checkPartner());
   }
 
   startRegistration() {
@@ -73,13 +71,13 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   wasPartnerEntered() {
-    return this.partner.lastName && this.partner.sNumber;
+    return !!this.partner.lastName && !!this.partner.sNumber;
   }
 
   resetPartner() {
     this.partner.lastName = null;
     this.partner.sNumber = null;
-    this.user.partner = null;
+    this.registrationService.deletePartner();
   }
 
   checkPartner() {
@@ -93,12 +91,13 @@ export class RegistrationFormComponent implements OnInit {
     if (this.wasPartnerEntered()) {
       this.checkingPartner = true;
       this.fixInstitutes = false;
-      this.checkingPartnerSub = this.registrationService.checkPartner(this.partner.lastName, this.partner.sNumber).subscribe(() => {
+      this.checkingPartnerSub = this.registrationService.checkPartner(this.partner.lastName, this.partner.sNumber)
+        .subscribe(() => {
         if (this.registrationService.partnerStatus === ChosenPartner.registeredAndFree) {
           this.fixInstitutes = true;
         }
         this.checkingPartner = false;
-      });
+      }, () => this.checkingPartner = false);
     } else {
       this.checkingPartner = false;
     }
@@ -109,9 +108,15 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   isPartnerOk() {
-    return !this.wasPartnerEntered()
-      || this.registrationService.partnerStatus === ChosenPartner.registeredAndFree
+    return this.registrationService.partnerStatus === ChosenPartner.registeredAndFree
       || this.registrationService.partnerStatus === ChosenPartner.notRegistered;
+  }
+
+  partnerStepNext(index: number) {
+    if (this.isPartnerOk()) {
+      this.registrationService.savePartner();
+    }
+    this.advanceOneStep(index);
   }
 
   advanceOneStep(index) {

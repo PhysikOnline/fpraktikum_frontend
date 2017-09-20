@@ -12,6 +12,7 @@ export const APP_TEXT = {
     INSTITUTES: 'Institute',
     GRADUATION: 'Studiengang',
     SNUMBER: 'S-Nummer',
+    NOTES: 'Bemerkungen',
     EMAIL: 'E-Mail',
     RESET: 'Zurücksetzen',
     SUBMIT: 'Abschicken',
@@ -60,6 +61,10 @@ export const APP_TEXT = {
     '(z.B. weil du bereits ein Institut bestanden hast).',
     SEMESTER_HALF: 'Semesterhälfte',
 
+    REG_NOTES_STEP_TITLE: 'Bemerkungen',
+    REG_NOTES_STEP_DESC: 'Hier kannst du optional Bemerkungen zu deiner Anmeldung eingeben.',
+    REG_NOTES_INPUT_PLACEHOLDER: 'Deine Bemerkungen',
+
     REG_CHECK_STEP_TITLE: 'Auswahl überprüfen',
     REG_CHECK_STEP_DESC: 'Bitte kontrolliere deine Daten, dann kannst du die Anmeldung abschicken.',
 
@@ -100,6 +105,7 @@ export const APP_TEXT = {
     PARTNER_DECLINE: 'Ablehnen',
 
     SIGN_OUT_ARE_YOU_SURE: 'Sicher, dass du deine Anmeldung löschen willst?',
+    SIGN_OUT_BOX_TITLE: 'Deine Anmeldung wurde erfolgreich gelöscht.',
 
     PLEASE_CONTACT_SUPPORT: 'Bitte kontaktiere den Support: <a href="mailto:support@elearning.physik.uni-frankfurt.de">support@elearning.physik.uni-frankfurt.de</a>'
   },

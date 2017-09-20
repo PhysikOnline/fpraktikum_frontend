@@ -43,13 +43,13 @@ export class ApiService {
   }
 
   // TODO
-  checkPartner(lastName: string, login: string): Observable<Partner> {
+  checkPartner(lastName: string, login: string): Observable<User> {
     let params = new HttpParams().set('user_lastname', lastName);
     params = params.set('user_login', login);
     return this.http.get(`${CONFIG.API_URL}/check_partner/`, {
       params: params
     })
-      .map(Partner.fromApiType)
+      .map(User.fromApiType)
       .catch(this.handleError);
   }
 

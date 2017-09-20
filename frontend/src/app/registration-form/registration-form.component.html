@@ -25,20 +25,20 @@
 </app-step>
 
 <!-- Choose partner -->
-<app-step [@stepState]="stepStates[1]" (stepNext)="advanceOneStep(2)"
+<app-step [@stepState]="stepStates[1]" (stepNext)="partnerStepNext(2)"
           (stepBack)="toggleStep(1)" [progressValue]="checkingPartner ? -1 : progress[1]"
           [nextButtonName]="wasPartnerEntered() ? 'BUTTON_NEXT' : 'BUTTON_SKIP'"
           [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_PARTNER_STEP_TITLE'"
-          [nextDisables]="!isPartnerOk()" [resetButtonName]="'RESET'" (reset)="resetPartner()">
+          [nextDisables]="!isPartnerOk() && wasPartnerEntered()" [resetButtonName]="'RESET'" (reset)="resetPartner()">
 
   <p>{{ 'REG_PARTNER_STEP_DESC' | translate }}</p>
   <p>{{ 'REG_PARTNER_STEP_DESC2' | translate }}</p>
 
   <md-input-container class="input-container">
-    <input mdInput [placeholder]="'S_NUMBER' | translate" [(ngModel)]="partner.sNumber" (keyup)="checkPartner()">
+    <input mdInput [placeholder]="'S_NUMBER' | translate" [(ngModel)]="partner.sNumber" (keyup)="partnerKeyUp.next()">
   </md-input-container>
   <md-input-container class="input-container">
-    <input mdInput [placeholder]="'LAST_NAME' | translate" [(ngModel)]="partner.lastName" (keyup)="checkPartner()">
+    <input mdInput [placeholder]="'LAST_NAME' | translate" [(ngModel)]="partner.lastName" (keyup)="partnerKeyUp.next()">
     <md-hint align="start">{{ 'INPUT_PARTNER_LASTNAME_HINT' | translate }}</md-hint>
   </md-input-container>
   <app-chosen-partner-info style="margin-top: 30px" *ngIf="wasPartnerEntered() && registrationService.partnerStatus !== undefined"></app-chosen-partner-info>
@@ -55,7 +55,7 @@
     {{ 'REG_INSTITUTES_STEP_DESC' |
     translate:(canSelectOnlyOneInstitute() ? ('ONE' | translate) : ('TWO' | translate))
     :(canSelectOnlyOneInstitute() ? '' : ('INSTITUTE_PLURAL_SUFFIX' | translate)) }}
-  </p>
+  </p><md-chip-list></md-chip-list>
 
   <div class="institute-form" *ngIf="!needsOnlyOneInstitute()">
     <md-slide-toggle [(ngModel)]="onlyOneInstitute">{{ 'REG_INSTITUTES_STEP_ONLY_ONE_INSTITUTE' | translate }}
@@ -64,14 +64,15 @@
     <md-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(1)">
       <md-radio-button class="radio-button-vertical" [disabled]="fixInstitutes || shouldOptionBeDisabled(institute.name, 1)"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation:1" [value]="institute">
-        {{ institute.name }} <md-chip-list><md-chip selectable="false">{{ institute.places }}</md-chip></md-chip-list> <span class="institute-notes">{{ institute.notes }}</span>
+        {{ institute.name }}
+        <md-chip selectable="false" [color]="hasInstituteEnoughPlaces(institute) ? 'accent' : 'primary'">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
       </md-radio-button>
     </md-radio-group>
     <p>2. {{ 'SEMESTER_HALF' | translate }}</p>
     <md-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(2)">
       <md-radio-button class="radio-button-vertical" [disabled]="fixInstitutes || shouldOptionBeDisabled(institute.name, 2)"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation:2" [value]="institute">
-        {{ institute.name }} <md-chip selectable="false">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
+        {{ institute.name }} <md-chip color="primary">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
       </md-radio-button>
     </md-radio-group>
   </div>
@@ -80,7 +81,7 @@
     <md-radio-group [(ngModel)]="user.institutes[0]">
       <md-radio-button class="radio-button-vertical" [disabled]="fixInstitutes"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation" [value]="institute">
-        {{ institute.name }} <span class="institute-notes">{{ institute.notes }}</span>
+        {{ institute.name }} <md-chip selectable="false">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
       </md-radio-button>
     </md-radio-group>
   </div>
