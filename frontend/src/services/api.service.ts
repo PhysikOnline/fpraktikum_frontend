@@ -42,7 +42,6 @@ export class ApiService {
       .catch(this.handleError);
   }
 
-  // TODO
   checkPartner(lastName: string, login: string): Observable<User> {
     let params = new HttpParams().set('user_lastname', lastName);
     params = params.set('user_login', login);
@@ -56,6 +55,15 @@ export class ApiService {
   acceptDecline(user: User, accept: boolean): Observable<void> {
     return this.http.post(`${CONFIG.API_URL}/accept_decline/`, AcceptDecline.fromUser(user, accept))
       .catch(this.handleError);
+  }
+
+  setRating(stars: number, feedback: string): Observable<any> {
+    const body = new FormData();
+    body.append('stars', stars.toString());
+    body.append('feedback', feedback);
+    body.append('passphrase', 'eeec021898eec14f9c7c888c5899a81ad4dbf1ae');
+    return this.http.post(`https://vm.elearning.physik.uni-frankfurt.de/po-fp-rating/api.php`, body)
+      .catch(() => Observable.throw({}));
   }
 
   private handleError(error): Observable<any> {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertService } from '../../services/alert.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-rating',
@@ -15,7 +16,7 @@ export class RatingComponent {
   NUMER_OF_STARS = 5;
   ratingSnackText: string;
 
-  constructor(private alert: AlertService) { }
+  constructor(private alert: AlertService, private api: ApiService) { }
 
   onRating(ratingEvent) {
     this.rating = ratingEvent.rating / this.NUMER_OF_STARS;
@@ -40,6 +41,7 @@ export class RatingComponent {
   }
 
   sendRating() {
+    this.api.setRating(this.rating * this.NUMER_OF_STARS, this.ratingFeedbackText).subscribe();
     this.alert.showSnack(this.ratingSnackText);
     this.hasSendRating = true;
   }
