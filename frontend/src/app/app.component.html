@@ -3,6 +3,7 @@
     <app-registration-form [@fadeIn] *ngIf="!registrationService.user.status"></app-registration-form>
     <app-registered-info [@fadeIn] *ngIf="registrationService.user.status === 'registrant'"></app-registered-info>
     <app-partner-info [@fadeIn] *ngIf="registrationService.user.status === 'partner'"></app-partner-info>
+    <app-waitlist-info [@fadeIn] *ngIf="registrationService.user.status === 'waitlist'"></app-waitlist-info>
   </main>
   <div class="sk-spinner" *ngIf="!showView">
     <div class="sk-spinner-animate"></div>

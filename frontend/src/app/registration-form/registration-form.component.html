@@ -47,7 +47,7 @@
 <!-- Choose institutes -->
 <app-step [@stepState]="stepStates[2]" (stepNext)="instituteStepNext(3)"
           (stepBack)="toggleStep(2)" [progressValue]="progress[2]"
-          [nextButtonName]="onWaitingList ? 'SEND' : 'BUTTON_NEXT'" [nextDisables]="instituteNextButtonDisable()"
+          [nextButtonName]="onWaitingList ? 'SUBMIT' : 'BUTTON_NEXT'" [nextDisables]="instituteNextButtonDisable()"
           [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_INSTITUTES_STEP_TITLE'"
           [resetButtonName]="'RESET'" (reset)="user.institutes = []; onlyOneInstitute = false">
 
@@ -58,8 +58,6 @@
   </p><md-chip-list></md-chip-list>
 
   <div class="institute-form" *ngIf="!needsOnlyOneInstitute()">
-    <md-slide-toggle [(ngModel)]="onlyOneInstitute">{{ 'REG_INSTITUTES_STEP_ONLY_ONE_INSTITUTE' | translate }}
-    </md-slide-toggle>
     <p>1. {{ 'SEMESTER_HALF' | translate }}</p>
     <md-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(1)">
       <md-radio-button class="radio-button-vertical" [disabled]="fixInstitutes || shouldOptionBeDisabled(institute.name, 1)"
@@ -86,7 +84,7 @@
     </md-radio-group>
   </div>
 
-  <div *ngIf="showWaitingList" style="margin-top: 20px">
+  <div *ngIf="showWaitingList" style="margin-top: 40px">
     <p>{{ 'REG_INSTITUTES_STEP_WAITINGLIST_DESC' | translate:(user.partner ? ('REG_INSTITUTES_STEP_WAITINGLIST_DESC_PARTNER' | translate) : '') }}</p>
     <md-slide-toggle [(ngModel)]="onWaitingList">{{ 'REG_INSTITUTES_STEP_WAITINGLIST_BTN' | translate }}
     </md-slide-toggle>

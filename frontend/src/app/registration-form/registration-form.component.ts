@@ -40,13 +40,6 @@ export class RegistrationFormComponent implements OnInit {
     lastName: string,
     sNumber: string,
   } = {lastName: null, sNumber: null};
-  set onlyOneInstitute(input: boolean) {
-    this._onlyOneInstitute = input;
-    this.onWaitingList = false;
-    this.showWaitingList = this.calShowWaitingList();
-  }
-
-  _onlyOneInstitute = false;
 
   onWaitingList = false
   showWaitingList = false;
@@ -133,7 +126,7 @@ export class RegistrationFormComponent implements OnInit {
 
   instituteStepNext(index: number) {
     if (this.onWaitingList) {
-
+      this.registrationService.writeOnWaitinglist().subscribe();
     } else {
       this.advanceOneStep(index);
     }
@@ -203,7 +196,7 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   canSelectOnlyOneInstitute() {
-    return this.needsOnlyOneInstitute() || this._onlyOneInstitute;
+    return this.needsOnlyOneInstitute();
   }
 
   needsOnlyOneInstitute() {

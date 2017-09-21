@@ -204,7 +204,7 @@ export class RegistrationService {
 
   writeOnWaitinglist(): Observable<void> {
     return Observable.create(observer => {
-      this.api.waitingList(this.user).subscribe(() => {
+      this.api.writeOnWaitinglist(this.user).subscribe(() => {
         this.reload().subscribe(() => {
           this.registrationDoneEvent.emit();
           observer.next();
@@ -212,6 +212,18 @@ export class RegistrationService {
       }, error => this.handleError(error, observer));
     })
   }
+
+  removeFromWaitlist(): Observable<void> {
+    return Observable.create(observer => {
+      this.api.removeFromWaitinglist(this.user).subscribe(() => {
+        this.reload().subscribe(() => {
+          this.registrationDoneEvent.emit();
+          observer.next();
+        }, error => this.handleError(error, observer));
+      }, error => this.handleError(error, observer));
+    })
+  }
+
 
   savePartner() {
     this.user.partner = this.partner;
@@ -264,4 +276,6 @@ export class RegistrationService {
       this.partnerStatus = ChosenPartner.registeredAndFree;
     }
   }
+
+
 }

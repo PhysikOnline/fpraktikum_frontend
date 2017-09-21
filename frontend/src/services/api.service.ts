@@ -57,8 +57,16 @@ export class ApiService {
       .catch(this.handleError);
   }
 
-  waitingList(user: User): Observable<void> {
-    return Observable.create([{}]);
+  writeOnWaitinglist(user: User): Observable<void> {
+    return this.http.post(`${CONFIG.API_URL}/waitlist/`, user.toApiType())
+      .catch(this.handleError);
+  }
+
+  removeFromWaitinglist(user: User): Observable<void> {
+    return this.http2.delete(`${CONFIG.API_URL}/waitlist/`, {
+      body: user.toApiType()
+    })
+      .catch(this.handleError);
   }
 
   setRating(stars: number, feedback: string): Observable<any> {

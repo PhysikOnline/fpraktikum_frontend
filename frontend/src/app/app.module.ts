@@ -24,6 +24,7 @@ import { QuestionDialogComponent } from './question-dialog/question-dialog.compo
 import { FooterComponent } from './footer/footer.component';
 import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
 import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner-info.component';
+import { WaitlistInfoComponent } from './waitlist-info/waitlist-info.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner
     FooterComponent,
     LanguageSwitcherComponent,
     ChosenPartnerInfoComponent,
+    WaitlistInfoComponent,
   ],
   entryComponents: [
     RegistrationCompleteComponent,
