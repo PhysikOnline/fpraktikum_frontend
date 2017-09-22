@@ -41,7 +41,7 @@ export class RegistrationFormComponent implements OnInit {
     sNumber: string,
   } = {lastName: null, sNumber: null};
 
-  onWaitingList = false
+  onWaitingList = false;
   showWaitingList = false;
 
   public partnerKeyUp = new Subject<string>();
@@ -95,9 +95,9 @@ export class RegistrationFormComponent implements OnInit {
       this.fixInstitutes = false;
       this.checkingPartnerSub = this.registrationService.checkPartner(this.partner.lastName, this.partner.sNumber)
         .subscribe(() => {
-          if (this.registrationService.partnerStatus === ChosenPartner.registeredAndFree) {
-            this.fixInstitutes = true;
-          }
+          // if (this.registrationService.partnerStatus === ChosenPartner.registeredAndFree) {
+          //   this.fixInstitutes = true;
+          // }
           this.checkingPartner = false;
         }, () => this.checkingPartner = false);
     } else {
@@ -110,16 +110,19 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   isPartnerOk() {
-    return this.registrationService.partnerStatus === ChosenPartner.registeredAndFree
-      || this.registrationService.partnerStatus === ChosenPartner.notRegistered;
+    // return this.registrationService.partnerStatus === ChosenPartner.registeredAndFree
+    //   || this.registrationService.partnerStatus === ChosenPartner.notRegistered;
+    return this.registrationService.partnerStatus === ChosenPartner.notRegistered;
   }
 
   partnerStepNext(index: number) {
-    if (this.isPartnerOk()) {
+    if (this.wasPartnerEntered() && this.isPartnerOk()) {
       this.registrationService.savePartner();
       if (this.registrationService.partnerStatus === ChosenPartner.registeredAndFree) {
         index++;
       }
+    } else {
+      this.registrationService.deletePartner();
     }
     this.advanceOneStep(index);
   }
@@ -230,11 +233,11 @@ export class RegistrationFormComponent implements OnInit {
       const freeInstitutes2 = this.institutes.filter(i => i.places > 0 && i.graduation === this.user.graduation && i.semesterHalf === 2);
       console.log(freeInstitutes1, freeInstitutes2)
       return !(
-        freeInstitutes1.length > 0 && freeInstitutes2.length > 0
+        (freeInstitutes1.length > 0 && freeInstitutes2.length > 0
         && (
           freeInstitutes1.some(i => !freeInstitutes2.find(i2 => i2.name === i.name))
           || freeInstitutes2.some(i => !freeInstitutes1.find(i2 => i2.name === i.name))
-        ));
+        )));
     }
   }
 }

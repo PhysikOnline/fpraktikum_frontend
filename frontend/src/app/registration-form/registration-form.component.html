@@ -60,7 +60,7 @@
   <div class="institute-form" *ngIf="!needsOnlyOneInstitute()">
     <p>1. {{ 'SEMESTER_HALF' | translate }}</p>
     <md-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(1)">
-      <md-radio-button class="radio-button-vertical" [disabled]="fixInstitutes || shouldOptionBeDisabled(institute.name, 1)"
+      <md-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 1)"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation:1" [value]="institute">
         {{ institute.name }}
         <md-chip selectable="false" [color]="hasInstituteEnoughPlaces(institute) ? 'accent' : 'primary'">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
@@ -68,7 +68,7 @@
     </md-radio-group>
     <p>2. {{ 'SEMESTER_HALF' | translate }}</p>
     <md-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(2)">
-      <md-radio-button class="radio-button-vertical" [disabled]="fixInstitutes || shouldOptionBeDisabled(institute.name, 2)"
+      <md-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 2)"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation:2" [value]="institute">
         {{ institute.name }} <md-chip color="primary">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
       </md-radio-button>
@@ -77,14 +77,14 @@
 
   <div class="institute-form" *ngIf="needsOnlyOneInstitute()">
     <md-radio-group [(ngModel)]="user.institutes[0]">
-      <md-radio-button class="radio-button-vertical" [disabled]="fixInstitutes"
+      <md-radio-button class="radio-button-vertical"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation" [value]="institute">
         {{ institute.name }} <md-chip selectable="false">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
       </md-radio-button>
     </md-radio-group>
   </div>
 
-  <div *ngIf="showWaitingList" style="margin-top: 40px">
+  <div style="margin-top: 40px">
     <p>{{ 'REG_INSTITUTES_STEP_WAITINGLIST_DESC' | translate:(user.partner ? ('REG_INSTITUTES_STEP_WAITINGLIST_DESC_PARTNER' | translate) : '') }}</p>
     <md-slide-toggle [(ngModel)]="onWaitingList">{{ 'REG_INSTITUTES_STEP_WAITINGLIST_BTN' | translate }}
     </md-slide-toggle>

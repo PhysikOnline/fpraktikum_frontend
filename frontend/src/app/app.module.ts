@@ -25,6 +25,18 @@ import { FooterComponent } from './footer/footer.component';
 import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
 import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner-info.component';
 import { WaitlistInfoComponent } from './waitlist-info/waitlist-info.component';
+import * as Raven from 'raven-js';
+import { ErrorHandler } from '@angular/core';
+
+Raven
+  .config('https://4f7ddb18431c44bd9398744306a42fd0@po-sentry.physikelearning.de/8')
+  .install();
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err: any): void {
+    Raven.captureException(err);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -62,7 +74,7 @@ import { WaitlistInfoComponent } from './waitlist-info/waitlist-info.component';
     MaterialModule,
     StarRatingModule.forRoot()
   ],
-  providers: [],
+  providers: [{ provide: ErrorHandler, useClass: RavenErrorHandler }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -25,6 +25,6 @@ export class WaitlistInfoComponent implements OnInit {
       if (res === true) {
         this.registrationService.removeFromWaitlist().subscribe();
       }
-    })
+    });
   }
 }

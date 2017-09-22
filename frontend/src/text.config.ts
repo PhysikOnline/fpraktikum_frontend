@@ -41,12 +41,11 @@ export const APP_TEXT = {
     REG_PARTNER_STEP_TITLE: 'PartnerIn',
     REG_PARTNER_STEP_DESC: 'Falls du bereits eine Partnerin oder einen Partner für das Praktikum hast, ' +
     'kannst sie oder ihn hier auswählen. Dies kann aber auch noch am Tag der Einführungsveranstaltung nachgeholt werden.',
-    REG_PARTNER_STEP_DESC2: 'Deine Partnerin/dein Partner kann dich auch nachträglich auswählen. ' +
-    'Falls du die s-Nummer also nicht weißt, überspringe diesen Schritt einfach.',
+    REG_PARTNER_STEP_DESC2: 'Falls du die s-Nummer also nicht weißt, überspringe diesen Schritt einfach.',
     INPUT_PARTNER_LASTNAME_HINT: 'Der Nachname muss mit dem im Profil übereinstimmen!',
 
-    PARTNER_IS_FREE_TITLE: '%0% ist bereits registriert und hat noch keinen Partner/keine Partnerin.',
-    PARTNER_IS_FREE_CONTENT: 'Hier sind die Daten von %0%, du musst natürlich die gleichen Institute übernehmen.',
+    PARTNER_IS_FREE_TITLE: '%0% ist bereits registriert.',
+    PARTNER_IS_FREE_CONTENT: 'Aktuell ist es leider nicht möglich, einen bereits registrierten Nutzer als Partner zu wählen',
     PARTNER_IS_NOT_REGISTERED_TITLE: '%0% ist noch nicht registriert.',
     PARTNER_IS_NOT_REGISTERED_CONTENT: 'Du kannst sie/ihn als PartnerIn anmelden.',
     PARTNER_DOES_NOT_EXIST_TITLE: 'Wir konnten "%1%" mit %0% als Nachname nicht in der Datenbank finden!',
@@ -64,7 +63,7 @@ export const APP_TEXT = {
     '(z.B. weil du bereits ein Institut bestanden hast).',
     SEMESTER_HALF: 'Semesterhälfte',
 
-    REG_INSTITUTES_STEP_WAITINGLIST_DESC: 'Leider sind nicht genügend Plätze frei, du kannst dich aber auf die Warteliste schreiben lassen%0%:',
+    REG_INSTITUTES_STEP_WAITINGLIST_DESC: 'Falls nicht genügend Plätze frei sind, kannst du dich auf die Warteliste schreiben lassen%0%:',
     REG_INSTITUTES_STEP_WAITINGLIST_DESC_PARTNER: ' (dabei wird dein Partner/deine Partnerin nicht mit angemeldet!)',
     REG_INSTITUTES_STEP_WAITINGLIST_BTN: 'Warteliste',
 

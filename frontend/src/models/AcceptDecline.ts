@@ -5,8 +5,9 @@ export interface AcceptDeclineApiModel {
   user_firstname: string;
   user_lastname: string;
   user_login: string;
-  user_email: string;
-  accept_decline: boolean;
+  user_mail: string;
+  user_matrikel: string,
+  accept: boolean;
 }
 
 export class AcceptDecline extends Record {
@@ -15,8 +16,9 @@ export class AcceptDecline extends Record {
       record.user_firstname,
       record.user_lastname,
       record.user_login,
-      record.user_email,
-      record.accept_decline,
+      record.user_mail,
+      record.user_matrikel,
+      record.accept,
     );
   }
 
@@ -26,6 +28,7 @@ export class AcceptDecline extends Record {
       user.lastName,
       user.login,
       user.email,
+      user.matrikel,
       accept,
     );
   }
@@ -35,8 +38,9 @@ export class AcceptDecline extends Record {
       user_firstname: this.firstName,
       user_lastname: this.lastName,
       user_login: this.login,
-      user_email: this.email,
-      accept_decline: this.accept,
+      user_mail: this.email,
+      user_matrikel: this.matrikel,
+      accept: this.accept,
     };
   }
 
@@ -44,6 +48,7 @@ export class AcceptDecline extends Record {
               public lastName: string,
               public login: string,
               public email: string,
+              public matrikel: string,
               public accept: boolean) {
     super();
   }

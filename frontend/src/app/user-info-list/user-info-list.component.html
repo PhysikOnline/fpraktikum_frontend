@@ -18,7 +18,8 @@
   <md-list-item class="user-info-list-item">
     <div class="list-identifier">{{ 'PARTNER' | translate }}</div>
     <div class="list-content" *ngIf="user.partner">{{ user.partner.firstName }} {{ user.partner.lastName }}</div>
-    <div class="list-content" *ngIf="!user.partner">-</div>
+    <div class="list-content" *ngIf="user.registrant">{{ user.registrant.firstName }} {{ user.registrant.lastName }}</div>
+    <div class="list-content" *ngIf="!user.partner && !user.registrant">-</div>
   </md-list-item>
   <md-list-item class="user-info-list-item">
     <div class="list-identifier">{{ 'INSTITUTES' | translate }}</div>

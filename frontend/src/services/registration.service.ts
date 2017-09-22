@@ -176,11 +176,11 @@ export class RegistrationService {
     });
   }
 
-  // TODO
   checkPartner(lastName: string, login: string): Observable<Partner> {
     this.partnerStatus = null;
     return Observable.create(observer => {
       this.api.checkPartner(lastName, login).subscribe(partner => {
+        console.log('Check Partner: ', partner)
         if (partner) {
           this.setPartnerData(partner);
         } else {
@@ -189,14 +189,7 @@ export class RegistrationService {
         }
         observer.next();
       }, error => {
-        if (error.status === 'registrant') {
-          this.setPartnerData(User.fromApiType(error));
-        } else if (error.error === 'Dieser User existiert nicht im Elearning System.') {
-          this.partner = new Partner('', lastName, login, '', '');
-          this.partnerStatus = ChosenPartner.doesNotExist;
-        } else {
-          this.handleError(error);
-        }
+        console.log(error)
         observer.error(error);
       });
     });
@@ -241,7 +234,14 @@ export class RegistrationService {
   }
 
   acceptDecline(accept: boolean): Observable<void> {
-    return this.api.acceptDecline(this.user, accept);
+    return Observable.create(observer => {
+      this.api.acceptDecline(this.user, accept).subscribe(() => {
+        this.reload().subscribe(() => {
+          this.registrationDoneEvent.emit();
+          observer.next();
+        }, error => this.handleError(error, observer));
+      }, error => this.handleError(error));
+    })
   }
 
   static getGraduationAvailable(institutes: Institute[]): string[] {

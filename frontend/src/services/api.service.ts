@@ -10,6 +10,7 @@ import { Partner } from '../models/partner';
 import { AcceptDecline } from '../models/AcceptDecline';
 import { Params } from '@angular/router';
 import { Http, RequestOptions } from '@angular/http';
+import * as Raven from 'raven-js';
 
 @Injectable()
 export class ApiService {
@@ -46,14 +47,29 @@ export class ApiService {
     let params = new HttpParams().set('user_lastname', lastName);
     params = params.set('user_login', login);
     return this.http.get(`${CONFIG.API_URL}/check_partner/`, {
-      params: params
+      params: params,
+      responseType: 'text',
     })
-      .map(User.fromApiType)
+      .map((res: string) => {
+        if (res) {
+          return User.fromApiType(JSON.parse(res));
+        } else {
+          return null;
+        }
+      })
       .catch(this.handleError);
   }
 
   acceptDecline(user: User, accept: boolean): Observable<void> {
-    return this.http.post(`${CONFIG.API_URL}/accept_decline/`, AcceptDecline.fromUser(user, accept))
+    return this.http.post(`${CONFIG.API_URL}/accept/`, AcceptDecline.fromUser(user, accept).toApiType(), {
+      responseType: 'text',
+    }).map((res: string) => {
+      if (res) {
+        return User.fromApiType(JSON.parse(res));
+      } else {
+        return null;
+      }
+    })
       .catch(this.handleError);
   }
 
@@ -74,7 +90,7 @@ export class ApiService {
     body.append('stars', stars.toString());
     body.append('feedback', feedback);
     body.append('passphrase', 'eeec021898eec14f9c7c888c5899a81ad4dbf1ae');
-    return this.http.post(`https://vm.elearning.physik.uni-frankfurt.de/po-fp-rating/api.php`, body)
+    return this.http.post(`https://vm.elearning.physik.uni-frankfurt.de/po-fp-rating/api.php`, body, { responseType: 'text' })
       .catch(() => Observable.throw({}));
   }
 
@@ -90,6 +106,9 @@ export class ApiService {
       }
     }
     console.error(error);
+    Raven.captureMessage(error.statusText, {
+      extra: error
+    });
     return Observable.throw(message);
   }
 }

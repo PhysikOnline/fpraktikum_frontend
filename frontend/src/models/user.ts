@@ -8,21 +8,29 @@ export interface UserApiModel {
   user_login?: string;
   user_mail?: string;
   user_matrikel?: string;
-  notes?: string,
+  notes?: string;
   institutes?: InstituteApiModel[];
-  status: string;
+  status?: string;
   partner?: PartnerApiModel;
   graduation?: string;
+  has_partner_accepted?: boolean;
+  has_accepted?: boolean;
+  registrant?: UserApiModel;
 }
 
 export class User extends Record {
   static fromApiType(record: UserApiModel): User {
     if (!record) return null;
+
     const institutes = record.institutes ? record.institutes.map(i => Institute.fromApiType(i)) : null;
-    let graduation = record.graduation;
-    if (!graduation) {
-      graduation = institutes ? institutes[0].graduation : '';
+    const partner = record.partner ? Partner.fromApiType(record.partner) : null;
+    const registrant = record.registrant ? User.fromApiType(record.registrant) : null;
+
+    let graduation = record.graduation ? record.graduation : '';
+    if (!graduation && institutes) {
+      graduation = institutes.length > 0 ? institutes[0].graduation : '';
     }
+
     return new User(
       record.status,
       graduation,
@@ -33,7 +41,10 @@ export class User extends Record {
       record.user_matrikel,
       record.notes,
       institutes,
-      Partner.fromApiType(record.partner),
+      partner,
+      record.has_partner_accepted,
+      record.has_accepted,
+      registrant,
     );
   }
 
@@ -45,10 +56,12 @@ export class User extends Record {
       user_login: this.login,
       user_mail: this.email,
       user_matrikel: this.matrikel,
+      graduation: this.graduation,
       notes: this.notes,
       institutes: institutes,
       status: this.status,
       partner: this.partner ? this.partner.toApiType() : null,
+      has_partner_accepted: this.hasPartnerAccepted,
     };
   }
 
@@ -61,7 +74,10 @@ export class User extends Record {
               public matrikel?: string,
               public notes?: string,
               public institutes?: Institute[],
-              public partner?: Partner) {
+              public partner?: Partner,
+              public hasPartnerAccepted?: boolean,
+              public hasAccepted?: boolean,
+              public registrant?: User) {
     super();
   }
 }
