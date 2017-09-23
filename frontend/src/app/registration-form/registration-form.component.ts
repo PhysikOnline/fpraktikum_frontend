@@ -41,7 +41,6 @@ export class RegistrationFormComponent implements OnInit {
     sNumber: string,
   } = {lastName: null, sNumber: null};
 
-  onWaitingList = false;
   showWaitingList = false;
 
   public partnerKeyUp = new Subject<string>();
@@ -128,11 +127,10 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   instituteStepNext(index: number) {
-    if (this.onWaitingList) {
-      this.registrationService.writeOnWaitinglist().subscribe();
-    } else {
-      this.advanceOneStep(index);
+    if (this.registrationService.onWaitingList) {
+      this.resetPartner();
     }
+    this.advanceOneStep(index);
   }
 
   advanceOneStep(index) {
@@ -169,8 +167,11 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   shouldOptionBeDisabled(instituteName, semesterHalf) {
-    if (this.onWaitingList) return true;
-    const institute = this.institutes.find(i => i.name === instituteName && i.semesterHalf === semesterHalf && i.graduation === this.user.graduation);
+    if (this.registrationService.onWaitingList) {
+      return true;
+    }
+    const institute = this.institutes.find(
+      i => i.name === instituteName && i.semesterHalf === semesterHalf && i.graduation === this.user.graduation);
     if (institute && !this.hasInstituteEnoughPlaces(institute)) {
       return true;
     }
@@ -195,7 +196,7 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   instituteNextButtonDisable() {
-    return !this.hasUserEnoughInstitutesSelected() && !this.onWaitingList;
+    return !this.hasUserEnoughInstitutesSelected() && !this.registrationService.onWaitingList;
   }
 
   canSelectOnlyOneInstitute() {
@@ -222,6 +223,7 @@ export class RegistrationFormComponent implements OnInit {
 
   resetRegistration() {
     this.user.graduation = null;
+    this.resetPartner();
     this.user.institutes = [];
   }
 
@@ -231,13 +233,13 @@ export class RegistrationFormComponent implements OnInit {
     } else {
       const freeInstitutes1 = this.institutes.filter(i => i.places > 0 && i.graduation === this.user.graduation && i.semesterHalf === 1);
       const freeInstitutes2 = this.institutes.filter(i => i.places > 0 && i.graduation === this.user.graduation && i.semesterHalf === 2);
-      console.log(freeInstitutes1, freeInstitutes2)
+      console.log(freeInstitutes1, freeInstitutes2);
       return !(
         (freeInstitutes1.length > 0 && freeInstitutes2.length > 0
-        && (
-          freeInstitutes1.some(i => !freeInstitutes2.find(i2 => i2.name === i.name))
-          || freeInstitutes2.some(i => !freeInstitutes1.find(i2 => i2.name === i.name))
-        )));
+          && (
+            freeInstitutes1.some(i => !freeInstitutes2.find(i2 => i2.name === i.name))
+            || freeInstitutes2.some(i => !freeInstitutes1.find(i2 => i2.name === i.name))
+          )));
     }
   }
 }

@@ -101,6 +101,8 @@ export class RegistrationService {
   graduationAvailable: string[] = [];
   partnerStatus: ChosenPartner;
 
+  onWaitingList = false;
+
   registrationDoneEvent = new EventEmitter();
 
   fullPartner: User;
@@ -155,6 +157,9 @@ export class RegistrationService {
   }
 
   registerUser(): Observable<void> {
+    if (this.onWaitingList) {
+      return this.writeOnWaitinglist();
+    }
     return Observable.create(observer => {
       this.api.postUser(this.user).subscribe(user => {
         this.user = user;

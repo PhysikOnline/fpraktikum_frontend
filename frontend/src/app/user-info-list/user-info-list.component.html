@@ -21,9 +21,13 @@
     <div class="list-content" *ngIf="user.registrant">{{ user.registrant.firstName }} {{ user.registrant.lastName }}</div>
     <div class="list-content" *ngIf="!user.partner && !user.registrant">-</div>
   </md-list-item>
-  <md-list-item class="user-info-list-item">
+  <md-list-item class="user-info-list-item" *ngIf="!registrationService.onWaitingList">
     <div class="list-identifier">{{ 'INSTITUTES' | translate }}</div>
     <div *ngFor="let i of user.institutes" class="list-institute">{{ i.name }}</div>
+  </md-list-item>
+  <md-list-item class="user-info-list-item" *ngIf="registrationService.onWaitingList">
+    <div class="list-identifier">{{ 'INSTITUTES' | translate }}</div>
+    <div class="list-content">{{ 'WAITLIST' | translate }}</div>
   </md-list-item>
   <md-list-item class="user-info-list-item">
     <div class="list-identifier">{{ 'NOTES' | translate }}</div>
