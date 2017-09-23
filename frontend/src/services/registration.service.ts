@@ -13,6 +13,7 @@ import { Partner } from '../models/partner';
 import { ChosenPartner } from '../models/chosen-partner';
 import { UserType } from '../models/user-type';
 import { observable } from 'rxjs/symbol/observable';
+import * as Raven from 'raven-js';
 
 // we have to get the user from the document
 declare let USER_FIRST_NAME: string;
@@ -132,6 +133,7 @@ export class RegistrationService {
           this.user = user;
         }
         observer.next();
+        this.setUserContext();
       }, error => this.handleError(error));
     });
   }
@@ -166,6 +168,7 @@ export class RegistrationService {
   }
 
   signOutUser(): Observable<void> {
+    this.user.matrikel = ''
     return Observable.create(observer => {
       this.api.signOut(this.user).subscribe(() => {
         this.reload().subscribe(() => {
@@ -277,5 +280,13 @@ export class RegistrationService {
     }
   }
 
-
+  private setUserContext() {
+    Raven.setUserContext({
+      username: this.user.login,
+      email: this.user.email,
+    });
+    Raven.setTagsContext({
+      status: this.user.status
+    });
+  }
 }

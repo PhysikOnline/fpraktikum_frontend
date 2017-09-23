@@ -11,6 +11,7 @@ import { AcceptDecline } from '../models/AcceptDecline';
 import { Params } from '@angular/router';
 import { Http, RequestOptions } from '@angular/http';
 import * as Raven from 'raven-js';
+import { RegistrationService } from './registration.service';
 
 @Injectable()
 export class ApiService {
