@@ -19,14 +19,15 @@
       transform: translate(-30px);
       padding: 10px 0 30px 30px;
       margin-right: -30px;
+      min-height: 40vh;
+      max-height: 70vh;
+      overflow-y: auto;
+      overflow-x: visible;
 
       @media (max-width: 600px){
         padding-top: 0;
+        max-height: 60vh;
       }
-      min-height: 40vh;
-      max-height: 60vh;
-      overflow-y: auto;
-      overflow-x: visible;
     }
 
     .step-actions {

@@ -49,7 +49,7 @@
           (stepBack)="toggleStep(2)" [progressValue]="progress[2]"
           [nextButtonName]="onWaitingList ? 'SUBMIT' : 'BUTTON_NEXT'" [nextDisables]="instituteNextButtonDisable()"
           [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_INSTITUTES_STEP_TITLE'"
-          [resetButtonName]="'RESET'" (reset)="user.institutes = []; onlyOneInstitute = false">
+          [resetButtonName]="'RESET'" (reset)="user.institutes = []">
 
   <p>
     {{ 'REG_INSTITUTES_STEP_DESC' |

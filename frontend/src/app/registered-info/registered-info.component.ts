@@ -37,7 +37,7 @@ export class RegisteredInfoComponent implements OnInit {
   private onSignOutSuccess() {
     this.alert.showDialog(InfoBoxComponent, {
       title: 'SIGN_OUT_BOX_TITLE',
-    })
+    }, false);
     this.signingOut = false;
   }
 }

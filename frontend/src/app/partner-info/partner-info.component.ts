@@ -26,9 +26,9 @@ export class PartnerInfoComponent implements OnInit {
   }
 
   decline() {
-    this.submitting = true;
     this.alert.showQuestionDialog(this.translate.translate('SIGN_OUT_ARE_YOU_SURE')).then((res) => {
       if (res === true) {
+        this.submitting = true;
         this.registrationService.acceptDecline(false).subscribe(() => this.submitting = false, () => this.submitting = false);
       }
     })

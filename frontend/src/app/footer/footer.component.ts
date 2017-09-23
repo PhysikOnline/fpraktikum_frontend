@@ -20,7 +20,7 @@ export class FooterComponent implements OnInit {
     this.alert.showDialog(InfoBoxComponent, {
       title: 'INFO_BOX_TITLE',
       content: 'INFO_BOX_CONTENT',
-    });
+    }, false);
   }
 
 }

@@ -1,5 +1,5 @@
 <app-step [nextButtonName]="''" [backButtonName]="''"
-          [progressValue]="100" [stepName]="'REG_WAITLIST_TITLE'">
+          [progressValue]="submitting ? -1 : 100" [stepName]="'REG_WAITLIST_TITLE'">
   <p>{{ 'ON_WAITLIST_INFO' | translate }}</p>
   <app-user-info-list [user]="user"></app-user-info-list>
   <div class="button-bottom">

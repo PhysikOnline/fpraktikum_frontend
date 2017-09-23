@@ -270,7 +270,7 @@ export class RegistrationService {
       this.partnerStatus = ChosenPartner.notRegistered;
     } else if (partner.graduation !== this.user.graduation) {
       this.partnerStatus = ChosenPartner.hasDifferentGraduation;
-    } else if (partner.partner) {
+    } else if (partner.partner || partner.registrant) {
       this.partnerStatus = ChosenPartner.hasPartner;
     } else {
       this.partnerStatus = ChosenPartner.registeredAndFree;

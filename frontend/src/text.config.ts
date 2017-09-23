@@ -51,7 +51,7 @@ export const APP_TEXT = {
     PARTNER_DOES_NOT_EXIST_TITLE: 'Wir konnten "%1%" mit %0% als Nachname nicht in der Datenbank finden!',
     PARTNER_DOES_NOT_EXIST_CONTENT: 'Bitte versuche es erneut.',
     PARTNER_HAS_PARTNER_TITLE: '%0% hat bereits einen Partner/eine Partnerin.',
-    PARTNER_HAS_PARTNER_CONTENT: '',
+    PARTNER_HAS_PARTNER_CONTENT: 'Leider ist es daher nicht möglich, sie/ihn als PartnerIn auszuwählen.',
     PARTNER_SAME_AS_TITLE: 'Du kannst dich nicht selber als Partner angeben ;)',
     PARTNER_IS_DIFFERENT_GRADUATION_TITLE: '%0% hat einen anderen Studiengang (%1%) als du angegeben.',
     PARTNER_IS_DIFFERENT_GRADUATION_CONTENT: 'Leider ist es daher nicht möglich, %0% als PartnerIn auszuwählen.',
@@ -76,6 +76,11 @@ export const APP_TEXT = {
     REG_CHECK_STEP_DESC: 'Bitte kontrolliere deine Daten, dann kannst du die Anmeldung abschicken.',
     REG_COMPLETE_TITLE: 'Anmeldung abgeschlossen!',
     REG_COMPLETE_CONTENT: 'Wir haben dir %0% eine Bestätigungs-Mail geschickt.',
+
+    REG_WAITLIST_TITLE: 'Wartelist',
+    ON_WAITLIST_INFO: 'Du bist auf der Warteliste.',
+    WAITLIST_DELETE: 'Lösche mich von der Liste',
+    REMOVE_FROM_WAITLIST_ARE_YOU_SURE: 'Sicher, dass du von der Warteliste entfernt werden möchtest?',
 
     AND_YOUR_PARTNER: 'und deiner Partnerin/deinem Partner',
     RATING_TITLE: 'Wie hat dir die Anmeldung gefallen? (optional)',
@@ -130,6 +135,7 @@ export const APP_TEXT = {
     INSTITUTES: 'Institute',
     GRADUATION: 'Graduation',
     SNUMBER: 'S-Number',
+    NOTES: 'Notes',
     EMAIL: 'E-Mail',
     RESET: 'Reset',
     SUBMIT: 'Submit',
@@ -162,6 +168,18 @@ export const APP_TEXT = {
     'So in case you do not know the s-number just skip this step.',
     INPUT_PARTNER_LASTNAME_HINT: 'The lastname has to match the one in the profile!',
 
+    PARTNER_IS_FREE_TITLE: '%0% is already registered.',
+    PARTNER_IS_FREE_CONTENT: 'At the moment it is not possible to choose a partner who is already registered.',
+    PARTNER_IS_NOT_REGISTERED_TITLE: '%0% is not registered.',
+    PARTNER_IS_NOT_REGISTERED_CONTENT: 'You can choose her/him as your partner.',
+    PARTNER_DOES_NOT_EXIST_TITLE: 'We could not find "%1%" with %0% as lastname in the database!',
+    PARTNER_DOES_NOT_EXIST_CONTENT: 'Please try again.',
+    PARTNER_HAS_PARTNER_TITLE: '%0% has already a partner.',
+    PARTNER_HAS_PARTNER_CONTENT: 'It is not possible to choose her/him as your partner.',
+    PARTNER_SAME_AS_TITLE: 'You can not choose yourself ;)',
+    PARTNER_IS_DIFFERENT_GRADUATION_TITLE: '%0% has another graduation (%1%).',
+    PARTNER_IS_DIFFERENT_GRADUATION_CONTENT: 'It is not possible to choose %0% as your partner.',
+
     REG_INSTITUTES_STEP_TITLE: 'Institute',
     REG_INSTITUTES_STEP_DESC: 'Please choose %0% Institute%1%.',
     INSTITUTE_PLURAL_SUFFIX: 's',
@@ -169,8 +187,22 @@ export const APP_TEXT = {
     '(e.g. because you already did one).',
     SEMESTER_HALF: 'Semester half',
 
+    REG_INSTITUTES_STEP_WAITINGLIST_DESC: 'In case there are not enough places available, you can write yourself onto a waitinglist%0%:',
+    REG_INSTITUTES_STEP_WAITINGLIST_DESC_PARTNER: ' (your partner will not be registered with you!)',
+    REG_INSTITUTES_STEP_WAITINGLIST_BTN: 'Waitinglist',
+
+    REG_NOTES_STEP_TITLE: 'Notes',
+    REG_NOTES_STEP_DESC: 'Here you can add optional notes to your registration.',
+
+    REG_NOTES_INPUT_PLACEHOLDER: 'Your notes',
+
     REG_CHECK_STEP_TITLE: 'Last check',
     REG_CHECK_STEP_DESC: 'Please double check your data, then you can submit your registration.',
+
+    REG_WAITLIST_TITLE: 'Waitlist',
+    ON_WAITLIST_INFO: 'You are on the waitlist.',
+    WAITLIST_DELETE: 'Remove me from the list',
+    REMOVE_FROM_WAITLIST_ARE_YOU_SURE: 'Are you sure that you want to be deleted from the waitlist?',
 
     REG_COMPLETE_TITLE: 'Registration finished!',
     REG_COMPLETE_CONTENT: 'We have send you %0% a mail.',
@@ -209,6 +241,7 @@ export const APP_TEXT = {
     PARTNER_DECLINE: 'Decline',
 
     SIGN_OUT_ARE_YOU_SURE: 'Are you sure, that you want to delete your registration?',
+    SIGN_OUT_BOX_TITLE: 'Your registration has been deleted.',
 
     PLEASE_CONTACT_SUPPORT: 'Please contact the support: <a href="mailto:support@elearning.physik.uni-frankfurt.de">support@elearning.physik.uni-frankfurt.de</a>'
   }
