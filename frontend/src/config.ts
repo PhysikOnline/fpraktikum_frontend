@@ -5,4 +5,5 @@ export const CONFIG = {
     LA: 'TEACHING',
   },
   API_URL: 'https://po-fp.physikelearning.de/api',
+  version: '1.0',
 }

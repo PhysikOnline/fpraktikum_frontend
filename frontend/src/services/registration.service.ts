@@ -168,7 +168,6 @@ export class RegistrationService {
   }
 
   signOutUser(): Observable<void> {
-    this.user.matrikel = ''
     return Observable.create(observer => {
       this.api.signOut(this.user).subscribe(() => {
         this.reload().subscribe(() => {
