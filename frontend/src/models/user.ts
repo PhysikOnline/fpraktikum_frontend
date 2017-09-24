@@ -13,7 +13,7 @@ export interface UserApiModel {
   status?: string;
   partner?: PartnerApiModel;
   graduation?: string;
-  has_partner_accepted?: boolean;
+  partner_has_accepted?: boolean;
   has_accepted?: boolean;
   registrant?: UserApiModel;
 }
@@ -42,7 +42,7 @@ export class User extends Record {
       record.notes,
       institutes,
       partner,
-      record.has_partner_accepted,
+      record.partner_has_accepted,
       record.has_accepted,
       registrant,
     );
@@ -61,7 +61,7 @@ export class User extends Record {
       institutes: institutes,
       status: this.status,
       partner: this.partner ? this.partner.toApiType() : null,
-      has_partner_accepted: this.hasPartnerAccepted,
+      partner_has_accepted: this.hasPartnerAccepted,
     };
   }
 

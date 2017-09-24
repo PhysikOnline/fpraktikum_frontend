@@ -1,5 +1,6 @@
 <app-step [nextButtonName]="''" [backButtonName]="''"
           [progressValue]="signingOut ? -1 : 100" [stepName]="'REG_INFO_TITLE'">
+  <p *ngIf="user.partner && !user.hasPartnerAccepted">{{ 'TELL_PARTNER_TO_ACCEPT' | translate }}</p>
   <app-user-info-list [user]="user"></app-user-info-list>
   <button md-raised-button color="warn" (click)="signOut()"
           class="button-bottom">{{ 'SIGN_OUT' | translate }}</button>

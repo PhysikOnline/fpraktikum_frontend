@@ -79,7 +79,7 @@ export const APP_TEXT = {
     REG_COMPLETE_CONTENT: 'Wir haben dir %0% eine Bestätigungs-Mail geschickt.',
 
     REG_WAITLIST_TITLE: 'Wartelist',
-    ON_WAITLIST_INFO: 'Du bist auf der Warteliste.',
+    ON_WAITLIST_INFO: 'Du bist auf der Warteliste. Bitte komme auf jeden Fall zur Einführungsveranstaltung, dort kannst du noch einem Insitut zugeteilt werden.',
     WAITLIST_DELETE: 'Lösche mich von der Liste',
     REMOVE_FROM_WAITLIST_ARE_YOU_SURE: 'Sicher, dass du von der Warteliste entfernt werden möchtest?',
 
@@ -116,6 +116,8 @@ export const APP_TEXT = {
     PARTNER_ACCEPT_ERROR: 'Fehler: kein Partner für aktiven Nutzer angegeben!',
     PARTNER_ACCEPT: 'Akzeptieren',
     PARTNER_DECLINE: 'Ablehnen',
+
+    TELL_PARTNER_TO_ACCEPT: 'Dein Partner/deine Partnerin hat die Anmeldung noch nicht bestätigt. Er/sie kann dies auf dieser Seite tun.',
 
     SIGN_OUT_ARE_YOU_SURE: 'Sicher, dass du deine Anmeldung löschen willst?',
     SIGN_OUT_BOX_TITLE: 'Deine Anmeldung wurde erfolgreich gelöscht.',
@@ -182,8 +184,8 @@ export const APP_TEXT = {
     PARTNER_IS_DIFFERENT_GRADUATION_TITLE: '%0% has another graduation (%1%).',
     PARTNER_IS_DIFFERENT_GRADUATION_CONTENT: 'It is not possible to choose %0% as your partner.',
 
-    REG_INSTITUTES_STEP_TITLE: 'Institute',
-    REG_INSTITUTES_STEP_DESC: 'Please choose %0% Institute%1%.',
+    REG_INSTITUTES_STEP_TITLE: 'Institutes',
+    REG_INSTITUTES_STEP_DESC: 'Please choose %0% institute%1%.',
     INSTITUTE_PLURAL_SUFFIX: 's',
     REG_INSTITUTES_STEP_ONLY_ONE_INSTITUTE: 'I want to choose only one institute ' +
     '(e.g. because you already did one).',
@@ -202,7 +204,7 @@ export const APP_TEXT = {
     REG_CHECK_STEP_DESC: 'Please double check your data, then you can submit your registration.',
 
     REG_WAITLIST_TITLE: 'Waitlist',
-    ON_WAITLIST_INFO: 'You are on the waitlist.',
+    ON_WAITLIST_INFO: 'You are on the waitlist. Please attend the introductory lecture!',
     WAITLIST_DELETE: 'Remove me from the list',
     REMOVE_FROM_WAITLIST_ARE_YOU_SURE: 'Are you sure that you want to be deleted from the waitlist?',
 
@@ -241,6 +243,8 @@ export const APP_TEXT = {
     PARTNER_ACCEPT_ERROR: 'ERROR: no partner was given for the current user!',
     PARTNER_ACCEPT: 'Accept',
     PARTNER_DECLINE: 'Decline',
+
+    TELL_PARTNER_TO_ACCEPT: 'Your partner has not accepted the registration. He/she can do so on this website.',
 
     SIGN_OUT_ARE_YOU_SURE: 'Are you sure, that you want to delete your registration?',
     SIGN_OUT_BOX_TITLE: 'Your registration has been deleted.',
