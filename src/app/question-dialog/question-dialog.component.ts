@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-question-dialog',
@@ -11,7 +11,7 @@ export class QuestionDialogComponent implements OnInit {
   questionTitle: string;
   questionContent: string;
 
-  constructor(@Inject(MD_DIALOG_DATA) public data: any, public dialogRef: MdDialogRef<QuestionDialogComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<QuestionDialogComponent>) {
     this.questionContent = data.questionContent;
     this.questionTitle = data.questionTitle;
   }

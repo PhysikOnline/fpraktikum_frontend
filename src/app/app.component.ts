@@ -4,7 +4,7 @@ import { AlertService } from '../services/alert.service';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { User } from '../models/user';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { InfoBoxComponent } from './info-box-dialog/info-box.component';
 import { DateService } from '../services/date.service';
 import { InTime } from '../models/in-time';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InfoBoxComponent } from '../info-box-dialog/info-box.component';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { AlertService } from '../../services/alert.service';
 
 @Component({

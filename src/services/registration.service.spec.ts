@@ -5,7 +5,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Institute } from '../models/institute';
 import { ApiService } from './api.service';
 import { AlertService } from './alert.service';
-import { MdSnackBarModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user';
 
@@ -27,7 +27,7 @@ describe('RegistrationService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        MdSnackBarModule
+        MatSnackBarModule
       ],
       providers: [
         RegistrationService,

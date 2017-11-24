@@ -3,11 +3,11 @@
   <p *ngIf="registrationService.user.registrant && !registrationService.user.hasAccepted">{{ 'PARTNER_ACCEPT_INFO' | translate:registrationService.user.registrant.firstName }}</p>
   <app-user-info-list [user]="registrationService.user"></app-user-info-list>
   <div class="button-bottom" *ngIf="!registrationService.user.hasAccepted">
-    <button md-raised-button color="primary" (click)="accept()">{{ 'PARTNER_ACCEPT' | translate }}</button>
-    <button md-raised-button color="warn" (click)="decline()">{{ 'PARTNER_DECLINE' | translate }}</button>
+    <button mat-raised-button color="primary" (click)="accept()">{{ 'PARTNER_ACCEPT' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="decline()">{{ 'PARTNER_DECLINE' | translate }}</button>
   </div>
   <div class="button-bottom" *ngIf="registrationService.user.hasAccepted">
-    <button md-raised-button color="warn" (click)="signOut()">{{ 'SIGN_OUT' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="signOut()">{{ 'SIGN_OUT' | translate }}</button>
   </div>
 
 </app-step>

@@ -12,33 +12,35 @@ import { Params } from '@angular/router';
 import { Http, RequestOptions } from '@angular/http';
 import * as Raven from 'raven-js';
 import { RegistrationService } from './registration.service';
+import {environment} from "../environments/environment";
 
 @Injectable()
 export class ApiService {
+  private readonly _apiUrl = environment.API_URL;
 
   constructor(private http: HttpClient, private http2: Http) { }
 
   getRegistration(): Observable<Registration> {
-    return this.http.get(`${CONFIG.API_URL}/registration/`)
+    return this.http.get(`${this._apiUrl}/registration/`)
       .map(Registration.fromApiType)
       .catch(this.handleError);
   }
 
   getUser(sNumber: string): Observable<User> {
-    return this.http.get(`${CONFIG.API_URL}/user/${sNumber}`)
+    return this.http.get(`${this._apiUrl}/user/${sNumber}`)
       .map(User.fromApiType)
       .catch(this.handleError);
   }
 
   postUser(user: User): Observable<User> {
     console.log(user);
-    return this.http.post(`${CONFIG.API_URL}/register/`, user.toApiType())
+    return this.http.post(`${this._apiUrl}/register/`, user.toApiType())
       .map(User.fromApiType)
       .catch(this.handleError);
   }
 
   signOut(user: User): Observable<void> {
-    return this.http2.delete(`${CONFIG.API_URL}/register/`, {
+    return this.http2.delete(`${this._apiUrl}/register/`, {
       body: user.toApiType()
     })
       .catch(this.handleError);
@@ -47,7 +49,7 @@ export class ApiService {
   checkPartner(lastName: string, login: string): Observable<User> {
     let params = new HttpParams().set('user_lastname', lastName);
     params = params.set('user_login', login);
-    return this.http.get(`${CONFIG.API_URL}/check_partner/`, {
+    return this.http.get(`${this._apiUrl}/check_partner/`, {
       params: params,
       responseType: 'text',
     })
@@ -62,7 +64,7 @@ export class ApiService {
   }
 
   acceptDecline(user: User, accept: boolean): Observable<void> {
-    return this.http.post(`${CONFIG.API_URL}/accept/`, AcceptDecline.fromUser(user, accept).toApiType(), {
+    return this.http.post(`${this._apiUrl}/accept/`, AcceptDecline.fromUser(user, accept).toApiType(), {
       responseType: 'text',
     }).map((res: string) => {
       if (res) {
@@ -75,12 +77,12 @@ export class ApiService {
   }
 
   writeOnWaitinglist(user: User): Observable<void> {
-    return this.http.post(`${CONFIG.API_URL}/waitlist/`, user.toApiType())
+    return this.http.post(`${this._apiUrl}/waitlist/`, user.toApiType())
       .catch(this.handleError);
   }
 
   removeFromWaitinglist(user: User): Observable<void> {
-    return this.http2.delete(`${CONFIG.API_URL}/waitlist/`, {
+    return this.http2.delete(`${this._apiUrl}/waitlist/`, {
       body: user.toApiType()
     })
       .catch(this.handleError);

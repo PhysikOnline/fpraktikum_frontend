@@ -1,38 +1,38 @@
 import { NgModule } from '@angular/core';
 import {
-  MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdDialogModule, MdInputModule, MdListModule,
-  MdMenuModule,
-  MdProgressBarModule, MdProgressSpinnerModule,
-  MdRadioModule, MdSlideToggleModule
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule, MatInputModule, MatListModule,
+  MatMenuModule,
+  MatProgressBarModule, MatProgressSpinnerModule,
+  MatRadioModule, MatSlideToggleModule
 } from '@angular/material';
 
 @NgModule({
   imports: [
-    MdButtonModule,
-    MdCheckboxModule,
-    MdCardModule,
-    MdProgressBarModule,
-    MdRadioModule,
-    MdInputModule,
-    MdSlideToggleModule,
-    MdListModule,
-    MdMenuModule,
-    MdProgressSpinnerModule,
-    MdChipsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatProgressBarModule,
+    MatRadioModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatListModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
+    MatChipsModule,
   ],
   exports: [
-    MdButtonModule,
-    MdCheckboxModule,
-    MdCardModule,
-    MdProgressBarModule,
-    MdRadioModule,
-    MdInputModule,
-    MdSlideToggleModule,
-    MdListModule,
-    MdDialogModule,
-    MdMenuModule,
-    MdProgressSpinnerModule,
-    MdChipsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatProgressBarModule,
+    MatRadioModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatListModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
+    MatChipsModule,
   ]
 })
 export class MaterialModule {

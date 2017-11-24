@@ -8,13 +8,13 @@
                     [labelPosition]="'bottom'"></star-rating-comp>
   <div *ngIf="ratingDetailText && !hasSendRating">
     <p>{{ ratingDetailText | translate }}</p>
-    <md-input-container class="rating-details">
+    <mat-input-container class="rating-details">
       <textarea id="rating-detail" rows="5" placeholder="{{ 'RATING_DETAIL_LABEL' | translate }}"
-                mdInput [(ngModel)]="ratingFeedbackText"></textarea>
-    </md-input-container>
+                matInput [(ngModel)]="ratingFeedbackText"></textarea>
+    </mat-input-container>
     <div class="rating-actions">
-      <button md-raised-button (click)="sendRating()" color="accent">{{ 'SUBMIT' | translate }}</button>
-      <button md-raised-button (click)="resetRating()">{{ 'RESET' | translate }}</button>
+      <button mat-raised-button (click)="sendRating()" color="accent">{{ 'SUBMIT' | translate }}</button>
+      <button mat-raised-button (click)="resetRating()">{{ 'RESET' | translate }}</button>
     </div>
   </div>
 </div>

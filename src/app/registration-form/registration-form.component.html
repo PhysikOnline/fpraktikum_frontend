@@ -1,13 +1,13 @@
 <div class="centered full-width welcome-wrapper">
-  <md-card id="welcome">
-    <md-card-title>{{ 'WELCOME' | translate }} {{ user.firstName }},</md-card-title>
-    <md-card-content>
+  <mat-card id="welcome">
+    <mat-card-title>{{ 'WELCOME' | translate }} {{ user.firstName }},</mat-card-title>
+    <mat-card-content>
       <p>{{ 'WELCOME_DESCRIPTION' | translate:semester }}</p>
-      <button md-raised-button color="primary" id="welcome-button" (click)="startRegistration()">
+      <button mat-raised-button color="primary" id="welcome-button" (click)="startRegistration()">
         {{ 'WELCOME_GO_BUTTON' | translate }}
       </button>
-    </md-card-content>
-  </md-card>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <!-- Choose graduation -->
@@ -17,11 +17,11 @@
 
   <p>{{ 'REG_GRADUATION_STEP_DESC' | translate }}</p>
 
-    <md-radio-group (change)="graduationChange($event)" id="graduation-form">
-      <md-radio-button aria-labelledby="graduation-form" class="radio-button-vertical" *ngFor="let graduation of graduationsArray" [value]="graduation">
+    <mat-radio-group (change)="graduationChange($event)" id="graduation-form">
+      <mat-radio-button aria-labelledby="graduation-form" class="radio-button-vertical" *ngFor="let graduation of graduationsArray" [value]="graduation">
         {{ graduation | translate }}
-      </md-radio-button>
-    </md-radio-group>
+      </mat-radio-button>
+    </mat-radio-group>
 </app-step>
 
 <!-- Choose partner -->
@@ -34,13 +34,13 @@
   <p>{{ 'REG_PARTNER_STEP_DESC' | translate }}</p>
   <p>{{ 'REG_PARTNER_STEP_DESC2' | translate }}</p>
 
-  <md-input-container class="input-container">
-    <input mdInput [placeholder]="'S_NUMBER' | translate" [(ngModel)]="partner.sNumber" (keyup)="partnerKeyUp.next()">
-  </md-input-container>
-  <md-input-container class="input-container">
-    <input mdInput [placeholder]="'LAST_NAME' | translate" [(ngModel)]="partner.lastName" (keyup)="partnerKeyUp.next()">
-    <md-hint align="start">{{ 'INPUT_PARTNER_LASTNAME_HINT' | translate }}</md-hint>
-  </md-input-container>
+  <mat-input-container class="input-container">
+    <input matInput [placeholder]="'S_NUMBER' | translate" [(ngModel)]="partner.sNumber" (keyup)="partnerKeyUp.next()">
+  </mat-input-container>
+  <mat-input-container class="input-container">
+    <input matInput [placeholder]="'LAST_NAME' | translate" [(ngModel)]="partner.lastName" (keyup)="partnerKeyUp.next()">
+    <mat-hint align="start">{{ 'INPUT_PARTNER_LASTNAME_HINT' | translate }}</mat-hint>
+  </mat-input-container>
   <app-chosen-partner-info style="margin-top: 30px" *ngIf="wasPartnerEntered() && registrationService.partnerStatus !== undefined"></app-chosen-partner-info>
 </app-step>
 
@@ -55,39 +55,39 @@
     {{ 'REG_INSTITUTES_STEP_DESC' |
     translate:(canSelectOnlyOneInstitute() ? ('ONE' | translate) : ('TWO' | translate))
     :(canSelectOnlyOneInstitute() ? '' : ('INSTITUTE_PLURAL_SUFFIX' | translate)) }}
-  </p><md-chip-list></md-chip-list>
+  </p><mat-chip-list></mat-chip-list>
 
   <div class="institute-form" *ngIf="!needsOnlyOneInstitute()">
     <p>1. {{ 'SEMESTER_HALF' | translate }}</p>
-    <md-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(1)">
-      <md-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 1)"
+    <mat-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(1)">
+      <mat-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 1)"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation:1" [value]="institute">
         {{ institute.name }}
-        <md-chip selectable="false" [color]="hasInstituteEnoughPlaces(institute) ? 'accent' : 'primary'">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
-      </md-radio-button>
-    </md-radio-group>
+        <mat-chip selectable="false" [color]="hasInstituteEnoughPlaces(institute) ? 'accent' : 'primary'">{{ institute.places }}</mat-chip> <span class="institute-notes">{{ institute.notes }}</span>
+      </mat-radio-button>
+    </mat-radio-group>
     <p>2. {{ 'SEMESTER_HALF' | translate }}</p>
-    <md-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(2)">
-      <md-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 2)"
+    <mat-radio-group (change)="instituteChange($event)" [value]="findInstituteByHalf(2)">
+      <mat-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 2)"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation:2" [value]="institute">
-        {{ institute.name }} <md-chip color="primary">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
-      </md-radio-button>
-    </md-radio-group>
+        {{ institute.name }} <mat-chip color="primary">{{ institute.places }}</mat-chip> <span class="institute-notes">{{ institute.notes }}</span>
+      </mat-radio-button>
+    </mat-radio-group>
   </div>
 
   <div class="institute-form" *ngIf="needsOnlyOneInstitute()">
-    <md-radio-group [(ngModel)]="user.institutes[0]">
-      <md-radio-button class="radio-button-vertical"
+    <mat-radio-group [(ngModel)]="user.institutes[0]">
+      <mat-radio-button class="radio-button-vertical"
                        *ngFor="let institute of institutes | instituteFilter:user.graduation" [value]="institute">
-        {{ institute.name }} <md-chip selectable="false">{{ institute.places }}</md-chip> <span class="institute-notes">{{ institute.notes }}</span>
-      </md-radio-button>
-    </md-radio-group>
+        {{ institute.name }} <mat-chip selectable="false">{{ institute.places }}</mat-chip> <span class="institute-notes">{{ institute.notes }}</span>
+      </mat-radio-button>
+    </mat-radio-group>
   </div>
 
   <div style="margin-top: 40px">
     <p>{{ 'REG_INSTITUTES_STEP_WAITINGLIST_DESC' | translate:(user.partner ? ('REG_INSTITUTES_STEP_WAITINGLIST_DESC_PARTNER' | translate) : '') }}</p>
-    <md-slide-toggle [(ngModel)]="registrationService.onWaitingList">{{ 'REG_INSTITUTES_STEP_WAITINGLIST_BTN' | translate }}
-    </md-slide-toggle>
+    <mat-slide-toggle [(ngModel)]="registrationService.onWaitingList">{{ 'REG_INSTITUTES_STEP_WAITINGLIST_BTN' | translate }}
+    </mat-slide-toggle>
   </div>
 </app-step>
 
@@ -98,9 +98,9 @@
           [backButtonName]="'BUTTON_BACK'" [stepName]="'REG_NOTES_STEP_TITLE'">
 
   <p>{{ 'REG_NOTES_STEP_DESC' | translate }}</p>
-  <md-form-field>
-    <textarea mdInput rows="5" [placeholder]="'REG_NOTES_INPUT_PLACEHOLDER' | translate" [(ngModel)]="user.notes"></textarea>
-  </md-form-field>
+  <mat-form-field>
+    <textarea matInput rows="5" [placeholder]="'REG_NOTES_INPUT_PLACEHOLDER' | translate" [(ngModel)]="user.notes"></textarea>
+  </mat-form-field>
 </app-step>
 
 <!-- Check registration and send -->
