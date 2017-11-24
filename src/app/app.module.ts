@@ -27,10 +27,13 @@ import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner
 import { WaitlistInfoComponent } from './waitlist-info/waitlist-info.component';
 import * as Raven from 'raven-js';
 import { ErrorHandler } from '@angular/core';
+import {environment} from '../environments/environment';
 
-Raven
-  .config('https://4f7ddb18431c44bd9398744306a42fd0@po-sentry.physikelearning.de/8')
-  .install();
+if (environment.production) {
+  Raven
+    .config('https://4f7ddb18431c44bd9398744306a42fd0@po-sentry.physikelearning.de/8')
+    .install();
+}
 
 export class RavenErrorHandler implements ErrorHandler {
   handleError(err: any): void {

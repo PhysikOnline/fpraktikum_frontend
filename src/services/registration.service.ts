@@ -12,7 +12,6 @@ import { ErrorDialogComponent } from '../app/error-dialog/error-dialog.component
 import { Partner } from '../models/partner';
 import { ChosenPartner } from '../models/chosen-partner';
 import { UserType } from '../models/user-type';
-import { observable } from 'rxjs/symbol/observable';
 import * as Raven from 'raven-js';
 
 // we have to get the user from the document
@@ -22,73 +21,6 @@ declare let USER_ACCOUNT: string;
 declare let USER_EMAIL: string;
 declare let USER_MATRIKEL: string;
 
-export const REG = {
-  semester: 'WS17',
-  start_date: '2017-08-06T00:00:00Z',
-  end_date: '2017-08-30T00:00:00Z',
-  institutes: [
-    {
-      name: 'IAP',
-      places: 20,
-      graduation: 'BA',
-      semester_half: 1,
-    },
-    {
-      name: 'IAP',
-      places: 20,
-      graduation: 'BA',
-      semester_half: 2,
-    },
-    {
-      name: 'PI',
-      places: 25,
-      graduation: 'BA',
-      semester_half: 1,
-    },
-    {
-      name: 'PI',
-      places: 10,
-      graduation: 'BA',
-      semester_half: 2,
-    },
-    {
-      name: 'IAP',
-      places: 20,
-      graduation: 'MA',
-      semester_half: 1,
-    },
-    {
-      name: 'IAP',
-      places: 20,
-      graduation: 'MA',
-      semester_half: 2,
-    },
-    {
-      name: 'ITP',
-      places: 25,
-      graduation: 'MA',
-      semester_half: 1,
-    },
-    {
-      name: 'ITP',
-      places: 10,
-      graduation: 'MA',
-      semester_half: 2,
-    },
-    {
-      name: 'IAP',
-      places: 25,
-      graduation: 'LA',
-      semester_half: 1,
-    },
-    {
-      name: 'PI',
-      places: 10,
-      graduation: 'LA',
-      semester_half: 2,
-    },
-  ]
-};
 
 @Injectable()
 export class RegistrationService {
