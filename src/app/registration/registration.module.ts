@@ -7,11 +7,35 @@ import { UserInfoListComponent } from './user-info-list/user-info-list.component
 import { PartnerInfoComponent } from './partner-info/partner-info.component';
 import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner-info.component';
 import { WaitlistInfoComponent } from './waitlist-info/waitlist-info.component';
-import { StoreModule } from '@ngrx/store/src/store_module';
-import { reducer } from '../store/reducers/index';
+import { RegistrationComponent } from './registration.component';
+import { ThemeModule } from '../theme/theme.module';
+import { DialogsModule } from '../dialogs/dialogs.module';
+import { MaterialModule } from '../material/material.module';
+import { PipesModule } from '../pipes/pipes.module';
+import { FormsModule } from '@angular/forms';
+import { Routes } from '@angular/router/src/config';
+import { RouterModule } from '@angular/router';
+import { reducer } from '../store/index';
+import { StoreModule } from '@ngrx/store';
+
+export const ROUTES: Routes = [
+  {
+    path: '',
+    component: RegistrationComponent,
+  },
+];
 
 @NgModule({
-  imports: [CommonModule, StoreModule.forFeature('registration', reducer)],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(ROUTES),
+    StoreModule.forFeature('registration', reducer),
+    ThemeModule,
+    DialogsModule,
+    MaterialModule,
+    PipesModule,
+    FormsModule,
+  ],
   declarations: [
     RegistrationFormComponent,
     RegistrationCompleteComponent,
@@ -20,6 +44,8 @@ import { reducer } from '../store/reducers/index';
     PartnerInfoComponent,
     ChosenPartnerInfoComponent,
     WaitlistInfoComponent,
+    RegistrationComponent,
   ],
+  exports: [RegistrationComponent],
 })
 export class RegistrationModule {}

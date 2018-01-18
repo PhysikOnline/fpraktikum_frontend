@@ -10,11 +10,12 @@ import { StarRatingModule } from 'angular-star-rating';
 import { AppComponent } from './app.component';
 import { ThemeModule } from './theme/theme.module';
 import { DialogsModule } from './dialogs/dialogs.module';
-import { StoreModule } from '@ngrx/store/src/store_module';
 import { ServiceModule } from './services/service.module';
+import { Routes, RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
 
 if (environment.production) {
-  Raven.config('https://4f7ddb18431c44bd9398744306a42fd0@po-sentry.physikelearning.de/8').install();
+  // Raven.config('https://4f7ddb18431c44bd9398744306a42fd0@po-sentry.physikelearning.de/8').install();
 }
 
 export class RavenErrorHandler implements ErrorHandler {
@@ -23,22 +24,26 @@ export class RavenErrorHandler implements ErrorHandler {
   }
 }
 
+export const ROUTES: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'registration' },
+  {
+    path: 'registration',
+    loadChildren: './registration/registration.module#RegistrationModule',
+  },
+];
+
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
   imports: [
     BrowserModule,
     ServiceModule,
     BrowserAnimationsModule,
     FormsModule,
-    MaterialModule,
     StarRatingModule.forRoot(),
-    RegistrationModule,
-    ThemeModule,
-    DialogsModule,
+    RouterModule.forRoot(ROUTES),
     StoreModule.forRoot({}),
   ],
-  providers: [{ provide: ErrorHandler, useClass: RavenErrorHandler }],
+  // providers: environment.production ? [{ provide: ErrorHandler, useClass: RavenErrorHandler }] : [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -10,7 +10,7 @@ export interface UserState {
 export const initialState: UserState = {
   loaded: false,
   loading: false,
-  data: null,
+  data: new User('null'),
 };
 
 export function reducer(state = initialState, action: fromUser.UserAction): UserState {
@@ -38,3 +38,7 @@ export function reducer(state = initialState, action: fromUser.UserAction): User
   }
   return state;
 }
+
+export const getUserLoading = (state: UserState) => state.loading;
+export const getUserLoaded = (state: UserState) => state.loaded;
+export const getUser = (state: UserState) => state.data;

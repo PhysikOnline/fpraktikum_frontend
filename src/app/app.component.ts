@@ -1,24 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog } from '@angular/material';
 import { InTime } from './models/in-time';
 import { DateService } from './services/date.service';
+import { Store } from '@ngrx/store/src/store';
+import { RegistrationState } from './store/reducers/index';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [
-    trigger('fadeIn', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ transform: 'translateY(0)', opacity: 1 })),
-      ]),
-    ]),
-  ],
 })
 export class AppComponent implements OnInit {
-  showView = false;
+  showView = true;
   inTime: InTime = InTime.inTime;
   inTimeEnum = InTime;
 

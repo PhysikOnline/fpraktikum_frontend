@@ -1,6 +1,6 @@
-<div *ngIf="inTime === inTimeEnum.inTime" class="full-sized">
+<!-- <div *ngIf="inTime === inTimeEnum.inTime" class="full-sized">
   <main class="view-wrapper" *ngIf="showView">
-    <app-registration-form [@fadeIn] *ngIf="!registrationService.user.status"></app-registration-form>
+    <!-- <app-registration-form [@fadeIn] *ngIf="!registrationService.user.status"></app-registration-form>
     <app-registered-info [@fadeIn] *ngIf="registrationService.user.status === 'registrant'"></app-registered-info>
     <app-partner-info [@fadeIn] *ngIf="registrationService.user.status === 'partner'"></app-partner-info>
     <app-waitlist-info [@fadeIn] *ngIf="registrationService.user.status === 'waitlist'"></app-waitlist-info>
@@ -14,4 +14,5 @@
   <app-not-intime [tooLate]="inTime"></app-not-intime>
 </div>
 
-<app-footer></app-footer>
+<app-footer></app-footer> -->
+<router-outlet></router-outlet>

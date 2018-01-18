@@ -6,5 +6,6 @@ import { InstituteFilterPipe } from './institute-filter.pipe';
 @NgModule({
   imports: [CommonModule],
   declarations: [TranslatePipe, InstituteFilterPipe],
+  exports: [TranslatePipe, InstituteFilterPipe],
 })
 export class PipesModule {}

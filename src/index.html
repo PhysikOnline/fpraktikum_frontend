@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Frontend</title>
@@ -15,37 +16,49 @@
       <div class="sk-spinner sk-spinner-pulse"></div>
  *
  */
+
     .sk-spinner {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
     }
+
     .sk-spinner-animate {
       width: 40px;
       height: 40px;
       background-color: #333;
       border-radius: 100%;
       -webkit-animation: sk-pulseScaleOut 1s infinite ease-in-out;
-      animation: sk-pulseScaleOut 1s infinite ease-in-out; }
+      animation: sk-pulseScaleOut 1s infinite ease-in-out;
+    }
+
     @-webkit-keyframes sk-pulseScaleOut {
       0% {
         -webkit-transform: scale(0);
-        transform: scale(0); }
+        transform: scale(0);
+      }
       100% {
         -webkit-transform: scale(1);
         transform: scale(1);
-        opacity: 0; } }
+        opacity: 0;
+      }
+    }
+
     @keyframes sk-pulseScaleOut {
       0% {
         -webkit-transform: scale(0);
-        transform: scale(0); }
+        transform: scale(0);
+      }
       100% {
         -webkit-transform: scale(1);
         transform: scale(1);
-        opacity: 0; } }
+        opacity: 0;
+      }
+    }
   </style>
 </head>
+
 <body>
   <app-root>
     <div class="sk-spinner">
@@ -53,11 +66,11 @@
     </div>
   </app-root>
   <script>
-//    let USER_FIRST_NAME = 'Lars';
-//    let USER_LAST_NAME = 'Gröber';
-//    let USER_ACCOUNT = 's0053274';
-//    let USER_EMAIL = 's0053274@rz.uni-frankfurt.de';
-//    let USER_MATRIKEL = '5692604';
+    //    let USER_FIRST_NAME = 'Lars';
+    //    let USER_LAST_NAME = 'Gröber';
+    //    let USER_ACCOUNT = 's0053274';
+    //    let USER_EMAIL = 's0053274@rz.uni-frankfurt.de';
+    //    let USER_MATRIKEL = '5692604';
     let USER_FIRST_NAME = 'Lars';
     let USER_LAST_NAME = 'Gröber';
     let USER_ACCOUNT = 'LarsG_admin';
@@ -70,4 +83,5 @@
 //    let USER_MATRIKEL = 'doesNotExist';
   </script>
 </body>
+
 </html>
