@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { APP_TEXT } from '../text.config';
+import { APP_TEXT } from '../../text.config';
 
 /**
  * Service which stores the current language and takes an identifier and returns its content.
@@ -9,7 +9,6 @@ import { APP_TEXT } from '../text.config';
  */
 @Injectable()
 export class TranslateService {
-
   private _language = 'de';
   private _text = APP_TEXT;
 

@@ -8,12 +8,12 @@ import 'rxjs/add/operator/map';
 import { Registration } from '../models/registration';
 import { AlertService } from './alert.service';
 import { ApiService } from './api.service';
-import { ErrorDialogComponent } from '../app/error-dialog/error-dialog.component';
 import { Partner } from '../models/partner';
 import { ChosenPartner } from '../models/chosen-partner';
 import { UserType } from '../models/user-type';
 import { observable } from 'rxjs/symbol/observable';
 import * as Raven from 'raven-js';
+import { ErrorDialogComponent } from '../dialogs/error-dialog/error-dialog.component';
 
 // we have to get the user from the document
 declare let USER_FIRST_NAME: string;
@@ -87,14 +87,13 @@ export const REG = {
       graduation: 'LA',
       semester_half: 2,
     },
-  ]
+  ],
 };
 
 @Injectable()
 export class RegistrationService {
-
   semester = '';
-  date: { start: Date, end: Date };
+  date: { start: Date; end: Date };
   user: User;
   institutes: Institute[] = [];
   partner: Partner;
@@ -107,9 +106,7 @@ export class RegistrationService {
 
   fullPartner: User;
 
-  constructor(private api: ApiService,
-              private alert: AlertService) {
-  }
+  constructor(private api: ApiService, private alert: AlertService) {}
 
   init(): Observable<[Registration, void]> {
     return this.reload();
@@ -117,33 +114,36 @@ export class RegistrationService {
 
   getUser(): Observable<void> {
     return Observable.create(observer => {
-      this.api.getUser(USER_ACCOUNT).subscribe((user: User) => {
-        if (user.status === null) {
-          this.user = new User(
-            null,
-            '',
-            USER_FIRST_NAME,
-            USER_LAST_NAME,
-            USER_ACCOUNT,
-            USER_EMAIL,
-            USER_MATRIKEL,
-            '',
-            [],
-            null,
-          );
-        } else {
-          this.user = user;
-        }
-        observer.next();
-        this.setUserContext();
-      }, error => this.handleError(error));
+      this.api.getUser(USER_ACCOUNT).subscribe(
+        (user: User) => {
+          if (user.status === null) {
+            this.user = new User(
+              null,
+              '',
+              USER_FIRST_NAME,
+              USER_LAST_NAME,
+              USER_ACCOUNT,
+              USER_EMAIL,
+              USER_MATRIKEL,
+              '',
+              [],
+              null
+            );
+          } else {
+            this.user = user;
+          }
+          observer.next();
+          this.setUserContext();
+        },
+        error => this.handleError(error)
+      );
     });
   }
 
   getRegistration(): Observable<Registration> {
     return Observable.create(observer => {
-      this.api.getRegistration()
-        .subscribe(res => {
+      this.api.getRegistration().subscribe(
+        res => {
           this.semester = res.semester;
           this.date = {
             start: res.startDate,
@@ -152,7 +152,9 @@ export class RegistrationService {
           this.institutes = res.institutes;
           this.graduationAvailable = RegistrationService.getGraduationAvailable(this.institutes);
           observer.next(res);
-        }, error => this.handleError(error));
+        },
+        error => this.handleError(error)
+      );
     });
   }
 
@@ -161,69 +163,92 @@ export class RegistrationService {
       return this.writeOnWaitinglist();
     }
     return Observable.create(observer => {
-      this.api.postUser(this.user).subscribe(user => {
-        this.user = user;
-        this.user.status = 'registrant';
-        this.registrationDoneEvent.emit();
-        observer.next();
-      }, error => {
-        this.handleError(error, observer);
-      });
+      this.api.postUser(this.user).subscribe(
+        user => {
+          this.user = user;
+          this.user.status = 'registrant';
+          this.registrationDoneEvent.emit();
+          observer.next();
+        },
+        error => {
+          this.handleError(error, observer);
+        }
+      );
     });
   }
 
   signOutUser(): Observable<void> {
     return Observable.create(observer => {
-      this.api.signOut(this.user).subscribe(() => {
-        this.reload().subscribe(() => {
-          this.registrationDoneEvent.emit();
-          observer.next();
-        }, error => this.handleError(error, observer));
-      }, error => this.handleError(error, observer));
+      this.api.signOut(this.user).subscribe(
+        () => {
+          this.reload().subscribe(
+            () => {
+              this.registrationDoneEvent.emit();
+              observer.next();
+            },
+            error => this.handleError(error, observer)
+          );
+        },
+        error => this.handleError(error, observer)
+      );
     });
   }
 
   checkPartner(lastName: string, login: string): Observable<Partner> {
     this.partnerStatus = null;
     return Observable.create(observer => {
-      this.api.checkPartner(lastName, login).subscribe(partner => {
-        console.log('Check Partner: ', partner)
-        if (partner) {
-          this.setPartnerData(partner);
-        } else {
-          this.partner = new Partner('', lastName, login, '', '');
-          this.partnerStatus = ChosenPartner.doesNotExist;
+      this.api.checkPartner(lastName, login).subscribe(
+        partner => {
+          console.log('Check Partner: ', partner);
+          if (partner) {
+            this.setPartnerData(partner);
+          } else {
+            this.partner = new Partner('', lastName, login, '', '');
+            this.partnerStatus = ChosenPartner.doesNotExist;
+          }
+          observer.next();
+        },
+        error => {
+          console.log(error);
+          observer.error(error);
         }
-        observer.next();
-      }, error => {
-        console.log(error)
-        observer.error(error);
-      });
+      );
     });
   }
 
   writeOnWaitinglist(): Observable<void> {
     return Observable.create(observer => {
-      this.api.writeOnWaitinglist(this.user).subscribe(() => {
-        this.reload().subscribe(() => {
-          this.registrationDoneEvent.emit();
-          observer.next();
-        }, error => this.handleError(error, observer));
-      }, error => this.handleError(error, observer));
-    })
+      this.api.writeOnWaitinglist(this.user).subscribe(
+        () => {
+          this.reload().subscribe(
+            () => {
+              this.registrationDoneEvent.emit();
+              observer.next();
+            },
+            error => this.handleError(error, observer)
+          );
+        },
+        error => this.handleError(error, observer)
+      );
+    });
   }
 
   removeFromWaitlist(): Observable<void> {
     return Observable.create(observer => {
-      this.api.removeFromWaitinglist(this.user).subscribe(() => {
-        this.reload().subscribe(() => {
-          this.registrationDoneEvent.emit();
-          observer.next();
-        }, error => this.handleError(error, observer));
-      }, error => this.handleError(error, observer));
-    })
+      this.api.removeFromWaitinglist(this.user).subscribe(
+        () => {
+          this.reload().subscribe(
+            () => {
+              this.registrationDoneEvent.emit();
+              observer.next();
+            },
+            error => this.handleError(error, observer)
+          );
+        },
+        error => this.handleError(error, observer)
+      );
+    });
   }
-
 
   savePartner() {
     this.user.partner = this.partner;
@@ -242,13 +267,19 @@ export class RegistrationService {
 
   acceptDecline(accept: boolean): Observable<void> {
     return Observable.create(observer => {
-      this.api.acceptDecline(this.user, accept).subscribe(() => {
-        this.reload().subscribe(() => {
-          this.registrationDoneEvent.emit();
-          observer.next();
-        }, error => this.handleError(error, observer));
-      }, error => this.handleError(error));
-    })
+      this.api.acceptDecline(this.user, accept).subscribe(
+        () => {
+          this.reload().subscribe(
+            () => {
+              this.registrationDoneEvent.emit();
+              observer.next();
+            },
+            error => this.handleError(error, observer)
+          );
+        },
+        error => this.handleError(error)
+      );
+    });
   }
 
   static getGraduationAvailable(institutes: Institute[]): string[] {
@@ -263,7 +294,7 @@ export class RegistrationService {
   private handleError(message, observer?) {
     this.alert.showDialog(ErrorDialogComponent, {
       content: message,
-      isBackend: true
+      isBackend: true,
     });
     if (observer) {
       observer.error(message);
@@ -290,7 +321,7 @@ export class RegistrationService {
       email: this.user.email,
     });
     Raven.setTagsContext({
-      status: this.user.status
+      status: this.user.status,
     });
   }
 }

@@ -9,16 +9,16 @@ import { TranslateService } from '../services/translate.service';
  */
 @Pipe({
   name: 'translate',
-  pure: false
+  pure: false,
 })
 export class TranslatePipe implements PipeTransform {
-
-  constructor(private translate: TranslateService) {
-  }
+  constructor(private translate: TranslateService) {}
 
   transform(name: string, ...args: any[]): string {
     let text = this.translate.translate(name);
-    args.forEach((a, i) => text = text.replace(new RegExp(`%${i}%`), a ? this.translate.translate(a) : ''));
+    args.forEach(
+      (a, i) => (text = text.replace(new RegExp(`%${i}%`), a ? this.translate.translate(a) : ''))
+    );
     return text;
   }
 }
