@@ -20,11 +20,17 @@ export interface UserApiModel {
 
 export class User extends Record {
   static fromApiType(record: UserApiModel): User {
-    if (!record) return null;
+    if (!record) {
+      return null;
+    }
 
-    const institutes = record.institutes ? record.institutes.map(i => Institute.fromApiType(i)) : null;
+    const institutes = record.institutes
+      ? record.institutes.map(i => Institute.fromApiType(i))
+      : null;
     const partner = record.partner ? Partner.fromApiType(record.partner) : null;
-    const registrant = record.registrant ? User.fromApiType(record.registrant) : null;
+    const registrant = record.registrant
+      ? User.fromApiType(record.registrant)
+      : null;
 
     let graduation = record.graduation ? record.graduation : '';
     if (!graduation && institutes) {
@@ -44,12 +50,14 @@ export class User extends Record {
       partner,
       record.partner_has_accepted,
       record.has_accepted,
-      registrant,
+      registrant
     );
   }
 
   toApiType(): UserApiModel {
-    const institutes = this.institutes ? this.institutes.map(i => i.toApiType()) : null;
+    const institutes = this.institutes
+      ? this.institutes.map(i => i.toApiType())
+      : null;
     return {
       user_firstname: this.firstName,
       user_lastname: this.lastName,
@@ -65,19 +73,21 @@ export class User extends Record {
     };
   }
 
-  constructor(public status: string,
-              public graduation?: string,
-              public firstName?: string,
-              public lastName?: string,
-              public login?: string,
-              public email?: string,
-              public matrikel?: string,
-              public notes?: string,
-              public institutes?: Institute[],
-              public partner?: Partner,
-              public hasPartnerAccepted?: boolean,
-              public hasAccepted?: boolean,
-              public registrant?: User) {
+  constructor(
+    public status: string,
+    public graduation?: string,
+    public firstName?: string,
+    public lastName?: string,
+    public login?: string,
+    public email?: string,
+    public matrikel?: string,
+    public notes?: string,
+    public institutes?: Institute[],
+    public partner?: Partner,
+    public hasPartnerAccepted?: boolean,
+    public hasAccepted?: boolean,
+    public registrant?: User
+  ) {
     super();
   }
 }
