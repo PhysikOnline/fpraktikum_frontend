@@ -15,8 +15,9 @@ import { PipesModule } from '../pipes/pipes.module';
 import { FormsModule } from '@angular/forms';
 import { Routes } from '@angular/router/src/config';
 import { RouterModule } from '@angular/router';
-import { reducer } from '../store/index';
+import { reducer, effects } from '../store/index';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 export const ROUTES: Routes = [
   {
@@ -29,12 +30,13 @@ export const ROUTES: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(ROUTES),
-    StoreModule.forFeature('registration', reducer),
     ThemeModule,
     DialogsModule,
     MaterialModule,
     PipesModule,
     FormsModule,
+    StoreModule.forFeature('registration', reducer),
+    EffectsModule.forFeature(effects),
   ],
   declarations: [
     RegistrationFormComponent,

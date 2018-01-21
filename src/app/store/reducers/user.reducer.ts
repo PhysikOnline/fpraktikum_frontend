@@ -13,7 +13,10 @@ export const initialState: UserState = {
   data: new User('null'),
 };
 
-export function reducer(state = initialState, action: fromUser.UserAction): UserState {
+export function reducer(
+  state = initialState,
+  action: fromUser.UserAction
+): UserState {
   switch (action.type) {
     case fromUser.LOAD_USER: {
       return {
@@ -24,6 +27,7 @@ export function reducer(state = initialState, action: fromUser.UserAction): User
     case fromUser.LOAD_USER_SUCCESS: {
       return {
         ...state,
+        data: action.payload,
         loading: false,
         loaded: true,
       };

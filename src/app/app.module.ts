@@ -1,6 +1,6 @@
 import * as Raven from 'raven-js';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { environment } from '../environments/environment.prod';
+import { environment } from '../environments/environment';
 import { RegistrationModule } from './registration/registration.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,9 +13,13 @@ import { DialogsModule } from './dialogs/dialogs.module';
 import { ServiceModule } from './services/service.module';
 import { Routes, RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 if (environment.production) {
-  // Raven.config('https://4f7ddb18431c44bd9398744306a42fd0@po-sentry.physikelearning.de/8').install();
+  Raven.config(
+    'https://4f7ddb18431c44bd9398744306a42fd0@po-sentry.physikelearning.de/8'
+  ).install();
 }
 
 export class RavenErrorHandler implements ErrorHandler {
@@ -42,8 +46,12 @@ export const ROUTES: Routes = [
     StarRatingModule.forRoot(),
     RouterModule.forRoot(ROUTES),
     StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  // providers: environment.production ? [{ provide: ErrorHandler, useClass: RavenErrorHandler }] : [],
+  providers: environment.production
+    ? [{ provide: ErrorHandler, useClass: RavenErrorHandler }]
+    : [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

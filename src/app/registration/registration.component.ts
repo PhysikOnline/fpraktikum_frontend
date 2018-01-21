@@ -12,5 +12,6 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(fromStore.getUser).subscribe(console.log);
+    this.store.dispatch(new fromStore.LoadUser());
   }
 }
