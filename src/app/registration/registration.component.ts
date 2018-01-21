@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as fromStore from '../store';
+import * as fromStore from './store';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -11,7 +11,9 @@ export class RegistrationComponent implements OnInit {
   constructor(private store: Store<fromStore.RegistrationState>) {}
 
   ngOnInit() {
-    this.store.select(fromStore.getUser).subscribe(console.log);
     this.store.dispatch(new fromStore.LoadUser());
+    this.store.dispatch(new fromStore.LoadRegisration());
+
+    this.store.select(fromStore.getInstitutes).subscribe(console.log);
   }
 }

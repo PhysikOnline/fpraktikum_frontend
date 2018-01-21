@@ -15,7 +15,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { FormsModule } from '@angular/forms';
 import { Routes } from '@angular/router/src/config';
 import { RouterModule } from '@angular/router';
-import { reducer, effects } from '../store/index';
+import { reducer, effects } from './store/index';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 

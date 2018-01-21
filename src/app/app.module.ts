@@ -12,9 +12,16 @@ import { ThemeModule } from './theme/theme.module';
 import { DialogsModule } from './dialogs/dialogs.module';
 import { ServiceModule } from './services/service.module';
 import { Routes, RouterModule } from '@angular/router';
+
+import {
+  StoreRouterConnectingModule,
+  RouterStateSerializer,
+} from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+import { reducers, CustomSerializer } from './store';
 
 if (environment.production) {
   Raven.config(
@@ -45,13 +52,17 @@ export const ROUTES: Routes = [
     FormsModule,
     StarRatingModule.forRoot(),
     RouterModule.forRoot(ROUTES),
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
+    StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: environment.production
-    ? [{ provide: ErrorHandler, useClass: RavenErrorHandler }]
-    : [],
+  providers: [
+    environment.production
+      ? [{ provide: ErrorHandler, useClass: RavenErrorHandler }]
+      : [],
+    [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

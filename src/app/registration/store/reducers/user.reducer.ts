@@ -1,5 +1,5 @@
 import * as fromUser from '../actions/user.action';
-import { User } from '../../models/user';
+import { User } from '../../../models/user';
 
 export interface UserState {
   data: User;

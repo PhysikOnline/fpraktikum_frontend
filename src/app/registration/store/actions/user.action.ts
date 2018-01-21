@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User } from '../../models/user';
+import { User } from '../../../models/user';
 
 // load user
 export const LOAD_USER = '[User] Load User';
@@ -10,14 +10,13 @@ export class LoadUser implements Action {
   readonly type = LOAD_USER;
 }
 
-export class LoadUserFail implements Action {
-  readonly type = LOAD_USER_FAIL;
-  constructor(public payload: any) {}
-}
-
 export class LoadUserSuccess implements Action {
   readonly type = LOAD_USER_SUCCESS;
   constructor(public payload: User) {}
+}
+export class LoadUserFail implements Action {
+  readonly type = LOAD_USER_FAIL;
+  constructor(public payload: any) {}
 }
 
 export type UserAction = LoadUser | LoadUserFail | LoadUserSuccess;

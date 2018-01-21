@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material';
 import { InTime } from './models/in-time';
 import { DateService } from './services/date.service';
 import { Store } from '@ngrx/store/src/store';
-import { RegistrationState } from './store/reducers/index';
 
 @Component({
   selector: 'app-root',

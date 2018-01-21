@@ -1,6 +1,7 @@
 import { Record } from './record';
 
 export interface InstituteApiModel {
+  id: number;
   name: string;
   graduation: string;
   places: number;
@@ -11,15 +12,18 @@ export interface InstituteApiModel {
 export class Institute extends Record {
   static fromApiType(record: InstituteApiModel): Institute {
     return new Institute(
+      record.id,
       record.name,
       record.graduation,
       record.places,
       record.semesterhalf,
-      record.notes);
+      record.notes
+    );
   }
 
   toApiType(): InstituteApiModel {
     return {
+      id: this.id,
       name: this.name,
       graduation: this.graduation,
       places: this.places,
@@ -28,11 +32,14 @@ export class Institute extends Record {
     };
   }
 
-  constructor(public name: string,
-              public graduation: string,
-              public places: number,
-              public semesterHalf: number,
-              public notes?: string) {
+  constructor(
+    public id: number,
+    public name: string,
+    public graduation: string,
+    public places: number,
+    public semesterHalf: number,
+    public notes?: string
+  ) {
     super();
   }
 }

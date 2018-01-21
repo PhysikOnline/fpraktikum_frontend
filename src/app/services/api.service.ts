@@ -17,7 +17,8 @@ import { Params } from '@angular/router';
 import { Http, RequestOptions } from '@angular/http';
 import * as Raven from 'raven-js';
 import { RegistrationService } from './registration.service';
-import { environment } from '../../environments/environment.prod';
+import { environment } from '../../environments/environment';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ApiService {
@@ -28,8 +29,8 @@ export class ApiService {
   getRegistration(): Observable<Registration> {
     return this.http
       .get(`${this._apiUrl}/registration/`)
-      .map(Registration.fromApiType)
-      .catch(this.handleError);
+      .pipe(map(reg => (Array.isArray(reg) && reg.length > 0 ? reg[0] : null)))
+      .pipe(map(Registration.fromApiType), catchError(this.handleError));
   }
 
   getUser(sNumber: string): Observable<User> {
@@ -75,9 +76,13 @@ export class ApiService {
 
   acceptDecline(user: User, accept: boolean): Observable<void> {
     return this.http
-      .post(`${this._apiUrl}/accept/`, AcceptDecline.fromUser(user, accept).toApiType(), {
-        responseType: 'text',
-      })
+      .post(
+        `${this._apiUrl}/accept/`,
+        AcceptDecline.fromUser(user, accept).toApiType(),
+        {
+          responseType: 'text',
+        }
+      )
       .map((res: string) => {
         if (res) {
           return User.fromApiType(JSON.parse(res));
@@ -89,7 +94,9 @@ export class ApiService {
   }
 
   writeOnWaitinglist(user: User): Observable<void> {
-    return this.http.post(`${this._apiUrl}/waitlist/`, user.toApiType()).catch(this.handleError);
+    return this.http
+      .post(`${this._apiUrl}/waitlist/`, user.toApiType())
+      .catch(this.handleError);
   }
 
   removeFromWaitinglist(user: User): Observable<void> {
@@ -106,9 +113,13 @@ export class ApiService {
     body.append('feedback', feedback);
     body.append('passphrase', 'eeec021898eec14f9c7c888c5899a81ad4dbf1ae');
     return this.http
-      .post(`https://vm.elearning.physik.uni-frankfurt.de/po-fp-rating/api.php`, body, {
-        responseType: 'text',
-      })
+      .post(
+        `https://vm.elearning.physik.uni-frankfurt.de/po-fp-rating/api.php`,
+        body,
+        {
+          responseType: 'text',
+        }
+      )
       .catch(() => Observable.throw({}));
   }
 

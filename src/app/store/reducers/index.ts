@@ -1,33 +1,47 @@
 import {
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-} from '@ngrx/store';
-import * as fromUser from './user.reducer';
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  Params,
+} from '@angular/router';
 
-export interface RegistrationState {
-  user: fromUser.UserState;
+import {
+  createSelector,
+  createFeatureSelector,
+  ActionReducerMap,
+} from '@ngrx/store';
+
+import * as fromRouter from '@ngrx/router-store';
+
+export interface RouterStateUrl {
+  url: string;
+  queryParams: Params;
+  params: Params;
 }
 
-export const reducer: ActionReducerMap<RegistrationState> = {
-  user: fromUser.reducer,
+export interface State {
+  routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
+}
+
+export const reducers: ActionReducerMap<State> = {
+  routerReducer: fromRouter.routerReducer,
 };
 
-export const getRegistrationState = createFeatureSelector<RegistrationState>(
-  'registration'
-);
+export const getRouterState = createFeatureSelector<
+  fromRouter.RouterReducerState<RouterStateUrl>
+>('routerReducer');
 
-export const getUserState = createSelector(
-  getRegistrationState,
-  (state: RegistrationState) => state.user
-);
+export class CustomSerializer
+  implements fromRouter.RouterStateSerializer<RouterStateUrl> {
+  serialize(routerState: RouterStateSnapshot): RouterStateUrl {
+    const { url } = routerState;
+    const { queryParams } = routerState.root;
 
-export const getUser = createSelector(getUserState, fromUser.getUser);
-export const getUserLoaded = createSelector(
-  getUserState,
-  fromUser.getUserLoaded
-);
-export const getUserLoading = createSelector(
-  getUserState,
-  fromUser.getUserLoading
-);
+    let state: ActivatedRouteSnapshot = routerState.root;
+    while (state.firstChild) {
+      state = state.firstChild;
+    }
+    const { params } = state;
+
+    return { url, queryParams, params };
+  }
+}
