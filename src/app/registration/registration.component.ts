@@ -12,7 +12,7 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new fromStore.LoadUser());
-    this.store.dispatch(new fromStore.LoadRegisration());
+    this.store.dispatch(new fromStore.LoadRegistrationInfo());
 
     this.store.select(fromStore.getInstitutes).subscribe(console.log);
   }

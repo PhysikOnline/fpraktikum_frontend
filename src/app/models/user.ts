@@ -32,7 +32,7 @@ export class User extends Record {
       ? User.fromApiType(record.registrant)
       : null;
 
-    let graduation = record.graduation ? record.graduation : '';
+    let graduation = record.graduation ? record.graduation : null;
     if (!graduation && institutes) {
       graduation = institutes.length > 0 ? institutes[0].graduation : '';
     }

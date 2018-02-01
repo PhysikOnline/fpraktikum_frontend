@@ -15,16 +15,16 @@ export const initialState: RegistrationInfoState = {
 
 export function reducer(
   state = initialState,
-  action: fromRegistration.RegistrationAction
+  action: fromRegistration.RegistrationInfoAction
 ): RegistrationInfoState {
   switch (action.type) {
-    case fromRegistration.LOAD_REGISTRATION: {
+    case fromRegistration.LOAD_REGISTRATION_INFO: {
       return {
         ...state,
         loading: true,
       };
     }
-    case fromRegistration.LOAD_REGISTRATION_SUCCESS: {
+    case fromRegistration.LOAD_REGISTRATION_INFO_SUCCESS: {
       return {
         ...state,
         data: action.payload,
@@ -32,7 +32,7 @@ export function reducer(
         loaded: true,
       };
     }
-    case fromRegistration.LOAD_REGISTRATION_FAIL: {
+    case fromRegistration.LOAD_REGISTRATION_INFO_FAIL: {
       return {
         ...state,
         loading: false,

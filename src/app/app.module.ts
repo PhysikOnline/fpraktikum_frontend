@@ -21,7 +21,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { reducers, CustomSerializer } from './store';
+import { reducers, effects, CustomSerializer } from './store';
 
 if (environment.production) {
   Raven.config(
@@ -53,7 +53,7 @@ export const ROUTES: Routes = [
     StarRatingModule.forRoot(),
     RouterModule.forRoot(ROUTES),
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot(effects),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],

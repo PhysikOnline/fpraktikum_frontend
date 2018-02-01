@@ -1,26 +1,27 @@
 import { Action } from '@ngrx/store';
 import { Registration } from '../../../models/registration';
 
-export const LOAD_REGISTRATION = '[Registration] Load Registration';
-export const LOAD_REGISTRATION_SUCCESS =
+export const LOAD_REGISTRATION_INFO = '[Registration] Load Registration';
+export const LOAD_REGISTRATION_INFO_SUCCESS =
   '[Registration] Load Registration Success';
-export const LOAD_REGISTRATION_FAIL = '[Registration] Load Registration Fail';
+export const LOAD_REGISTRATION_INFO_FAIL =
+  '[Registration] Load Registration Fail';
 
-export class LoadRegisration implements Action {
-  readonly type = LOAD_REGISTRATION;
+export class LoadRegistrationInfo implements Action {
+  readonly type = LOAD_REGISTRATION_INFO;
 }
 
-export class LoadRegisrationSuccess implements Action {
-  readonly type = LOAD_REGISTRATION_SUCCESS;
+export class LoadRegistrationInfoSuccess implements Action {
+  readonly type = LOAD_REGISTRATION_INFO_SUCCESS;
   constructor(public payload: Registration) {}
 }
 
-export class LoadRegisrationFail implements Action {
-  readonly type = LOAD_REGISTRATION_FAIL;
+export class LoadRegisrationInfoFail implements Action {
+  readonly type = LOAD_REGISTRATION_INFO_FAIL;
   constructor(public payload: any) {}
 }
 
-export type RegistrationAction =
-  | LoadRegisration
-  | LoadRegisrationSuccess
-  | LoadRegisrationFail;
+export type RegistrationInfoAction =
+  | LoadRegistrationInfo
+  | LoadRegistrationInfoSuccess
+  | LoadRegisrationInfoFail;

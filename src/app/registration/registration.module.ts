@@ -18,18 +18,13 @@ import { RouterModule } from '@angular/router';
 import { reducer, effects } from './store/index';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-
-export const ROUTES: Routes = [
-  {
-    path: '',
-    component: RegistrationComponent,
-  },
-];
+import { RegistrationInfoComponent } from './registration-info/registration-info.component';
+import { routes } from './registration.routing';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(ROUTES),
+    RouterModule.forChild(routes),
     ThemeModule,
     DialogsModule,
     MaterialModule,
@@ -47,6 +42,7 @@ export const ROUTES: Routes = [
     ChosenPartnerInfoComponent,
     WaitlistInfoComponent,
     RegistrationComponent,
+    RegistrationInfoComponent,
   ],
   exports: [RegistrationComponent],
 })
