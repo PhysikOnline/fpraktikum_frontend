@@ -1,3 +1,37 @@
+<h1>Anmeldung zum Fortgeschrittenen Praktikum</h1>
 <p>
-  registration-info works!
+  Hi {{ user$.pluck('firstName') | async }}, hier kannst du dich zum Fortgeschrittenen
+  Praktikum im {{ registration$.pluck('semester')| async }} anmelden.
 </p>
+
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Informationen über die Anmeldung
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Verfügbare Institute
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <pre>{{ (registration$.pluck('institutes') | async) | json }}</pre>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Falls du noch Fragen hast
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    Schreibe uns:
+    <a href="mailto:team@elearning.physik.uni-frankfurt.de">team@elearning.physik.uni-frankfurt.de</a>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<button id="go-btn" mat-raised-button color="primary" [disabled]="!(startBtn$.pluck('active') | async)">
+  {{ startBtn$.pluck('text') | async }}
+</button>

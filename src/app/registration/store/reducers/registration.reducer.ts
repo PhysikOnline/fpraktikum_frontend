@@ -10,7 +10,7 @@ export interface RegistrationInfoState {
 export const initialState: RegistrationInfoState = {
   loaded: false,
   loading: false,
-  data: null,
+  data: new Registration('', null, null, []),
 };
 
 export function reducer(
