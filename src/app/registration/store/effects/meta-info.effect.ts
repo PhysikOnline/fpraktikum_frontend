@@ -13,6 +13,7 @@ import { ApiService } from '../../../services/api.service';
 import { Observable } from 'rxjs/Observable';
 import { MetaInfoState } from '../reducers/meta-info.reducer';
 import { USER_TYPE } from '../../../models/user-type';
+import { REGISTRATION_STEP } from '../../../models/registration-step';
 
 @Injectable()
 export class MetaInfoEffects {
@@ -22,9 +23,10 @@ export class MetaInfoEffects {
   showInfoPage$ = this.actions$.ofType(metaInfoActions.UPDATE_META_INFO).pipe(
     map((action: metaInfoActions.UpdateMetaInfo) => {
       const userType = metaInfoReducer.getUserState(action.payload);
+      const regStep = metaInfoReducer.getRegistrationStep(action.payload);
       switch (userType) {
         case USER_TYPE.NOT_REGISTERED: {
-          return new fromRoot.Go({ path: ['registration', 'info'] });
+          return this.getRouterActionOnStep(regStep);
         }
         case USER_TYPE.REGISTRANT: {
           return new fromRoot.Go({ path: ['registration', 'info-registrant'] });
@@ -40,4 +42,21 @@ export class MetaInfoEffects {
       }
     })
   );
+
+  private getRouterActionOnStep(step: REGISTRATION_STEP) {
+    switch (step) {
+      case REGISTRATION_STEP.PREFLIGHT: {
+        return new fromRoot.Go({ path: ['registration', 'preflight'] });
+      }
+      case REGISTRATION_STEP.MAIN: {
+        return new fromRoot.Go({ path: ['registration', 'main'] });
+      }
+      case REGISTRATION_STEP.END: {
+        return new fromRoot.Go({ path: ['registration', 'end'] });
+      }
+      default: {
+        return new fromRoot.Go({ path: ['registration', 'info'] });
+      }
+    }
+  }
 }
