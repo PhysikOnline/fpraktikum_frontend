@@ -7,6 +7,12 @@ import { UserState } from '../store/reducers/user.reducer';
 
 import * as fromStore from '../store';
 import { Registration } from '../../models/registration';
+import { MetaInfoState } from '../store/reducers/meta-info.reducer';
+import {
+  MetaInfoAction,
+  UpdateRegistrationStep,
+} from '../store/actions/meta-info.action';
+import { REGISTRATION_STEP } from '../../models/registration-step';
 
 @Component({
   selector: 'app-registration-info',
@@ -40,9 +46,16 @@ export class RegistrationInfoComponent implements OnInit {
     };
   });
 
+  startRegistration() {
+    this.metaInfoStore.dispatch(
+      new fromStore.UpdateRegistrationStep(REGISTRATION_STEP.PREFLIGHT)
+    );
+  }
+
   constructor(
     private regInfoStore: Store<RegistrationInfoState>,
-    private userStore: Store<UserState>
+    private userStore: Store<UserState>,
+    private metaInfoStore: Store<MetaInfoState>
   ) {}
 
   ngOnInit() {}

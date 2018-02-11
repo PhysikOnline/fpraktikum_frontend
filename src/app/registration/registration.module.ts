@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { RegistrationCompleteComponent } from './registration-complete/registration-complete.component';
 import { RegisteredInfoComponent } from './registered-info/registered-info.component';
 import { UserInfoListComponent } from './user-info-list/user-info-list.component';
@@ -18,8 +17,9 @@ import { RouterModule } from '@angular/router';
 import { reducer, effects } from './store/index';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { RegistrationInfoComponent } from './registration-info/registration-info.component';
 import { routes } from './registration.routing';
+import { RegistrationFormPreflightComponent } from './registration-form-preflight/registration-form-preflight.component';
+import { RegistrationInfoComponent } from './registration-info/registration-info.component';
 
 @NgModule({
   imports: [
@@ -34,7 +34,6 @@ import { routes } from './registration.routing';
     EffectsModule.forFeature(effects),
   ],
   declarations: [
-    RegistrationFormComponent,
     RegistrationCompleteComponent,
     RegisteredInfoComponent,
     UserInfoListComponent,
@@ -43,6 +42,7 @@ import { routes } from './registration.routing';
     WaitlistInfoComponent,
     RegistrationComponent,
     RegistrationInfoComponent,
+    RegistrationFormPreflightComponent,
   ],
   exports: [RegistrationComponent],
 })

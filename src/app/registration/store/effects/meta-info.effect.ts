@@ -14,13 +14,16 @@ import { Observable } from 'rxjs/Observable';
 import { MetaInfoState } from '../reducers/meta-info.reducer';
 import { USER_TYPE } from '../../../models/user-type';
 import { REGISTRATION_STEP } from '../../../models/registration-step';
+import { UpdateRegistrationStep } from '../actions/meta-info.action';
 
 @Injectable()
 export class MetaInfoEffects {
   constructor(private actions$: Actions) {}
 
   @Effect()
-  showInfoPage$ = this.actions$.ofType(metaInfoActions.UPDATE_META_INFO).pipe(
+  showInfoPage$ = Observable.merge(
+    this.actions$.ofType(metaInfoActions.UPDATE_META_INFO)
+  ).pipe(
     map((action: metaInfoActions.UpdateMetaInfo) => {
       const userType = metaInfoReducer.getUserState(action.payload);
       const regStep = metaInfoReducer.getRegistrationStep(action.payload);
@@ -40,6 +43,13 @@ export class MetaInfoEffects {
           return new fromRoot.Go({ path: ['registration', 'info-partner'] });
         }
       }
+    })
+  );
+
+  @Effect()
+  onRegStepChange$ = this.actions$.ofType(metaInfoActions.UPDATE_REG_STEP).pipe(
+    map((action: UpdateRegistrationStep) => {
+      return this.getRouterActionOnStep(action.payload);
     })
   );
 
