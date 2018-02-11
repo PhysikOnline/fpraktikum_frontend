@@ -25,16 +25,34 @@ export function reducer(
   action: fromMetaInfo.MetaInfoAction
 ): MetaInfoState {
   switch (action.type) {
-    case fromMetaInfo.UPDATE_META_INFO: {
+    case fromMetaInfo.UPDATE_GRADUATION: {
       return {
         ...state,
-        ...action.payload,
+        graduation: action.payload,
       };
     }
     case fromMetaInfo.UPDATE_REG_STEP: {
       return {
         ...state,
         registrationStep: action.payload,
+      };
+    }
+    case fromMetaInfo.UPDATE_MASTER_IT: {
+      return {
+        ...state,
+        isMasterIT: action.payload,
+      };
+    }
+    case fromMetaInfo.UPDATE_BIO_MODULE: {
+      return {
+        ...state,
+        hasCompletedBioModule: action.payload,
+      };
+    }
+    case fromMetaInfo.UPDATE_USER_TYPE: {
+      return {
+        ...state,
+        userType: action.payload,
       };
     }
   }
@@ -45,6 +63,6 @@ export const getGraduation = (state: MetaInfoState) => state.graduation;
 export const getHasCompletedBioModule = (state: MetaInfoState) =>
   state.hasCompletedBioModule;
 export const getIsMasterIt = (state: MetaInfoState) => state.isMasterIT;
-export const getUserState = (state: MetaInfoState) => state.userType;
+export const getUserType = (state: MetaInfoState) => state.userType;
 export const getRegistrationStep = (state: MetaInfoState) =>
   state.registrationStep;

@@ -11,7 +11,7 @@ import { ThemeModule } from '../theme/theme.module';
 import { DialogsModule } from '../dialogs/dialogs.module';
 import { MaterialModule } from '../material/material.module';
 import { PipesModule } from '../pipes/pipes.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes } from '@angular/router/src/config';
 import { RouterModule } from '@angular/router';
 import { reducer, effects } from './store/index';
@@ -30,6 +30,7 @@ import { RegistrationInfoComponent } from './registration-info/registration-info
     MaterialModule,
     PipesModule,
     FormsModule,
+    ReactiveFormsModule,
     StoreModule.forFeature('registration', reducer),
     EffectsModule.forFeature(effects),
   ],

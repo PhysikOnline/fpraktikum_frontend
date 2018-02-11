@@ -22,14 +22,13 @@ export class MetaInfoEffects {
 
   @Effect()
   showInfoPage$ = Observable.merge(
-    this.actions$.ofType(metaInfoActions.UPDATE_META_INFO)
+    this.actions$.ofType(metaInfoActions.UPDATE_USER_TYPE)
   ).pipe(
-    map((action: metaInfoActions.UpdateMetaInfo) => {
-      const userType = metaInfoReducer.getUserState(action.payload);
-      const regStep = metaInfoReducer.getRegistrationStep(action.payload);
+    map((action: metaInfoActions.UpdateUserType) => {
+      const userType = action.payload;
       switch (userType) {
         case USER_TYPE.NOT_REGISTERED: {
-          return this.getRouterActionOnStep(regStep);
+          return new fromRoot.Go({ path: ['registration', 'info'] });
         }
         case USER_TYPE.REGISTRANT: {
           return new fromRoot.Go({ path: ['registration', 'info-registrant'] });

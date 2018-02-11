@@ -38,26 +38,6 @@ export class RegistrationInfoEffects {
       })
     );
 
-  @Effect()
-  showInfoPage$ = Observable.combineLatest(
-    this.actions$.ofType(registrationActions.LOAD_REGISTRATION_INFO_SUCCESS),
-    this.actions$.ofType(userActions.LOAD_USER_SUCCESS)
-  ).pipe(
-    map(([regAction, userAction]) => {
-      const user: User = (<userActions.LoadUserSuccess>userAction).payload;
-      const graduation = user.graduation;
-      switch (user.status) {
-        case null: {
-          return new metaInfoActions.UpdateMetaInfo({
-            graduation,
-            userType: USER_TYPE.NOT_REGISTERED,
-            registrationStep: REGISTRATION_STEP.INFO,
-          });
-        }
-      }
-    })
-  );
-
   @Effect({ dispatch: false })
   showError$ = Observable.merge(
     this.actions$.ofType(registrationActions.LOAD_REGISTRATION_INFO_FAIL),
