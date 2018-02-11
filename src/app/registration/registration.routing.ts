@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { RegistrationComponent } from './registration.component';
 import { RegistrationFormPreflightComponent } from './registration-form-preflight/registration-form-preflight.component';
 import { RegistrationInfoComponent } from './registration-info/registration-info.component';
+import { RegistrationFormMainComponent } from './registration-form-main/registration-form-main.component';
 
 export const routes: Route[] = [
   {
@@ -12,6 +13,10 @@ export const routes: Route[] = [
       {
         path: 'preflight',
         component: RegistrationFormPreflightComponent,
+      },
+      {
+        path: 'main',
+        component: RegistrationFormMainComponent,
       },
     ],
   },

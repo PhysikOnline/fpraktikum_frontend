@@ -20,6 +20,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { routes } from './registration.routing';
 import { RegistrationFormPreflightComponent } from './registration-form-preflight/registration-form-preflight.component';
 import { RegistrationInfoComponent } from './registration-info/registration-info.component';
+import { RegistrationFormMainComponent } from './registration-form-main/registration-form-main.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { RegistrationInfoComponent } from './registration-info/registration-info
     RegistrationComponent,
     RegistrationInfoComponent,
     RegistrationFormPreflightComponent,
+    RegistrationFormMainComponent,
   ],
   exports: [RegistrationComponent],
 })
