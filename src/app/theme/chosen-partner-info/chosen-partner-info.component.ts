@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChosenPartner } from '../../models/chosen-partner';
 import { RegistrationService } from '../../services/registration.service';
+import { Partner } from '../../models/partner';
 
 @Component({
   selector: 'app-chosen-partner-info',
@@ -10,7 +11,10 @@ import { RegistrationService } from '../../services/registration.service';
 export class ChosenPartnerInfoComponent implements OnInit {
   chosenPartnerEnum = ChosenPartner;
 
-  constructor(public registrationService: RegistrationService) {}
+  @Input() partner: Partner;
+  @Input() partnerStatus: ChosenPartner;
+
+  constructor() {}
 
   ngOnInit() {}
 }

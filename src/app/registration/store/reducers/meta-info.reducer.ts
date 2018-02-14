@@ -3,6 +3,7 @@ import * as fromMetaInfo from '../actions/meta-info.action';
 import { USER_TYPE } from '../../../models/user-type';
 import { REGISTRATION_STEP } from '../../../models/registration-step';
 import { UPDATE_REG_STEP } from '../actions/meta-info.action';
+import { Institute } from '../../../models/institute';
 
 export interface MetaInfoState {
   graduation?: string;
@@ -10,6 +11,7 @@ export interface MetaInfoState {
   isMasterIT?: boolean;
   userType: USER_TYPE;
   registrationStep: REGISTRATION_STEP;
+  avInstitutes: Institute[];
 }
 
 export const initialState: MetaInfoState = {
@@ -18,6 +20,7 @@ export const initialState: MetaInfoState = {
   isMasterIT: null,
   userType: null,
   registrationStep: REGISTRATION_STEP.INFO,
+  avInstitutes: [],
 };
 
 export function reducer(
@@ -55,6 +58,12 @@ export function reducer(
         userType: action.payload,
       };
     }
+    case fromMetaInfo.UPDATE_AVAILABLE_INSTITUTE: {
+      return {
+        ...state,
+        avInstitutes: action.payload,
+      };
+    }
   }
   return state;
 }
@@ -66,3 +75,5 @@ export const getIsMasterIt = (state: MetaInfoState) => state.isMasterIT;
 export const getUserType = (state: MetaInfoState) => state.userType;
 export const getRegistrationStep = (state: MetaInfoState) =>
   state.registrationStep;
+export const getAvailableInstitutes = (state: MetaInfoState) =>
+  state.avInstitutes;

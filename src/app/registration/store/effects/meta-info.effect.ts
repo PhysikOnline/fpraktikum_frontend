@@ -3,9 +3,11 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
+import { merge } from 'rxjs/observable/merge';
 
 import * as fromRoot from '../../../store';
 import * as registrationActions from '../actions/registration.action';
+import * as registrationSelectors from '../selectors/registration.selectors';
 import * as metaInfoActions from '../actions/meta-info.action';
 import * as metaInfoReducer from '../reducers/meta-info.reducer';
 import * as userActions from '../actions/user.action';
@@ -15,10 +17,16 @@ import { MetaInfoState } from '../reducers/meta-info.reducer';
 import { USER_TYPE } from '../../../models/user-type';
 import { REGISTRATION_STEP } from '../../../models/registration-step';
 import { UpdateRegistrationStep } from '../actions/meta-info.action';
+import { Store } from '@ngrx/store';
+import { RegistrationInfoState } from '../reducers/registration.reducer';
 
 @Injectable()
 export class MetaInfoEffects {
-  constructor(private actions$: Actions) {}
+  constructor(
+    private actions$: Actions,
+    private metaInfoStore: Store<MetaInfoState>,
+    private regStore: Store<RegistrationInfoState>
+  ) {}
 
   @Effect()
   showInfoPage$ = Observable.merge(
@@ -51,6 +59,14 @@ export class MetaInfoEffects {
       return this.getRouterActionOnStep(action.payload);
     })
   );
+
+  @Effect({ dispatch: false })
+  avInstitutes$ = Observable.combineLatest(
+    this.actions$.ofType(metaInfoActions.UPDATE_BIO_MODULE),
+    this.actions$.ofType(metaInfoActions.UPDATE_GRADUATION),
+    this.actions$.ofType(metaInfoActions.UPDATE_MASTER_IT),
+    this.regStore.map(registrationSelectors.getInstitutes)
+  ).pipe(map(console.log));
 
   private getRouterActionOnStep(step: REGISTRATION_STEP) {
     switch (step) {

@@ -10,9 +10,16 @@ import { MaterialModule } from '../material/material.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { StarRatingModule } from 'angular-star-rating';
 import { FormsModule } from '@angular/forms';
+import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner-info.component';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, PipesModule, StarRatingModule, FormsModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    PipesModule,
+    StarRatingModule,
+    FormsModule,
+  ],
   declarations: [
     StepComponent,
     TemplateErrorComponent,
@@ -20,6 +27,7 @@ import { FormsModule } from '@angular/forms';
     LanguageSwitcherComponent,
     RatingComponent,
     NotIntimeComponent,
+    ChosenPartnerInfoComponent,
   ],
   exports: [
     StepComponent,
@@ -28,6 +36,7 @@ import { FormsModule } from '@angular/forms';
     LanguageSwitcherComponent,
     RatingComponent,
     NotIntimeComponent,
+    ChosenPartnerInfoComponent,
   ],
 })
 export class ThemeModule {}

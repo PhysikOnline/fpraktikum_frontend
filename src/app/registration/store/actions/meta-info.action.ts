@@ -4,12 +4,15 @@ import { MetaInfoState } from '../reducers/meta-info.reducer';
 import { REGISTRATION_STEP } from '../../../models/registration-step';
 import { GRADUATION } from '../../../../config';
 import { USER_TYPE } from '../../../models/user-type';
+import { Institute } from '../../../models/institute';
 
 export const UPDATE_REG_STEP = '[Registration] Update Registration Step';
 export const UPDATE_GRADUATION = '[Registration] Update Gradution';
 export const UPDATE_MASTER_IT = '[Registration] Update Master IT';
 export const UPDATE_BIO_MODULE = '[Registration] Update Bio Module';
 export const UPDATE_USER_TYPE = '[Registration] Update User Type';
+export const UPDATE_AVAILABLE_INSTITUTE =
+  '[Registration] Update Available Institutes';
 
 export class UpdateRegistrationStep implements Action {
   readonly type = UPDATE_REG_STEP;
@@ -36,9 +39,15 @@ export class UpdateUserType implements Action {
   constructor(public payload: USER_TYPE) {}
 }
 
+export class UpdateAvailableInstitutes implements Action {
+  readonly type = UPDATE_AVAILABLE_INSTITUTE;
+  constructor(public payload: Institute[]) {}
+}
+
 export type MetaInfoAction =
   | UpdateRegistrationStep
   | UpdateIsMasterIT
   | UpdateGraduation
   | UpdateHasCompletedBioModule
-  | UpdateUserType;
+  | UpdateUserType
+  | UpdateAvailableInstitutes;

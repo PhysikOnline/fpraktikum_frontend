@@ -39,6 +39,22 @@ export function reducer(
         loaded: false,
       };
     }
+    case fromUser.UPDATE_INSTITUTES: {
+      const user = state.data;
+      user.institutes = action.payload;
+      return {
+        ...state,
+        data: user,
+      };
+    }
+    case fromUser.UPDATE_NOTES: {
+      const user = state.data;
+      user.notes = action.payload;
+      return {
+        ...state,
+        data: user,
+      };
+    }
   }
   return state;
 }

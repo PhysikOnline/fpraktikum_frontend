@@ -4,7 +4,6 @@ import { RegistrationCompleteComponent } from './registration-complete/registrat
 import { RegisteredInfoComponent } from './registered-info/registered-info.component';
 import { UserInfoListComponent } from './user-info-list/user-info-list.component';
 import { PartnerInfoComponent } from './partner-info/partner-info.component';
-import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner-info.component';
 import { WaitlistInfoComponent } from './waitlist-info/waitlist-info.component';
 import { RegistrationComponent } from './registration.component';
 import { ThemeModule } from '../theme/theme.module';
@@ -40,7 +39,6 @@ import { RegistrationFormMainComponent } from './registration-form-main/registra
     RegisteredInfoComponent,
     UserInfoListComponent,
     PartnerInfoComponent,
-    ChosenPartnerInfoComponent,
     WaitlistInfoComponent,
     RegistrationComponent,
     RegistrationInfoComponent,

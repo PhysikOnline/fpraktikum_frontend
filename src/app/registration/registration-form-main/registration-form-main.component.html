@@ -1,3 +1,67 @@
-<p>
-  registration-form-main works!
-</p>
+<mat-horizontal-stepper [linear]="true">
+  <mat-step [stepControl]="partnerForm">
+    <form [formGroup]="partnerForm">
+      <ng-template matStepLabel>Partnerwahl</ng-template>
+      <div class="step-body">
+        <p>
+          Falls du bereits eine Partnerin oder einen Partner für das Praktikum hast, kannst
+          sie oder ihn hier auswählen. Dies kann aber auch noch am Tag der Einführungsveranstaltung
+          nachgeholt werden.
+        </p>
+        <p>
+          Falls du die s-Nummer also nicht weißt, überspringe diesen Schritt einfach.
+        </p>
+        <mat-form-field>
+          <input matInput placeholder="s000000" formControlName="partnerNumber" [value]="(partner | async)?.login || ''"
+            (keyup)="partnerInput.next()">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Nachname" formControlName="partnerName" [value]="(partner | async)?.lastName || ''"
+            (keyup)="partnerInput.next()">
+          <mat-hint>Der Nachname muss mit dem im Profil übereinstimmen!</mat-hint>
+        </mat-form-field>
+        <app-chosen-partner-info style="margin-top: 30px"></app-chosen-partner-info>
+        <div class="mt-1">
+          <mat-checkbox (change)="noPartner.next($event.checked)">
+            Ich möchte keine Partnerin/keinen Partner angeben.
+          </mat-checkbox>
+        </div>
+        <div class="step-btns">
+          <button mat-raised-button color="primary" matStepperNext [disabled]="partnerForm.invalid">Weiter</button>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="institutesForm">
+    <form [formGroup]="institutesForm">
+      <ng-template matStepLabel>Institute</ng-template>
+      <div class="step-body">
+        <p>
+
+        </p>
+
+        <div class="step-btns">
+          <button mat-raised-button matStepperPrevious>Zurück</button>
+          <button mat-raised-button color="primary" matStepperNext>Weiter</button>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="notesForm">
+    <form [formGroup]="notesForm">
+      <ng-template matStepLabel>Bemerkungen</ng-template>
+      <div class="step-body">
+        <p>
+          Hier kannst du Bemerkungen eintragen.
+        </p>
+        <mat-form-field>
+          <textarea matInput formControlName="notes" placeholder="Bemerkungen..." (keyup)="notesInput.next()"></textarea>
+        </mat-form-field>
+        <div class="step-btns">
+          <button mat-raised-button matStepperPrevious>Zurück</button>
+          <button mat-raised-button color="primary" matStepperNext (click)="startNextStep()">Weiter</button>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>

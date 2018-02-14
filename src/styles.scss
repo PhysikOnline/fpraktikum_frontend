@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 //@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '~angular-star-rating/assets/scss/star-rating';
+@import 'app/theme/scss/step.scss';
 
 @import 'theme';
 
@@ -102,4 +103,12 @@ md-dialog-container {
 }
 .material-icons.md-light.md-inactive {
   color: rgba(255, 255, 255, 0.3);
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
+
+.mt-2 {
+  margin-top: 2rem;
 }

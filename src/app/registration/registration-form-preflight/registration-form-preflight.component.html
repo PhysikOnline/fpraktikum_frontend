@@ -9,7 +9,7 @@
           <mat-radio-button [value]="graduation.LA">Lehramt</mat-radio-button>
         </mat-radio-group>
         <div class="step-btns">
-          <button mat-raised-button color="primary" matStepperNext>Next</button>
+          <button mat-raised-button color="primary" matStepperNext>Weiter</button>
         </div>
       </div>
     </form>
@@ -29,8 +29,8 @@
           <mat-radio-button [value]="false">Nein</mat-radio-button>
         </mat-radio-group>
         <div class="step-btns">
-          <button mat-raised-button matStepperPrevious>Back</button>
-          <button mat-raised-button color="primary" matStepperNext>Next</button>
+          <button mat-raised-button matStepperPrevious>Zurück</button>
+          <button mat-raised-button color="primary" matStepperNext>Weiter</button>
         </div>
       </div>
     </form>
@@ -40,16 +40,17 @@
       <ng-template matStepLabel>Biologie Vorlesung</ng-template>
       <div class="step-body">
         <p>
-          Bitte wähle aus, ob du bereits das Modul ???? in den Biowissenschaften erfolgreich
-          abgeschlossen hast. Es ist Voraussetzung für das Institut der Biophysik.
+          Bitte wähle aus, ob du bereits das Modul "Einführung in die Biophysik" in den Biowissenschaften
+          erfolgreich abgeschlossen hast. Es ist Voraussetzung für das Institut der
+          Biophysik.
         </p>
         <mat-radio-group formControlName="biology" (change)="biologySelected.next($event.value)">
           <mat-radio-button [value]="true">Ja</mat-radio-button>
           <mat-radio-button [value]="false">Nein</mat-radio-button>
         </mat-radio-group>
         <div class="step-btns">
-          <button mat-raised-button matStepperPrevious>Back</button>
-          <button mat-raised-button color="primary" matStepperNext (click)="startNextStep()">Next</button>
+          <button mat-raised-button matStepperPrevious>Zurück</button>
+          <button mat-raised-button color="primary" matStepperNext (click)="startNextStep()">Weiter</button>
         </div>
       </div>
     </form>
