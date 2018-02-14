@@ -104,6 +104,9 @@ export class MetaInfoEffects {
         if (graduation === GRADUATION.MA && !masterIT && i.name === 'ITP') {
           return false;
         }
+        if (i.places < 1) {
+          return false;
+        }
         return true;
       });
       return new metaInfoActions.UpdateAvailableInstitutes(avInstitutes);
