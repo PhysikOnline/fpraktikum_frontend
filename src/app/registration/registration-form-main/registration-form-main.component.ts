@@ -18,6 +18,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CheckPartner } from '../store/index';
 import { RemovePartner } from '../store/actions/partner.action';
 import { UpdateNotes } from '../store/actions/user.action';
+import { ChosenPartner } from '../../models/chosen-partner';
 
 @Component({
   selector: 'app-registration-form-main',
@@ -30,9 +31,19 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     this.sub.add(sub);
   }
 
-  readonly graduation = GRADUATION;
+  readonly userGraduation = this.metaStore.map(selectors.getGraduation);
   readonly partner = this.partnerStore.map(selectors.getPartner);
   readonly partnerType = this.partnerStore.map(selectors.getPartnerType);
+  readonly partnerAcceptable = this.partnerType.map(
+    type => type === ChosenPartner.notRegistered
+  );
+  readonly chooseOnlyOneInstitute = this.userGraduation.map(
+    g => g === GRADUATION.LA
+  );
+
+  readonly availableInstitutes = this.metaStore.map(
+    selectors.getAvailableInstitutes
+  );
 
   readonly partnerForm: FormGroup;
   readonly institutesForm: FormGroup;
@@ -69,6 +80,7 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     this.sink = this.noPartner.subscribe(res => {
       if (res) {
         this.partnerStore.dispatch(new RemovePartner());
+        this.partnerForm.reset();
         this.partnerForm.disable();
       } else {
         this.partnerForm.enable();
@@ -94,6 +106,8 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     }
     this.metaStore.dispatch(new UpdateRegistrationStep(REGISTRATION_STEP.END));
   }
+
+  shouldOptionBeDisabled(instituteName, semesterHalf) {}
 
   ngOnInit() {}
   ngOnDestroy() {
