@@ -34,20 +34,20 @@
       <ng-template matStepLabel>Institute</ng-template>
       <div class="step-body">
         <p>
-          Wähle bitte {{ (needsOnlyOneInstitute | async) ? 'ein' : 'zwei' }} Institut(e) aus.
+          Wähle bitte {{ (needsOnlyOneInstitute | async) ? 'ein Institut' : 'zwei Institute' }} aus.
         </p>
         <div class="institute-form" *ngIf="!(needsOnlyOneInstitute | async)">
           <p>1. {{ 'SEMESTER_HALF' | translate }}</p>
-          <mat-radio-group (change)="instituteChange($event)">
-            <mat-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 1)" *ngFor="let institute of availableInstitutes | async | instituteFilter:1"
+          <mat-radio-group (change)="institutesSelected.next($event.value)" formControlName="institutes1">
+            <mat-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 1) | async" *ngFor="let institute of availableInstitutes | async | instituteFilter:1"
               [value]="institute">
               {{ institute.name }}
               <span class="institute-notes">{{ institute.notes }}</span>
             </mat-radio-button>
           </mat-radio-group>
           <p>2. {{ 'SEMESTER_HALF' | translate }}</p>
-          <mat-radio-group (change)="instituteChange($event)">
-            <mat-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 2)" *ngFor="let institute of availableInstitutes | async | instituteFilter:2"
+          <mat-radio-group (change)="institutesSelected.next($event.value)" formControlName="institutes2">
+            <mat-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 2) | async" *ngFor="let institute of availableInstitutes | async | instituteFilter:2"
               [value]="institute">
               {{ institute.name }}
               <span class="institute-notes">{{ institute.notes }}</span>
@@ -56,7 +56,7 @@
         </div>
 
         <div class="institute-form" *ngIf="needsOnlyOneInstitute | async">
-          <mat-radio-group>
+          <mat-radio-group (change)="institutesSelected.next($event.value)" formControlName="institutes">
             <mat-radio-button class="radio-button-vertical" *ngFor="let institute of availableInstitutes | async" [value]="institute">
               {{ institute.name }}
               <span class="institute-notes">{{ institute.notes }}</span>
@@ -66,6 +66,7 @@
 
         <div class="step-btns">
           <button mat-raised-button matStepperPrevious>Zurück</button>
+          <button mat-raised-button>Zurücksetzen</button>
           <button mat-raised-button color="primary" matStepperNext>Weiter</button>
         </div>
       </div>
