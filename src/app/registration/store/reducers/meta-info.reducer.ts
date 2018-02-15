@@ -12,6 +12,7 @@ export interface MetaInfoState {
   userType: USER_TYPE;
   registrationStep: REGISTRATION_STEP;
   avInstitutes: Institute[];
+  selectedInstitutes: Institute[];
 }
 
 export const initialState: MetaInfoState = {
@@ -21,6 +22,7 @@ export const initialState: MetaInfoState = {
   userType: null,
   registrationStep: REGISTRATION_STEP.INFO,
   avInstitutes: [],
+  selectedInstitutes: [],
 };
 
 export function reducer(
@@ -29,40 +31,25 @@ export function reducer(
 ): MetaInfoState {
   switch (action.type) {
     case fromMetaInfo.UPDATE_GRADUATION: {
-      return {
-        ...state,
-        graduation: action.payload,
-      };
+      return { ...state, graduation: action.payload };
     }
     case fromMetaInfo.UPDATE_REG_STEP: {
-      return {
-        ...state,
-        registrationStep: action.payload,
-      };
+      return { ...state, registrationStep: action.payload };
     }
     case fromMetaInfo.UPDATE_MASTER_IT: {
-      return {
-        ...state,
-        isMasterIT: action.payload,
-      };
+      return { ...state, isMasterIT: action.payload };
     }
     case fromMetaInfo.UPDATE_BIO_MODULE: {
-      return {
-        ...state,
-        hasCompletedBioModule: action.payload,
-      };
+      return { ...state, hasCompletedBioModule: action.payload };
     }
     case fromMetaInfo.UPDATE_USER_TYPE: {
-      return {
-        ...state,
-        userType: action.payload,
-      };
+      return { ...state, userType: action.payload };
     }
     case fromMetaInfo.UPDATE_AVAILABLE_INSTITUTE: {
-      return {
-        ...state,
-        avInstitutes: action.payload,
-      };
+      return { ...state, avInstitutes: action.payload };
+    }
+    case fromMetaInfo.UPDATE_SELECTED_INSTITUTE: {
+      return { ...state, selectedInstitutes: action.payload };
     }
   }
   return state;
@@ -77,3 +64,5 @@ export const getRegistrationStep = (state: MetaInfoState) =>
   state.registrationStep;
 export const getAvailableInstitutes = (state: MetaInfoState) =>
   state.avInstitutes;
+export const getSelectedInstitutes = (state: MetaInfoState) =>
+  state.selectedInstitutes;

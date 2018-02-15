@@ -39,3 +39,8 @@ export const getAvailableInstitutes = createSelector(
   getMetaInfoState,
   fromMetaInfo.getAvailableInstitutes
 );
+
+export const getSelectedInstitutes = createSelector(
+  getMetaInfoState,
+  fromMetaInfo.getSelectedInstitutes
+);
