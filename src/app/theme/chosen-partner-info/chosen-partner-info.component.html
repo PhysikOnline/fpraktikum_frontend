@@ -11,14 +11,13 @@
   <mat-card-content>{{ 'PARTNER_IS_NOT_REGISTERED_CONTENT' | translate }}</mat-card-content>
 </mat-card>
 <mat-card class="partner-not-registered" *ngIf="partnerStatus === chosenPartnerEnum.hasDifferentGraduation">
-  <mat-card-title>{{ 'PARTNER_IS_DIFFERENT_GRADUATION_TITLE' | translate:partner.firstName | translate
-    }}
+  <mat-card-title>{{ 'PARTNER_IS_DIFFERENT_GRADUATION_TITLE' | translate:partner.firstName | translate }}
   </mat-card-title>
   <mat-card-content>{{ 'PARTNER_IS_DIFFERENT_GRADUATION_CONTENT' | translate:partner.firstName }}
   </mat-card-content>
 </mat-card>
 <mat-card class="partner-does-not-exist" *ngIf="partnerStatus === chosenPartnerEnum.doesNotExist">
-  <mat-card-title>{{ 'PARTNER_DOES_NOT_EXIST_TITLE' | translate:partner.lastName:partner.login }}
+  <mat-card-title>{{ 'PARTNER_DOES_NOT_EXIST_TITLE' | translate }}
   </mat-card-title>
   <mat-card-content>{{ 'PARTNER_DOES_NOT_EXIST_CONTENT' | translate }}</mat-card-content>
 </mat-card>

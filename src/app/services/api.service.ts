@@ -19,6 +19,7 @@ import * as Raven from 'raven-js';
 import { RegistrationService } from './registration.service';
 import { environment } from '../../environments/environment';
 import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class ApiService {
@@ -71,7 +72,12 @@ export class ApiService {
           return null;
         }
       })
-      .catch(this.handleError);
+      .catch(error => {
+        if (error.status === 400) {
+          return of(null);
+        }
+        return this.handleError(error);
+      });
   }
 
   acceptDecline(user: User, accept: boolean): Observable<void> {

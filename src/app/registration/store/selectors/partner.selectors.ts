@@ -21,3 +21,7 @@ export const getPartnerLoading = createSelector(
   getPartnerState,
   fromPartner.getPartnerLoading
 );
+export const getPartnerType = createSelector(
+  getPartnerState,
+  fromPartner.getPartnerType
+);

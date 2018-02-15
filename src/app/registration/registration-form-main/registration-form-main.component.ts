@@ -32,6 +32,7 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
 
   readonly graduation = GRADUATION;
   readonly partner = this.partnerStore.map(selectors.getPartner);
+  readonly partnerType = this.partnerStore.map(selectors.getPartnerType);
 
   readonly partnerForm: FormGroup;
   readonly institutesForm: FormGroup;
