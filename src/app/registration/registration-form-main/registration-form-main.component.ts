@@ -32,7 +32,7 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     this.sub.add(sub);
   }
 
-  readonly userGraduation = this.metaStore.map(selectors.getGraduation);
+  readonly userGraduation = this.metaStore.select(selectors.getGraduation);
   readonly partner = this.partnerStore.map(selectors.getPartner);
   readonly partnerType = this.partnerStore.map(selectors.getPartnerType);
 
@@ -43,7 +43,7 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     g => g === GRADUATION.LA
   );
 
-  readonly availableInstitutes = this.metaStore.map(
+  readonly availableInstitutes = this.metaStore.select(
     selectors.getAvailableInstitutes
   );
 

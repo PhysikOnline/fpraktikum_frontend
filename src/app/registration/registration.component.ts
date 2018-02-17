@@ -11,8 +11,8 @@ export class RegistrationComponent implements OnInit {
   constructor(private store: Store<fromStore.RegistrationState>) {}
 
   ngOnInit() {
-    this.store.dispatch(new fromStore.LoadUser());
-    this.store.dispatch(new fromStore.LoadRegistrationInfo());
+    // this.store.dispatch(new fromStore.LoadUser());
+    // this.store.dispatch(new fromStore.LoadRegistrationInfo());
 
     this.store.select(fromStore.getInstitutes).subscribe(console.log);
   }
