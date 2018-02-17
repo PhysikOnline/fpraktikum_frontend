@@ -79,8 +79,13 @@ body {
   white-space: normal;
 }
 
-md-dialog-container {
+mat-dialog-container {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+mat-radio-button {
+  display: block !important;
+  padding-bottom: 1rem;
 }
 
 .mat-form-field {

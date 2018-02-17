@@ -13,6 +13,8 @@ export const UPDATE_BIO_MODULE = '[Registration] Update Bio Module';
 export const UPDATE_USER_TYPE = '[Registration] Update User Type';
 export const UPDATE_AVAILABLE_INSTITUTE =
   '[Registration] Update Available Institutes';
+export const UPDATE_SELECTED_INSTITUTE =
+  '[Registration] Update Selected Institutes';
 
 export class UpdateRegistrationStep implements Action {
   readonly type = UPDATE_REG_STEP;
@@ -44,10 +46,16 @@ export class UpdateAvailableInstitutes implements Action {
   constructor(public payload: Institute[]) {}
 }
 
+export class UpdateSelectedInstitutes implements Action {
+  readonly type = UPDATE_SELECTED_INSTITUTE;
+  constructor(public payload: Institute[]) {}
+}
+
 export type MetaInfoAction =
   | UpdateRegistrationStep
   | UpdateIsMasterIT
   | UpdateGraduation
   | UpdateHasCompletedBioModule
   | UpdateUserType
-  | UpdateAvailableInstitutes;
+  | UpdateAvailableInstitutes
+  | UpdateSelectedInstitutes;

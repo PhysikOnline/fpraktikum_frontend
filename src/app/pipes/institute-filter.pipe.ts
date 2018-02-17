@@ -5,11 +5,9 @@ import { Institute } from '../models/institute';
   name: 'instituteFilter',
 })
 export class InstituteFilterPipe implements PipeTransform {
-  transform(institutes: Institute[], graduation: string, semesterHalf?: number): any {
+  transform(institutes: Institute[], semesterHalf?: number): any {
     return institutes
-      .filter(
-        i => i.graduation === graduation && (!semesterHalf || i.semesterHalf === semesterHalf)
-      )
+      .filter(i => !semesterHalf || i.semesterHalf === semesterHalf)
       .sort((a, b) => {
         const nameA = a.name.toUpperCase(); // ignore upper and lowercase
         const nameB = b.name.toUpperCase(); // ignore upper and lowercase

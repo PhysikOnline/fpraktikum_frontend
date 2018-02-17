@@ -28,6 +28,7 @@ import { defaultIfEmpty } from 'rxjs/operators/defaultIfEmpty';
 import { startWith } from 'rxjs/operators/startWith';
 import { GRADUATION } from '../../../../config';
 import { tap } from 'rxjs/operators/tap';
+import { UpdateSelectedInstitutes } from '../index';
 
 @Injectable()
 export class MetaInfoEffects {
@@ -69,6 +70,7 @@ export class MetaInfoEffects {
     })
   );
 
+  // set available institutes every time the required information changes
   @Effect()
   avInstitutes$ = Observable.combineLatest(
     this.actions$

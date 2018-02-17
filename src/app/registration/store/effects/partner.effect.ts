@@ -5,10 +5,15 @@ import { switchMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 import { ApiService } from '../../../services/api.service';
-import { LOAD_USER_SUCCESS } from '../actions/user.action';
-import { USER_TYPE } from '../../../models/user-type';
+import { LOAD_USER_SUCCESS, LoadUserSuccess } from '../actions/user.action';
+import { USER_TYPE, UserType } from '../../../models/user-type';
+import { Observable } from 'rxjs/Observable';
+import { ChangePartnerType } from '../actions/partner.action';
+import { ChosenPartner } from '../../../models/chosen-partner';
 import {
   CHECK_PARTNER,
+  CHECK_PARTNER_SUCCESS,
+  CHANGE_PARTNER_TYPE,
   CheckPartner,
   CheckPartnerSuccess,
   CheckPartnerFail,
@@ -19,15 +24,41 @@ export class PartnerEffects {
   constructor(private actions$: Actions, private apiService: ApiService) {}
 
   @Effect()
-  loadUser$ = this.actions$.ofType(CHECK_PARTNER).pipe(
+  loadPartner$ = this.actions$.ofType(CHECK_PARTNER).pipe(
     switchMap(a => {
       const p = (<CheckPartner>a).payload;
-      return this.apiService
-        .checkPartner(p.name, p.number)
-        .pipe(
-          map(partner => new CheckPartnerSuccess(partner)),
-          catchError(error => of(new CheckPartnerFail(error)))
-        );
+      return this.apiService.checkPartner(p.name, p.number).pipe(
+        map(partner => new CheckPartnerSuccess(partner)),
+        catchError(error => {
+          console.log(error);
+          return of(new CheckPartnerFail(error));
+        })
+      );
+    })
+  );
+
+  @Effect()
+  partnerType$ = Observable.combineLatest(
+    this.actions$.ofType(CHECK_PARTNER_SUCCESS),
+    this.actions$.ofType(LOAD_USER_SUCCESS)
+  ).pipe(
+    map(([p, u]) => [
+      (<CheckPartnerSuccess>p).payload,
+      (<LoadUserSuccess>p).payload,
+    ]),
+    map(([partner, user]) => {
+      if (!partner) {
+        return new ChangePartnerType(ChosenPartner.doesNotExist);
+      }
+      if (partner.status === UserType.notRegistered) {
+        return new ChangePartnerType(ChosenPartner.notRegistered);
+      } else if (partner.graduation !== user.graduation) {
+        return new ChangePartnerType(ChosenPartner.hasDifferentGraduation);
+      } else if (partner.partner || partner.registrant) {
+        return new ChangePartnerType(ChosenPartner.hasPartner);
+      } else {
+        return new ChangePartnerType(ChosenPartner.registeredAndFree);
+      }
     })
   );
 }
