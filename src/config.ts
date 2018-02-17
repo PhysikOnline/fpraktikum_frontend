@@ -1,7 +1,7 @@
 export enum GRADUATION {
   BA = 'BA',
   MA = 'MA',
-  LA = 'LA',
+  LA = 'L',
 }
 
 export const CONFIG = {

@@ -76,6 +76,8 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     this.notesForm = formBuilder.group({
       notes: [''],
     });
+    this.chooseOnlyOneInstitute.subscribe(console.log);
+    this.userGraduation.subscribe(console.log);
 
     this.sink = this.chooseOnlyOneInstitute.subscribe(res => {
       if (res) {

@@ -41,7 +41,7 @@
           Wähle bitte {{ (chooseOnlyOneInstitute | async) ? 'ein Institut' : 'zwei Institute'
           }} aus.
         </p>
-        <div class="institute-form" *ngIf="!(needsOnlyOneInstitute | async)">
+        <div class="institute-form" *ngIf="!(chooseOnlyOneInstitute | async)">
           <p>1. {{ 'SEMESTER_HALF' | translate }}</p>
           <mat-radio-group (change)="institutesSelect.next($event.value)" formControlName="institutes1">
             <mat-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 1) | async"
