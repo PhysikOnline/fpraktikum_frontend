@@ -88,7 +88,7 @@
           Hier kannst du Bemerkungen eintragen.
         </p>
         <mat-form-field>
-          <textarea matInput formControlName="notes" placeholder="Bemerkungen..." (keyup)="notesInput.next()"></textarea>
+          <textarea matInput formControlName="notes" placeholder="Bemerkungen..." (keyup)="notesInput.next(null)"></textarea>
         </mat-form-field>
         <div class="step-btns">
           <button mat-raised-button matStepperPrevious>Zurück</button>

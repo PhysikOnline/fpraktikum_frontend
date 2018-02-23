@@ -20,6 +20,7 @@ import { routes } from './registration.routing';
 import { RegistrationFormPreflightComponent } from './registration-form-preflight/registration-form-preflight.component';
 import { RegistrationInfoComponent } from './registration-info/registration-info.component';
 import { RegistrationFormMainComponent } from './registration-form-main/registration-form-main.component';
+import { RegistrationFormComponent } from './registration-form-old/registration-form.component';
 import { guards } from './guards/index';
 
 @NgModule({
@@ -45,6 +46,7 @@ import { guards } from './guards/index';
     RegistrationInfoComponent,
     RegistrationFormPreflightComponent,
     RegistrationFormMainComponent,
+    RegistrationFormComponent,
   ],
   providers: [...guards],
   exports: [RegistrationComponent],
