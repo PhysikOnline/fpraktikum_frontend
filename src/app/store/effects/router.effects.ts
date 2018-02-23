@@ -24,6 +24,9 @@ export class RouterEffects {
     this.route.queryParams
   ).pipe(
     tap(([{ path, query: queryParams, extras }, origParams]) => {
+      if (!queryParams) {
+        queryParams = origParams;
+      }
       this.router.navigate(path, { queryParams, ...extras });
     })
   );

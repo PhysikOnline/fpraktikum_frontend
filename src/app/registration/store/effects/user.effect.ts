@@ -19,6 +19,12 @@ import { PartnerState } from '../reducers/partner.reducer';
 import { Observable } from 'rxjs/Observable';
 import { UserState } from '../reducers/user.reducer';
 import { Partner } from '../../../models/partner';
+import { GlobalUserState } from '../../../store/reducers/global-user.reducer';
+import { LoadUserSuccess } from '../index';
+import {
+  GLOBAL_USER_UPDATE,
+  GlobalUserUpdate,
+} from '../../../store/actions/global-user.action';
 
 @Injectable()
 export class UserEffects {
@@ -27,7 +33,8 @@ export class UserEffects {
     private apiService: ApiService,
     private metaStore: Store<MetaInfoState>,
     private partnerStore: Store<PartnerState>,
-    private userStore: Store<UserState>
+    private userStore: Store<UserState>,
+    private globalUserStore: Store<GlobalUserState>
   ) {}
 
   @Effect()
@@ -43,15 +50,30 @@ export class UserEffects {
   );
 
   @Effect()
-  loadUserSuccess$ = this.actions$.ofType(userActions.LOAD_USER_SUCCESS).pipe(
-    map((action: userActions.LoadUserSuccess) => {
-      const userType = action.payload.status;
+  loadUserSuccess$ = Observable.combineLatest(
+    this.actions$.ofType(userActions.LOAD_USER_SUCCESS),
+    this.actions$
+      .ofType(GLOBAL_USER_UPDATE)
+      .map(a => (<GlobalUserUpdate>a).payload)
+  ).pipe(
+    switchMap(([action, globalUser]) => {
+      const user = (<LoadUserSuccess>action).payload;
+      const userType = user.status;
       switch (userType) {
         case null: {
-          return new metaInfoActions.UpdateUserType(USER_TYPE.NOT_REGISTERED);
+          if (globalUser) {
+            user.login = globalUser.login;
+            user.lastName = globalUser.lastName;
+            user.firstName = globalUser.firstName;
+            user.email = globalUser.email;
+          }
+          return [
+            new metaInfoActions.UpdateUserType(USER_TYPE.NOT_REGISTERED),
+            new userActions.UpdateUser(user),
+          ];
         }
-        case 'registered': {
-          return new metaInfoActions.UpdateUserType(USER_TYPE.REGISTRANT);
+        case 'registrant': {
+          return [new metaInfoActions.UpdateUserType(USER_TYPE.REGISTRANT)];
         }
         // TODO
       }

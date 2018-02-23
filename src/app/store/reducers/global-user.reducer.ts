@@ -37,4 +37,4 @@ export function reducer(
 }
 
 export const getToken = (state: GlobalUserState) => state.token;
-export const getUser = (state: GlobalUserState) => state.data;
+export const getGlobalUser = (state: GlobalUserState) => state.data;
