@@ -11,6 +11,11 @@ export const LOAD_USER_SUCCESS = '[User] Load User Success';
 // update user
 export const UPDATE_INSTITUTES = '[User] Update Institutes';
 export const UPDATE_NOTES = '[User] Update Notes';
+export const UPDATE_USER = '[User] Update User';
+
+export const SEND_REGISTRATION = '[User] Send Registration';
+export const SEND_REGISTRATION_SUCCESS = '[User] Send Registration Success';
+export const SEND_REGISTRATION_FAIL = '[User] Send Registration Fail';
 
 export class LoadUser implements Action {
   readonly type = LOAD_USER;
@@ -32,10 +37,32 @@ export class UpdateNotes implements Action {
   readonly type = UPDATE_NOTES;
   constructor(public payload: string) {}
 }
+export class UpdateUser implements Action {
+  readonly type = UPDATE_USER;
+  constructor(public payload: User) {}
+}
+
+export class SendRegistration implements Action {
+  readonly type = SEND_REGISTRATION;
+}
+
+export class SendRegistrationSuccess implements Action {
+  readonly type = SEND_REGISTRATION_SUCCESS;
+  constructor(public payload: User) {}
+}
+
+export class SendRegistrationFail implements Action {
+  readonly type = SEND_REGISTRATION_FAIL;
+  constructor(public payload: any) {}
+}
 
 export type UserAction =
   | LoadUser
   | LoadUserFail
   | LoadUserSuccess
   | UpdateInstitutes
-  | UpdateNotes;
+  | UpdateNotes
+  | UpdateUser
+  | SendRegistration
+  | SendRegistrationSuccess
+  | SendRegistrationFail;

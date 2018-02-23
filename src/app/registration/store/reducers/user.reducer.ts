@@ -55,6 +55,12 @@ export function reducer(
         data: user,
       };
     }
+    case fromUser.UPDATE_USER: {
+      return {
+        ...state,
+        data: action.payload,
+      };
+    }
   }
   return state;
 }
