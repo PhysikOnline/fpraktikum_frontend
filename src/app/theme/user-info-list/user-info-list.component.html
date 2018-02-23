@@ -1,36 +1,36 @@
 <mat-list class="user-info-list">
   <mat-list-item class="user-info-list-item">
     <div class="list-identifier">{{ 'NAME' | translate }}</div>
-    <div class="list-content">{{ user.firstName }} {{ user.lastName }}</div>
+    <div class="list-content">{{ user?.firstName }} {{ user?.lastName }}</div>
   </mat-list-item>
   <mat-list-item class="user-info-list-item">
     <div class="list-identifier">{{ 'SNUMBER' | translate }}</div>
-    <div class="list-content">{{ user.login }}</div>
+    <div class="list-content">{{ user?.login }}</div>
   </mat-list-item>
   <mat-list-item class="user-info-list-item">
     <div class="list-identifier">{{ 'GRADUATION' | translate }}</div>
-    <div class="list-content">{{ user.graduation | translate }}</div>
+    <div class="list-content">{{ user?.graduation | translate }}</div>
   </mat-list-item>
   <mat-list-item class="user-info-list-item">
     <div class="list-identifier">{{ 'EMAIL' | translate }}</div>
-    <div class="list-content">{{ user.email }}</div>
+    <div class="list-content">{{ user?.email }}</div>
   </mat-list-item>
   <mat-list-item class="user-info-list-item">
     <div class="list-identifier">{{ 'PARTNER' | translate }}</div>
-    <div class="list-content" *ngIf="user.partner">{{ user.partner.firstName }} {{ user.partner.lastName }}</div>
-    <div class="list-content" *ngIf="user.registrant">{{ user.registrant.firstName }} {{ user.registrant.lastName }}</div>
-    <div class="list-content" *ngIf="!user.partner && !user.registrant">-</div>
+    <div class="list-content" *ngIf="user?.partner">{{ user?.partner?.firstName }} {{ user?.partner?.lastName }}</div>
+    <div class="list-content" *ngIf="user?.registrant">{{ user?.registrant?.firstName }} {{ user?.registrant?.lastName }}</div>
+    <div class="list-content" *ngIf="!user?.partner && !user?.registrant">-</div>
   </mat-list-item>
-  <mat-list-item class="user-info-list-item" *ngIf="!registrationService.onWaitingList">
+  <mat-list-item class="user-info-list-item">
     <div class="list-identifier">{{ 'INSTITUTES' | translate }}</div>
-    <div *ngFor="let i of user.institutes" class="list-institute">{{ i.name }}</div>
+    <div *ngFor="let i of user?.institutes" class="list-institute">{{ i.name }}</div>
   </mat-list-item>
-  <mat-list-item class="user-info-list-item" *ngIf="registrationService.onWaitingList">
+  <mat-list-item class="user-info-list-item">
     <div class="list-identifier">{{ 'INSTITUTES' | translate }}</div>
     <div class="list-content">{{ 'WAITLIST' | translate }}</div>
   </mat-list-item>
   <mat-list-item class="user-info-list-item">
     <div class="list-identifier">{{ 'NOTES' | translate }}</div>
-    <div class="list-content">{{ user.notes }}</div>
+    <div class="list-content">{{ user?.notes }}</div>
   </mat-list-item>
 </mat-list>

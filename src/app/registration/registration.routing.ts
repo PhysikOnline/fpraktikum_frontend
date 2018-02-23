@@ -4,6 +4,7 @@ import { RegistrationFormPreflightComponent } from './registration-form-prefligh
 import { RegistrationInfoComponent } from './registration-info/registration-info.component';
 import { RegistrationFormMainComponent } from './registration-form-main/registration-form-main.component';
 import { RegistrationGuard } from './guards/registraton.guard';
+import { RegistrationEndComponent } from './registration-end/registration-end.component';
 
 export const routes: Route[] = [
   {
@@ -19,6 +20,10 @@ export const routes: Route[] = [
       {
         path: 'main',
         component: RegistrationFormMainComponent,
+      },
+      {
+        path: 'end',
+        component: RegistrationEndComponent,
       },
     ],
   },

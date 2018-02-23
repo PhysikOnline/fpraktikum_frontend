@@ -9,7 +9,7 @@
           <mat-radio-button [value]="graduation.LA">Lehramt</mat-radio-button>
         </mat-radio-group>
         <div class="step-btns">
-          <button mat-raised-button color="primary" matStepperNext>Weiter</button>
+          <button mat-raised-button color="primary" [disabled]="graduationForm.invalid" matStepperNext>Weiter</button>
         </div>
       </div>
     </form>
@@ -30,7 +30,7 @@
         </mat-radio-group>
         <div class="step-btns">
           <button mat-raised-button matStepperPrevious>Zurück</button>
-          <button mat-raised-button color="primary" matStepperNext>Weiter</button>
+          <button mat-raised-button color="primary" [disabled]="masterITForm.invalid" matStepperNext>Weiter</button>
         </div>
       </div>
     </form>
@@ -50,7 +50,8 @@
         </mat-radio-group>
         <div class="step-btns">
           <button mat-raised-button matStepperPrevious>Zurück</button>
-          <button mat-raised-button color="primary" matStepperNext (click)="startNextStep()">Weiter</button>
+          <button mat-raised-button color="primary" [disabled]="biologyForm.invalid" matStepperNext
+            (click)="startNextStep()">Weiter</button>
         </div>
       </div>
     </form>

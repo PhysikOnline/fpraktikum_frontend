@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RegistrationCompleteComponent } from './registration-complete/registration-complete.component';
-import { RegisteredInfoComponent } from './registered-info/registered-info.component';
-import { UserInfoListComponent } from './user-info-list/user-info-list.component';
-import { PartnerInfoComponent } from './partner-info/partner-info.component';
-import { WaitlistInfoComponent } from './waitlist-info/waitlist-info.component';
 import { RegistrationComponent } from './registration.component';
 import { ThemeModule } from '../theme/theme.module';
 import { DialogsModule } from '../dialogs/dialogs.module';
@@ -20,8 +16,8 @@ import { routes } from './registration.routing';
 import { RegistrationFormPreflightComponent } from './registration-form-preflight/registration-form-preflight.component';
 import { RegistrationInfoComponent } from './registration-info/registration-info.component';
 import { RegistrationFormMainComponent } from './registration-form-main/registration-form-main.component';
-import { RegistrationFormComponent } from './registration-form-old/registration-form.component';
 import { guards } from './guards/index';
+import { RegistrationEndComponent } from './registration-end/registration-end.component';
 
 @NgModule({
   imports: [
@@ -38,15 +34,11 @@ import { guards } from './guards/index';
   ],
   declarations: [
     RegistrationCompleteComponent,
-    RegisteredInfoComponent,
-    UserInfoListComponent,
-    PartnerInfoComponent,
-    WaitlistInfoComponent,
     RegistrationComponent,
     RegistrationInfoComponent,
     RegistrationFormPreflightComponent,
     RegistrationFormMainComponent,
-    RegistrationFormComponent,
+    RegistrationEndComponent,
   ],
   providers: [...guards],
   exports: [RegistrationComponent],

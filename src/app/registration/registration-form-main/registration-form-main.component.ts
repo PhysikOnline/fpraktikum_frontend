@@ -33,8 +33,8 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
   }
 
   readonly userGraduation = this.metaStore.select(selectors.getGraduation);
-  readonly partner = this.partnerStore.map(selectors.getPartner);
-  readonly partnerType = this.partnerStore.map(selectors.getPartnerType);
+  readonly partner = this.partnerStore.select(selectors.getPartner);
+  readonly partnerType = this.partnerStore.select(selectors.getPartnerType);
 
   readonly partnerAcceptable = this.partnerType.map(
     type => type === ChosenPartner.notRegistered

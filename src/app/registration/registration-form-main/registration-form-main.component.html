@@ -28,7 +28,7 @@
           </mat-checkbox>
         </div>
         <div class="step-btns">
-          <button mat-raised-button color="primary" matStepperNext [disabled]="partnerForm.invalid && !(partnerAcceptable | async)">Weiter</button>
+          <button mat-raised-button color="primary" matStepperNext [disabled]="!(noPartner | async) && (partnerForm.invalid || !(partnerAcceptable | async))">Weiter</button>
         </div>
       </div>
     </form>
@@ -75,7 +75,7 @@
         <div class="step-btns">
           <button mat-raised-button matStepperPrevious>Zurück</button>
           <button mat-raised-button (click)="resetInstitutes()">Zurücksetzen</button>
-          <button mat-raised-button color="primary" matStepperNext>Weiter</button>
+          <button mat-raised-button color="primary" [disabled]="institutesForm.invalid" matStepperNext>Weiter</button>
         </div>
       </div>
     </form>

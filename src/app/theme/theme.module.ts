@@ -11,6 +11,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { StarRatingModule } from 'angular-star-rating';
 import { FormsModule } from '@angular/forms';
 import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner-info.component';
+import { InfoListComponent } from './info-list/info-list.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner
     RatingComponent,
     NotIntimeComponent,
     ChosenPartnerInfoComponent,
+    InfoListComponent,
   ],
   exports: [
     StepComponent,
@@ -37,6 +39,7 @@ import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner
     RatingComponent,
     NotIntimeComponent,
     ChosenPartnerInfoComponent,
+    InfoListComponent,
   ],
 })
 export class ThemeModule {}
