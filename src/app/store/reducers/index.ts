@@ -11,6 +11,7 @@ import {
 } from '@ngrx/store';
 
 import * as fromRouter from '@ngrx/router-store';
+import * as fromGlobalUser from './global-user.reducer';
 
 export interface RouterStateUrl {
   url: string;
@@ -20,10 +21,12 @@ export interface RouterStateUrl {
 
 export interface State {
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
+  globalUserReducer: fromGlobalUser.GlobalUserState;
 }
 
 export const reducers: ActionReducerMap<State> = {
   routerReducer: fromRouter.routerReducer,
+  globalUserReducer: fromGlobalUser.reducer,
 };
 
 export const getRouterState = createFeatureSelector<
