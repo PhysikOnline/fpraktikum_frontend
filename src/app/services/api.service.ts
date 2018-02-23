@@ -10,6 +10,7 @@ import {
 } from '@angular/common/http';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/share';
 import { User, UserApiModel } from '../models/user';
 import { Partner } from '../models/partner';
 import { AcceptDecline } from '../models/AcceptDecline';
@@ -20,47 +21,56 @@ import { RegistrationService } from './registration.service';
 import { environment } from '../../environments/environment';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
+import { LoadingService } from './loading.service';
 
 @Injectable()
 export class ApiService {
   private readonly _apiUrl = environment.API_URL;
 
-  constructor(private http: HttpClient, private http2: Http) {}
+  constructor(
+    private http: HttpClient,
+    private http2: Http,
+    private loadingService: LoadingService
+  ) {}
 
   getRegistration(): Observable<Registration> {
-    return this.http
+    const req = this.http
       .get(`${this._apiUrl}/registration/`)
       .pipe(map(reg => (Array.isArray(reg) && reg.length > 0 ? reg[0] : null)))
       .pipe(map(Registration.fromApiType), catchError(this.handleError));
+    return this.makeRequest(req);
   }
 
   getUser(sNumber: string): Observable<User> {
-    return this.http
+    const req = this.http
       .get(`${this._apiUrl}/user/${sNumber}`)
       .map(User.fromApiType)
       .catch(this.handleError);
+    return this.makeRequest(req);
   }
 
   postUser(user: User): Observable<User> {
     console.log(user);
-    return this.http
+    const req = this.http
       .post(`${this._apiUrl}/register/`, user.toApiType())
       .map(User.fromApiType)
       .catch(this.handleError);
+    return this.makeRequest(req);
   }
 
   signOut(user: User): Observable<void> {
-    return this.http2
+    const req = this.http2
       .delete(`${this._apiUrl}/register/`, {
         body: user.toApiType(),
       })
       .catch(this.handleError);
+    return this.makeRequest(req);
   }
 
   checkPartner(lastName: string, login: string): Observable<User> {
     let params = new HttpParams().set('user_lastname', lastName);
     params = params.set('user_login', login);
-    return this.http
+    const req = this.http
       .get(`${this._apiUrl}/check_partner/`, {
         params: params,
         responseType: 'text',
@@ -76,12 +86,13 @@ export class ApiService {
         if (error.status === 400) {
           return of(null);
         }
-        return this.handleError(error);
+        const req = this.handleError(error);
       });
+    return this.makeRequest(req);
   }
 
   acceptDecline(user: User, accept: boolean): Observable<void> {
-    return this.http
+    const req = this.http
       .post(
         `${this._apiUrl}/accept/`,
         AcceptDecline.fromUser(user, accept).toApiType(),
@@ -97,20 +108,23 @@ export class ApiService {
         }
       })
       .catch(this.handleError);
+    return this.makeRequest(req);
   }
 
   writeOnWaitinglist(user: User): Observable<void> {
-    return this.http
+    const req = this.http
       .post(`${this._apiUrl}/waitlist/`, user.toApiType())
       .catch(this.handleError);
+    return this.makeRequest(req);
   }
 
   removeFromWaitinglist(user: User): Observable<void> {
-    return this.http2
+    const req = this.http2
       .delete(`${this._apiUrl}/waitlist/`, {
         body: user.toApiType(),
       })
       .catch(this.handleError);
+    return this.makeRequest(req);
   }
 
   setRating(stars: number, feedback: string): Observable<any> {
@@ -127,6 +141,10 @@ export class ApiService {
         }
       )
       .catch(() => Observable.throw({}));
+  }
+
+  private makeRequest(req: Observable<any>) {
+    return this.loadingService.add(req.share());
   }
 
   private handleError(error): Observable<any> {

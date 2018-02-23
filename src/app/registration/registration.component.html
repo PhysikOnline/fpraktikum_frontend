@@ -1,5 +1,7 @@
 <mat-card id="registration-card">
   <mat-card-content>
     <router-outlet></router-outlet>
+    <mat-progress-bar [mode]="(loadingService.isLoading | async) ? 'indeterminate' : 'determinate'"
+      value="100" id="loading-bar"></mat-progress-bar>
   </mat-card-content>
 </mat-card>

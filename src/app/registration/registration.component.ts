@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as fromStore from './store';
 import { Store } from '@ngrx/store';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'app-registration',
@@ -8,7 +9,10 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent implements OnInit {
-  constructor(private store: Store<fromStore.RegistrationState>) {}
+  constructor(
+    private store: Store<fromStore.RegistrationState>,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit() {
     // this.store.dispatch(new fromStore.LoadUser());

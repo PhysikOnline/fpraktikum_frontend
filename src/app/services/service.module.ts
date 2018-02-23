@@ -7,21 +7,18 @@ import { MatSnackBarModule } from '@angular/material';
 import { ApiService } from './api.service';
 import { DateService } from './date.service';
 import { HttpModule } from '@angular/http';
+import { LoadingService } from './loading.service';
 
 @NgModule({
   declarations: [],
-  imports: [
-    HttpClientModule,
-    MatSnackBarModule,
-    HttpModule,
-  ],
+  imports: [HttpClientModule, MatSnackBarModule, HttpModule],
   providers: [
     RegistrationService,
     TranslateService,
     AlertService,
     ApiService,
     DateService,
+    LoadingService,
   ],
 })
-export class ServiceModule {
-}
+export class ServiceModule {}
