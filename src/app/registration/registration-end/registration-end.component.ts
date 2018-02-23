@@ -5,7 +5,7 @@ import * as fromPartner from '../store/reducers/partner.reducer';
 import * as fromSelectors from '../store/selectors';
 import { Store } from '@ngrx/store';
 import { USER_TYPE } from '../../models/user-type';
-import { SendRegistraton } from '../store/actions/registration.action';
+import { SendRegistration } from '../store/actions/user.action';
 
 @Component({
   selector: 'app-registration-end',
@@ -24,7 +24,7 @@ export class RegistrationEndComponent implements OnInit {
   ) {}
 
   send() {
-    this.userStore.dispatch(new SendRegistraton());
+    this.userStore.dispatch(new SendRegistration());
   }
 
   ngOnInit() {}

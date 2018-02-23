@@ -9,6 +9,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/share';
 import { User, UserApiModel } from '../models/user';
@@ -17,7 +18,6 @@ import { AcceptDecline } from '../models/AcceptDecline';
 import { Params } from '@angular/router';
 import { Http, RequestOptions } from '@angular/http';
 import * as Raven from 'raven-js';
-import { RegistrationService } from './registration.service';
 import { environment } from '../../environments/environment';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
@@ -52,17 +52,15 @@ export class ApiService {
   postUser(user: User): Observable<User> {
     console.log(user);
     const req = this.http
-      .post(`${this._apiUrl}/register/`, user.toApiType())
+      .post(`${this._apiUrl}/user_registrant/`, user.toApiType())
       .map(User.fromApiType)
       .catch(this.handleError);
     return this.makeRequest(req);
   }
 
   signOut(user: User): Observable<void> {
-    const req = this.http2
-      .delete(`${this._apiUrl}/register/`, {
-        body: user.toApiType(),
-      })
+    const req = this.http
+      .delete(`${this._apiUrl}/user_registrant/${user.id}`)
       .catch(this.handleError);
     return this.makeRequest(req);
   }

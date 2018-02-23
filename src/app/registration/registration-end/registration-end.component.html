@@ -2,4 +2,4 @@
 
 <app-info-list [user]="user | async" [info]="metaInfo | async" [partner]="partner | async"></app-info-list>
 
-<button mat-button color="accent">Abschicken</button>
+<button mat-raised-button color="accent" (click)="send()">Abschicken</button>

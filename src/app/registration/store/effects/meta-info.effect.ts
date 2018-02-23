@@ -39,9 +39,7 @@ export class MetaInfoEffects {
   ) {}
 
   @Effect()
-  showInfoPage$ = Observable.merge(
-    this.actions$.ofType(metaInfoActions.UPDATE_USER_TYPE)
-  ).pipe(
+  showInfoPage$ = this.actions$.ofType(metaInfoActions.UPDATE_USER_TYPE).pipe(
     map((action: metaInfoActions.UpdateUserType) => {
       const userType = action.payload;
       switch (userType) {

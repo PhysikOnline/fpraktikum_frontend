@@ -5,7 +5,6 @@ import { TemplateErrorComponent } from './template-error/template-error.componen
 import { FooterComponent } from './footer/footer.component';
 import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
 import { RatingComponent } from './rating/rating.component';
-import { NotIntimeComponent } from './not-intime/not-intime.component';
 import { MaterialModule } from '../material/material.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { StarRatingModule } from 'angular-star-rating';
@@ -27,7 +26,6 @@ import { InfoListComponent } from './info-list/info-list.component';
     FooterComponent,
     LanguageSwitcherComponent,
     RatingComponent,
-    NotIntimeComponent,
     ChosenPartnerInfoComponent,
     InfoListComponent,
   ],
@@ -37,7 +35,6 @@ import { InfoListComponent } from './info-list/info-list.component';
     FooterComponent,
     LanguageSwitcherComponent,
     RatingComponent,
-    NotIntimeComponent,
     ChosenPartnerInfoComponent,
     InfoListComponent,
   ],

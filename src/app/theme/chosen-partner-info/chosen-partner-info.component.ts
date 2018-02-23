@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChosenPartner } from '../../models/chosen-partner';
-import { RegistrationService } from '../../services/registration.service';
 import { Partner } from '../../models/partner';
 
 @Component({
