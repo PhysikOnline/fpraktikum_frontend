@@ -3,6 +3,7 @@ import { Record } from './record';
 import { Partner, PartnerApiModel } from './partner';
 
 export interface UserApiModel {
+  id?: string;
   user_firstname?: string;
   user_lastname?: string;
   user_login?: string;
@@ -39,6 +40,7 @@ export class User extends Record {
 
     return new User(
       record.status,
+      record.id,
       graduation,
       record.user_firstname,
       record.user_lastname,
@@ -75,6 +77,7 @@ export class User extends Record {
 
   constructor(
     public status: string,
+    public id?: string,
     public graduation?: string,
     public firstName?: string,
     public lastName?: string,
