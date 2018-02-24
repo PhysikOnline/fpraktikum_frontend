@@ -9,6 +9,7 @@ import * as fromRoot from '../../../store';
 import * as registrationActions from '../actions/registration.action';
 import * as registrationSelectors from '../selectors/registration.selectors';
 import * as metaInfoSelectors from '../selectors/meta-info.selectors';
+import * as partnerSelectors from '../selectors/partner.selectors';
 import * as metaInfoActions from '../actions/meta-info.action';
 import * as metaInfoReducer from '../reducers/meta-info.reducer';
 import * as userActions from '../actions/user.action';
@@ -29,13 +30,17 @@ import { startWith } from 'rxjs/operators/startWith';
 import { GRADUATION } from '../../../../config';
 import { tap } from 'rxjs/operators/tap';
 import { UpdateSelectedInstitutes } from '../index';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+import { PartnerState } from '../reducers/partner.reducer';
+import { withLatestFrom } from 'rxjs/operators/withLatestFrom';
 
 @Injectable()
 export class MetaInfoEffects {
   constructor(
     private actions$: Actions,
     private metaInfoStore: Store<MetaInfoState>,
-    private regStore: Store<RegistrationInfoState>
+    private regStore: Store<RegistrationInfoState>,
+    private partnerStore: Store<PartnerState>
   ) {}
 
   @Effect()
@@ -110,6 +115,37 @@ export class MetaInfoEffects {
         return true;
       });
       return new metaInfoActions.UpdateAvailableInstitutes(avInstitutes);
+    })
+  );
+
+  @Effect()
+  onAvailableInstitutes$ = combineLatest(
+    this.partnerStore.select(partnerSelectors.getPartner),
+    this.actions$
+      .ofType(metaInfoActions.UPDATE_AVAILABLE_INSTITUTE)
+      .map((a: metaInfoActions.UpdateAvailableInstitutes) => a.payload)
+  ).pipe(
+    withLatestFrom(this.metaInfoStore.select(metaInfoSelectors.getGraduation)),
+    map(([[partner, availableInstitutes], graduation]) => {
+      const placesNeeded = partner ? 2 : 1;
+      let areEnoughPlacesAvailable = true;
+      if (graduation === GRADUATION.LA) {
+        areEnoughPlacesAvailable = availableInstitutes.some(
+          i => i.places >= placesNeeded
+        );
+      } else {
+        areEnoughPlacesAvailable =
+          availableInstitutes
+            .filter(i => i.semesterHalf === 1)
+            .some(i => i.places >= placesNeeded) &&
+          availableInstitutes
+            .filter(i => i.semesterHalf === 2)
+            .some(i => i.places >= placesNeeded);
+      }
+
+      return areEnoughPlacesAvailable
+        ? { type: 'NO_ACTION' }
+        : new registrationActions.NotEnoughPlaces();
     })
   );
 

@@ -8,6 +8,8 @@ export const LOAD_REGISTRATION_INFO_SUCCESS =
 export const LOAD_REGISTRATION_INFO_FAIL =
   '[Registration] Load Registration Fail';
 
+export const NOT_ENOUGH_PLACES = '[Registration] Not Enough Places';
+
 export class LoadRegistrationInfo implements Action {
   readonly type = LOAD_REGISTRATION_INFO;
 }
@@ -22,7 +24,12 @@ export class LoadRegisrationInfoFail implements Action {
   constructor(public payload: any) {}
 }
 
+export class NotEnoughPlaces implements Action {
+  readonly type = NOT_ENOUGH_PLACES;
+}
+
 export type RegistrationInfoAction =
   | LoadRegistrationInfo
   | LoadRegistrationInfoSuccess
-  | LoadRegisrationInfoFail;
+  | LoadRegisrationInfoFail
+  | NotEnoughPlaces;
