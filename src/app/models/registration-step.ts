@@ -3,4 +3,5 @@ export enum REGISTRATION_STEP {
   PREFLIGHT,
   MAIN,
   END,
+  WAITLIST,
 }

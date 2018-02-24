@@ -6,6 +6,7 @@ import { RegistrationFormMainComponent } from './registration-form-main/registra
 import { RegistrationGuard } from './guards/registraton.guard';
 import { RegistrationEndComponent } from './registration-end/registration-end.component';
 import { RegistrantInfoComponent } from './registrant-info/registrant-info.component';
+import { RegistrationWaitlistComponent } from './registration-waitlist/registration-waitlist.component';
 
 export const routes: Route[] = [
   {
@@ -29,6 +30,10 @@ export const routes: Route[] = [
       {
         path: 'info-registrant',
         component: RegistrantInfoComponent,
+      },
+      {
+        path: 'waitlist',
+        component: RegistrationWaitlistComponent,
       },
     ],
   },

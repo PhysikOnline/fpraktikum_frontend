@@ -41,7 +41,12 @@ export class RegistrationInfoEffects {
   @Effect()
   notEnoughPlaces$ = this.actions$
     .ofType(registrationActions.NOT_ENOUGH_PLACES)
-    .pipe(map(() => new fromRoot.Go({ path: ['registration', 'waitlist'] })));
+    .pipe(
+      map(
+        () =>
+          new metaInfoActions.UpdateRegistrationStep(REGISTRATION_STEP.WAITLIST)
+      )
+    );
 
   @Effect({ dispatch: false })
   showError$ = Observable.merge(

@@ -160,6 +160,9 @@ export class MetaInfoEffects {
       case REGISTRATION_STEP.END: {
         return new fromRoot.Go({ path: ['registration', 'end'] });
       }
+      case REGISTRATION_STEP.WAITLIST: {
+        return new fromRoot.Go({ path: ['registration', 'waitlist'] });
+      }
       default: {
         return new fromRoot.Go({ path: ['registration', 'info'] });
       }

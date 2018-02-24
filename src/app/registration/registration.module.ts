@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegistrationCompleteComponent } from './registration-complete/registration-complete.component';
 import { RegistrationComponent } from './registration.component';
 import { ThemeModule } from '../theme/theme.module';
 import { ServiceModule } from '../services/service.module';
@@ -20,6 +19,7 @@ import { RegistrationFormMainComponent } from './registration-form-main/registra
 import { guards } from './guards/index';
 import { RegistrationEndComponent } from './registration-end/registration-end.component';
 import { RegistrantInfoComponent } from './registrant-info/registrant-info.component';
+import { RegistrationWaitlistComponent } from './registration-waitlist/registration-waitlist.component';
 
 @NgModule({
   imports: [
@@ -36,13 +36,13 @@ import { RegistrantInfoComponent } from './registrant-info/registrant-info.compo
     EffectsModule.forFeature(effects),
   ],
   declarations: [
-    RegistrationCompleteComponent,
     RegistrationComponent,
     RegistrationInfoComponent,
     RegistrationFormPreflightComponent,
     RegistrationFormMainComponent,
     RegistrationEndComponent,
     RegistrantInfoComponent,
+    RegistrationWaitlistComponent,
   ],
   providers: [...guards],
   exports: [RegistrationComponent],
