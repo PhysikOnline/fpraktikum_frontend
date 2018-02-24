@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Effect, Actions } from '@ngrx/effects';
-import { switchMap, map, catchError, take } from 'rxjs/operators';
+import { switchMap, map, catchError, take, tap, zip } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/observable/combineLatest';
 
@@ -21,12 +21,22 @@ import { UserState } from '../reducers/user.reducer';
 import { Partner } from '../../../models/partner';
 import { GlobalUser } from '../../../models/global-user';
 import { GlobalUserState } from '../../../store/reducers/global-user.reducer';
-import { LoadUserSuccess } from '../index';
+import {
+  LoadUserSuccess,
+  UserAction,
+  MetaInfoAction,
+  SIGNOUT,
+  SIGNOUT_SUCCESS,
+  LoadUser,
+} from '../index';
 import {
   GLOBAL_USER_UPDATE,
   GlobalUserUpdate,
 } from '../../../store/actions/global-user.action';
 import { GRADUATION } from '../../../../config';
+import { AlertService } from '../../../services/alert.service';
+import { RegistrationCompleteComponent } from '../../../dialogs/registration-complete/registration-complete.component';
+import { withLatestFrom } from 'rxjs/operators/withLatestFrom';
 
 @Injectable()
 export class UserEffects {
@@ -36,14 +46,20 @@ export class UserEffects {
     private metaStore: Store<MetaInfoState>,
     private partnerStore: Store<PartnerState>,
     private userStore: Store<UserState>,
-    private globalUserStore: Store<GlobalUserState>
+    private globalUserStore: Store<GlobalUserState>,
+    private alert: AlertService
   ) {}
 
   @Effect()
-  loadUser$ = this.actions$.ofType(userActions.LOAD_USER).pipe(
-    switchMap(() => {
+  loadUser$ = Observable.combineLatest(
+    this.actions$.ofType(userActions.LOAD_USER),
+    this.actions$
+      .ofType(GLOBAL_USER_UPDATE)
+      .map(a => (<GlobalUserUpdate>a).payload)
+  ).pipe(
+    switchMap(([a, globalUser]) => {
       return this.apiService
-        .getUser('s0053274')
+        .getUser(globalUser.login)
         .pipe(
           map(user => new userActions.LoadUserSuccess(user)),
           catchError(error => of(new userActions.LoadUserFail(error)))
@@ -61,6 +77,7 @@ export class UserEffects {
     switchMap(([action, globalUser]: [LoadUserSuccess, GlobalUser]) => {
       const user = action.payload;
       const userType = user.status;
+      let appUserType;
       switch (userType) {
         case null: {
           if (globalUser) {
@@ -69,33 +86,52 @@ export class UserEffects {
             user.firstName = globalUser.firstName;
             user.email = globalUser.email;
           }
-          return [
-            new metaInfoActions.UpdateUserType(USER_TYPE.NOT_REGISTERED),
-            new userActions.UpdateUser(user),
-          ];
+          appUserType = USER_TYPE.NOT_REGISTERED;
+          break;
         }
-        case 'registrant': {
-          return [
-            new metaInfoActions.UpdateUserType(USER_TYPE.REGISTRANT),
-            new metaInfoActions.UpdateSelectedInstitutes(user.institutes),
-            new metaInfoActions.UpdateGraduation(<GRADUATION>user.graduation),
-          ];
+        default: {
+          appUserType = USER_TYPE.REGISTRANT;
         }
         // TODO
       }
+      return [
+        new metaInfoActions.UpdateUserType(appUserType),
+        new metaInfoActions.UpdateSelectedInstitutes(user.institutes),
+        new metaInfoActions.UpdateGraduation(<GRADUATION>user.graduation),
+        new userActions.UpdateUser(user),
+      ];
     })
   );
 
   @Effect()
+  signout$ = this.actions$.ofType(SIGNOUT).pipe(
+    withLatestFrom(this.userStore.select(fromSelectors.getUser)),
+    map(r => r[1]),
+    switchMap(user => {
+      return this.apiService
+        .signOut(user)
+        .pipe(
+          map(() => new userActions.SignoutSuccess()),
+          catchError(error => of(new userActions.SignoutFail(error)))
+        );
+    })
+  );
+
+  @Effect()
+  signoutSuccess$ = this.actions$
+    .ofType(SIGNOUT_SUCCESS)
+    .pipe(map(() => new LoadUser()));
+
+  @Effect()
   sendRegistration$ = this.actions$.ofType(userActions.SEND_REGISTRATION).pipe(
-    switchMap(() =>
+    withLatestFrom(
       Observable.combineLatest(
         this.metaStore.select(fromSelectors.getMetaInfoState),
         this.partnerStore.select(fromSelectors.getPartner),
         this.userStore.select(fromSelectors.getUser)
       )
     ),
-    take(1),
+    map(r => r[1]),
     switchMap(([metaInfo, partner, user]) => {
       user.graduation = metaInfo.graduation;
       user.institutes = metaInfo.selectedInstitutes;
@@ -108,4 +144,15 @@ export class UserEffects {
         );
     })
   );
+
+  @Effect()
+  sendRegistratonSuccess$ = this.actions$
+    .ofType(userActions.SEND_REGISTRATION_SUCCESS)
+    .pipe(
+      tap(() => this.alert.showDialog(RegistrationCompleteComponent, {})),
+      map(
+        (action: userActions.SendRegistrationSuccess) =>
+          new userActions.LoadUserSuccess(action.payload)
+      )
+    );
 }

@@ -49,7 +49,7 @@ export function reducer(
     }
     case fromUser.UPDATE_NOTES: {
       const user = state.data;
-      user.notes = action.payload;
+      user.notes = action.payload || '';
       return {
         ...state,
         data: user,

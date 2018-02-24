@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { TranslateService } from './translate.service';
 import { QuestionDialogComponent } from '../dialogs/question-dialog/question-dialog.component';
+
 @Injectable()
 export class AlertService {
   constructor(

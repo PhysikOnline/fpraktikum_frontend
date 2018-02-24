@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { PartnerState } from '../store/reducers/partner.reducer';
 import { UserState } from '../store/reducers/user.reducer';
-import { debounceTime, filter } from 'rxjs/operators';
+import { debounceTime, filter, map } from 'rxjs/operators';
 
 import * as selectors from '../store/selectors';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -156,9 +156,12 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
 
   shouldOptionBeDisabled(instituteName, semesterHalf) {
     const otherHalf = semesterHalf % 2 + 1;
-    return this.selectedInstitutes.map(institutes =>
-      institutes.find(
-        i => i.name === instituteName && i.semesterHalf === otherHalf
+    return this.selectedInstitutes.pipe(
+      filter(i => !!i),
+      map(institutes =>
+        institutes.find(
+          i => i.name === instituteName && i.semesterHalf === otherHalf
+        )
       )
     );
   }

@@ -17,6 +17,10 @@ export const SEND_REGISTRATION = '[User] Send Registration';
 export const SEND_REGISTRATION_SUCCESS = '[User] Send Registration Success';
 export const SEND_REGISTRATION_FAIL = '[User] Send Registration Fail';
 
+export const SIGNOUT = '[User] Signout';
+export const SIGNOUT_SUCCESS = '[User] Signout Success';
+export const SIGNOUT_FAIL = '[User] Signout Fail';
+
 export class LoadUser implements Action {
   readonly type = LOAD_USER;
 }
@@ -56,6 +60,19 @@ export class SendRegistrationFail implements Action {
   constructor(public payload: any) {}
 }
 
+export class Signout implements Action {
+  readonly type = SIGNOUT;
+}
+
+export class SignoutSuccess implements Action {
+  readonly type = SIGNOUT_SUCCESS;
+}
+
+export class SignoutFail implements Action {
+  readonly type = SIGNOUT_FAIL;
+  constructor(public payload: any) {}
+}
+
 export type UserAction =
   | LoadUser
   | LoadUserFail
@@ -65,4 +82,7 @@ export type UserAction =
   | UpdateUser
   | SendRegistration
   | SendRegistrationSuccess
-  | SendRegistrationFail;
+  | SendRegistrationFail
+  | Signout
+  | SignoutSuccess
+  | SignoutFail;

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RegistrationCompleteComponent } from './registration-complete/registration-complete.component';
 import { RegistrationComponent } from './registration.component';
 import { ThemeModule } from '../theme/theme.module';
+import { ServiceModule } from '../services/service.module';
 import { DialogsModule } from '../dialogs/dialogs.module';
 import { MaterialModule } from '../material/material.module';
 import { PipesModule } from '../pipes/pipes.module';
@@ -29,6 +30,7 @@ import { RegistrantInfoComponent } from './registrant-info/registrant-info.compo
     MaterialModule,
     PipesModule,
     FormsModule,
+    ServiceModule,
     ReactiveFormsModule,
     StoreModule.forFeature('registration', reducer),
     EffectsModule.forFeature(effects),

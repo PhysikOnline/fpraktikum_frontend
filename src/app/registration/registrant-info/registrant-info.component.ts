@@ -4,6 +4,8 @@ import { UserState } from '../store/reducers/user.reducer';
 import { MetaInfoState } from '../store/reducers/meta-info.reducer';
 import * as selectors from '../store/selectors';
 import { USER_TYPE } from '../../models/user-type';
+import { AlertService } from '../../services/alert.service';
+import { Signout } from '../store/index';
 
 @Component({
   selector: 'app-registrant-info',
@@ -21,10 +23,17 @@ export class RegistrantInfoComponent implements OnInit {
 
   constructor(
     private userStore: Store<UserState>,
-    private metaInfoStore: Store<MetaInfoState>
+    private metaInfoStore: Store<MetaInfoState>,
+    private alert: AlertService
   ) {}
 
-  signout() {}
+  signout() {
+    this.alert.showQuestionDialog('Wirklich abmelden?').then(res => {
+      if (res) {
+        this.userStore.dispatch(new Signout());
+      }
+    });
+  }
 
   accept() {}
 

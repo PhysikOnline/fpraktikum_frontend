@@ -5,11 +5,28 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { InfoBoxComponent } from './info-box-dialog/info-box.component';
 import { MaterialModule } from '../material/material.module';
 import { PipesModule } from '../pipes/pipes.module';
+import { ThemeModule } from '../theme/theme.module';
+import { RegistrationCompleteComponent } from './registration-complete/registration-complete.component';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, PipesModule],
-  declarations: [QuestionDialogComponent, ErrorDialogComponent, InfoBoxComponent],
-  entryComponents: [QuestionDialogComponent, ErrorDialogComponent, InfoBoxComponent],
-  exports: [QuestionDialogComponent, ErrorDialogComponent, InfoBoxComponent],
+  imports: [CommonModule, MaterialModule, PipesModule, ThemeModule],
+  declarations: [
+    QuestionDialogComponent,
+    ErrorDialogComponent,
+    InfoBoxComponent,
+    RegistrationCompleteComponent,
+  ],
+  entryComponents: [
+    QuestionDialogComponent,
+    ErrorDialogComponent,
+    InfoBoxComponent,
+    RegistrationCompleteComponent,
+  ],
+  exports: [
+    QuestionDialogComponent,
+    ErrorDialogComponent,
+    InfoBoxComponent,
+    RegistrationCompleteComponent,
+  ],
 })
 export class DialogsModule {}
