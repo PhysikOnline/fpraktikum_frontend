@@ -15,10 +15,16 @@ import { User } from '../../../models/user';
 import { LoadRegistrationInfoSuccess } from '../actions/registration.action';
 import { USER_TYPE } from '../../../models/user-type';
 import { REGISTRATION_STEP } from '../../../models/registration-step';
+import { AlertService } from '../../../services/alert.service';
+import { WaitlistDialogComponent } from '../../../dialogs/waitlist-dialog/waitlist-dialog.component';
 
 @Injectable()
 export class RegistrationInfoEffects {
-  constructor(private actions$: Actions, private apiService: ApiService) {}
+  constructor(
+    private actions$: Actions,
+    private apiService: ApiService,
+    private alert: AlertService
+  ) {}
 
   @Effect()
   loadRegistration$ = this.actions$
@@ -42,10 +48,19 @@ export class RegistrationInfoEffects {
   notEnoughPlaces$ = this.actions$
     .ofType(registrationActions.NOT_ENOUGH_PLACES)
     .pipe(
-      map(
-        () =>
-          new metaInfoActions.UpdateRegistrationStep(REGISTRATION_STEP.WAITLIST)
-      )
+      switchMap(() => {
+        return Observable.fromPromise(
+          this.alert.showDialog(WaitlistDialogComponent, {})
+        );
+      }),
+      map(res => {
+        if (res) {
+          return new metaInfoActions.UpdateRegistrationStep(
+            REGISTRATION_STEP.WAITLIST
+          );
+        }
+        return { type: 'NO_ACTION' };
+      })
     );
 
   @Effect({ dispatch: false })

@@ -7,6 +7,7 @@ import { MaterialModule } from '../material/material.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { ThemeModule } from '../theme/theme.module';
 import { RegistrationCompleteComponent } from './registration-complete/registration-complete.component';
+import { WaitlistDialogComponent } from './waitlist-dialog/waitlist-dialog.component';
 
 @NgModule({
   imports: [CommonModule, MaterialModule, PipesModule, ThemeModule],
@@ -15,18 +16,21 @@ import { RegistrationCompleteComponent } from './registration-complete/registrat
     ErrorDialogComponent,
     InfoBoxComponent,
     RegistrationCompleteComponent,
+    WaitlistDialogComponent,
   ],
   entryComponents: [
     QuestionDialogComponent,
     ErrorDialogComponent,
     InfoBoxComponent,
     RegistrationCompleteComponent,
+    WaitlistDialogComponent,
   ],
   exports: [
     QuestionDialogComponent,
     ErrorDialogComponent,
     InfoBoxComponent,
     RegistrationCompleteComponent,
+    WaitlistDialogComponent,
   ],
 })
 export class DialogsModule {}
