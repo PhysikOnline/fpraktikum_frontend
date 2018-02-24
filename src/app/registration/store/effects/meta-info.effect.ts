@@ -103,13 +103,11 @@ export class MetaInfoEffects {
         if (graduation !== i.graduation) {
           return false;
         }
+        // FIXME
         if (!bio && i.name === 'BMI????') {
           return false;
         }
         if (graduation === GRADUATION.MA && !masterIT && i.name === 'ITP') {
-          return false;
-        }
-        if (i.places < 1) {
           return false;
         }
         return true;

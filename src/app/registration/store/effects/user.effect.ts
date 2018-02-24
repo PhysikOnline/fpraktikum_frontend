@@ -8,7 +8,6 @@ import 'rxjs/add/observable/combineLatest';
 import * as fromRoot from '../../../store';
 import * as metaInfoActions from '../actions/meta-info.action';
 import * as userActions from '../actions/user.action';
-import * as fromUser from '../selectors/user.selectors';
 import * as fromSelectors from '../selectors';
 import { ApiService } from '../../../services/api.service';
 import { LOAD_USER_SUCCESS } from '../actions/user.action';
@@ -22,14 +21,6 @@ import { Partner } from '../../../models/partner';
 import { GlobalUser } from '../../../models/global-user';
 import { GlobalUserState } from '../../../store/reducers/global-user.reducer';
 import {
-  LoadUserSuccess,
-  UserAction,
-  MetaInfoAction,
-  SIGNOUT,
-  SIGNOUT_SUCCESS,
-  LoadUser,
-} from '../index';
-import {
   GLOBAL_USER_UPDATE,
   GlobalUserUpdate,
 } from '../../../store/actions/global-user.action';
@@ -37,6 +28,8 @@ import { GRADUATION } from '../../../../config';
 import { AlertService } from '../../../services/alert.service';
 import { RegistrationCompleteComponent } from '../../../dialogs/registration-complete/registration-complete.component';
 import { withLatestFrom } from 'rxjs/operators/withLatestFrom';
+import { Institute } from '../../../models/institute';
+import { User } from '../../../models/user';
 
 @Injectable()
 export class UserEffects {
@@ -74,37 +67,39 @@ export class UserEffects {
       .ofType(GLOBAL_USER_UPDATE)
       .map(a => (<GlobalUserUpdate>a).payload)
   ).pipe(
-    switchMap(([action, globalUser]: [LoadUserSuccess, GlobalUser]) => {
-      const user = action.payload;
-      const userType = user.status;
-      let appUserType;
-      switch (userType) {
-        case null: {
-          if (globalUser) {
-            user.login = globalUser.login;
-            user.lastName = globalUser.lastName;
-            user.firstName = globalUser.firstName;
-            user.email = globalUser.email;
+    switchMap(
+      ([action, globalUser]: [userActions.LoadUserSuccess, GlobalUser]) => {
+        const user = action.payload;
+        const userType = user.status;
+        let appUserType;
+        switch (userType) {
+          case null: {
+            if (globalUser) {
+              user.login = globalUser.login;
+              user.lastName = globalUser.lastName;
+              user.firstName = globalUser.firstName;
+              user.email = globalUser.email;
+            }
+            appUserType = USER_TYPE.NOT_REGISTERED;
+            break;
           }
-          appUserType = USER_TYPE.NOT_REGISTERED;
-          break;
+          default: {
+            appUserType = USER_TYPE.REGISTRANT;
+          }
+          // TODO
         }
-        default: {
-          appUserType = USER_TYPE.REGISTRANT;
-        }
-        // TODO
+        return [
+          new metaInfoActions.UpdateUserType(appUserType),
+          new metaInfoActions.UpdateSelectedInstitutes(user.institutes),
+          new metaInfoActions.UpdateGraduation(<GRADUATION>user.graduation),
+          new userActions.UpdateUser(user),
+        ];
       }
-      return [
-        new metaInfoActions.UpdateUserType(appUserType),
-        new metaInfoActions.UpdateSelectedInstitutes(user.institutes),
-        new metaInfoActions.UpdateGraduation(<GRADUATION>user.graduation),
-        new userActions.UpdateUser(user),
-      ];
-    })
+    )
   );
 
   @Effect()
-  signout$ = this.actions$.ofType(SIGNOUT).pipe(
+  signout$ = this.actions$.ofType(userActions.SIGNOUT).pipe(
     withLatestFrom(this.userStore.select(fromSelectors.getUser)),
     map(r => r[1]),
     switchMap(user => {
@@ -119,8 +114,23 @@ export class UserEffects {
 
   @Effect()
   signoutSuccess$ = this.actions$
-    .ofType(SIGNOUT_SUCCESS)
-    .pipe(map(() => new LoadUser()));
+    .ofType(userActions.SIGNOUT_SUCCESS)
+    .pipe(map(() => new userActions.LoadUser()));
+
+  @Effect()
+  waitlist$ = this.actions$.ofType(userActions.SEND_WAITLIST).pipe(
+    map((a: userActions.SendWaitlist) => a.payload),
+    withLatestFrom(this.userStore.select(fromSelectors.getUser)),
+    switchMap(([institutes, user]: [Institute[], User]) => {
+      // TODO add institutes
+      return this.apiService
+        .writeOnWaitinglist(user)
+        .pipe(
+          map(() => new userActions.SendWaitlistSuccess()),
+          catchError(error => of(new userActions.SendWaitlistFail(error)))
+        );
+    })
+  );
 
   @Effect()
   sendRegistration$ = this.actions$.ofType(userActions.SEND_REGISTRATION).pipe(
@@ -147,7 +157,10 @@ export class UserEffects {
 
   @Effect()
   sendRegistratonSuccess$ = this.actions$
-    .ofType(userActions.SEND_REGISTRATION_SUCCESS)
+    .ofType(
+      userActions.SEND_REGISTRATION_SUCCESS,
+      userActions.SEND_WAITLIST_SUCCESS
+    )
     .pipe(
       tap(() => this.alert.showDialog(RegistrationCompleteComponent, {})),
       map(

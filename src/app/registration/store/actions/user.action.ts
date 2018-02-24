@@ -21,6 +21,10 @@ export const SIGNOUT = '[User] Signout';
 export const SIGNOUT_SUCCESS = '[User] Signout Success';
 export const SIGNOUT_FAIL = '[User] Signout Fail';
 
+export const SEND_WAITLIST = '[User] Send Waitlist';
+export const SEND_WAITLIST_SUCCESS = '[User] Send Waitlist Success';
+export const SEND_WAITLIST_FAIL = '[User] Send Waitlist Fail';
+
 export class LoadUser implements Action {
   readonly type = LOAD_USER;
 }
@@ -70,6 +74,20 @@ export class SignoutSuccess implements Action {
 
 export class SignoutFail implements Action {
   readonly type = SIGNOUT_FAIL;
+  constructor(public payload: any) {}
+}
+
+export class SendWaitlist implements Action {
+  readonly type = SEND_WAITLIST;
+  constructor(public payload: Institute[]) {}
+}
+
+export class SendWaitlistSuccess implements Action {
+  readonly type = SEND_WAITLIST_SUCCESS;
+}
+
+export class SendWaitlistFail implements Action {
+  readonly type = SEND_WAITLIST_FAIL;
   constructor(public payload: any) {}
 }
 

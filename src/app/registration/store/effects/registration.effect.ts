@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { switchMap, map, catchError, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+import { merge } from 'rxjs/observable/merge';
 
 import * as fromRoot from '../../../store';
 import * as registrationActions from '../actions/registration.action';
@@ -48,11 +50,9 @@ export class RegistrationInfoEffects {
   notEnoughPlaces$ = this.actions$
     .ofType(registrationActions.NOT_ENOUGH_PLACES)
     .pipe(
-      switchMap(() => {
-        return Observable.fromPromise(
-          this.alert.showDialog(WaitlistDialogComponent, {})
-        );
-      }),
+      switchMap(() =>
+        fromPromise(this.alert.showDialog(WaitlistDialogComponent, {}))
+      ),
       map(res => {
         if (res) {
           return new metaInfoActions.UpdateRegistrationStep(
@@ -64,7 +64,7 @@ export class RegistrationInfoEffects {
     );
 
   @Effect({ dispatch: false })
-  showError$ = Observable.merge(
+  showError$ = merge(
     this.actions$.ofType(registrationActions.LOAD_REGISTRATION_INFO_FAIL),
     this.actions$.ofType(userActions.LOAD_USER_FAIL)
   ).pipe(

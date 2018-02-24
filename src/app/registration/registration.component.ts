@@ -11,7 +11,7 @@ import { LoadingService } from '../services/loading.service';
 export class RegistrationComponent implements OnInit {
   constructor(
     private store: Store<fromStore.RegistrationState>,
-    private loadingService: LoadingService
+    public loadingService: LoadingService
   ) {}
 
   ngOnInit() {
