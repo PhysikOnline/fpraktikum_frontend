@@ -18,6 +18,7 @@ import { RegistrationInfoComponent } from './registration-info/registration-info
 import { RegistrationFormMainComponent } from './registration-form-main/registration-form-main.component';
 import { guards } from './guards/index';
 import { RegistrationEndComponent } from './registration-end/registration-end.component';
+import { RegistrantInfoComponent } from './registrant-info/registrant-info.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { RegistrationEndComponent } from './registration-end/registration-end.co
     RegistrationFormPreflightComponent,
     RegistrationFormMainComponent,
     RegistrationEndComponent,
+    RegistrantInfoComponent,
   ],
   providers: [...guards],
   exports: [RegistrationComponent],
