@@ -56,6 +56,10 @@ export class User extends Record {
     );
   }
 
+  public get name() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
   toApiType(): UserApiModel {
     const institutes = this.institutes
       ? this.institutes.map(i => i.toApiType())

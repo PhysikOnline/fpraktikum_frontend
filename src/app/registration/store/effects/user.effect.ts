@@ -19,12 +19,14 @@ import { PartnerState } from '../reducers/partner.reducer';
 import { Observable } from 'rxjs/Observable';
 import { UserState } from '../reducers/user.reducer';
 import { Partner } from '../../../models/partner';
+import { GlobalUser } from '../../../models/global-user';
 import { GlobalUserState } from '../../../store/reducers/global-user.reducer';
 import { LoadUserSuccess } from '../index';
 import {
   GLOBAL_USER_UPDATE,
   GlobalUserUpdate,
 } from '../../../store/actions/global-user.action';
+import { GRADUATION } from '../../../../config';
 
 @Injectable()
 export class UserEffects {
@@ -56,8 +58,8 @@ export class UserEffects {
       .ofType(GLOBAL_USER_UPDATE)
       .map(a => (<GlobalUserUpdate>a).payload)
   ).pipe(
-    switchMap(([action, globalUser]) => {
-      const user = (<LoadUserSuccess>action).payload;
+    switchMap(([action, globalUser]: [LoadUserSuccess, GlobalUser]) => {
+      const user = action.payload;
       const userType = user.status;
       switch (userType) {
         case null: {
@@ -73,7 +75,11 @@ export class UserEffects {
           ];
         }
         case 'registrant': {
-          return [new metaInfoActions.UpdateUserType(USER_TYPE.REGISTRANT)];
+          return [
+            new metaInfoActions.UpdateUserType(USER_TYPE.REGISTRANT),
+            new metaInfoActions.UpdateSelectedInstitutes(user.institutes),
+            new metaInfoActions.UpdateGraduation(<GRADUATION>user.graduation),
+          ];
         }
         // TODO
       }

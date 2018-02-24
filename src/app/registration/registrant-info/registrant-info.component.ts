@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { UserState } from '../store/reducers/user.reducer';
 import { MetaInfoState } from '../store/reducers/meta-info.reducer';
 import * as selectors from '../store/selectors';
+import { USER_TYPE } from '../../models/user-type';
 
 @Component({
   selector: 'app-registrant-info',
@@ -16,10 +17,18 @@ export class RegistrantInfoComponent implements OnInit {
   );
   public readonly user = this.userStore.select(selectors.getUser);
 
+  public readonly USER_TYPE = USER_TYPE;
+
   constructor(
     private userStore: Store<UserState>,
     private metaInfoStore: Store<MetaInfoState>
   ) {}
+
+  signout() {}
+
+  accept() {}
+
+  deny() {}
 
   ngOnInit() {}
 }

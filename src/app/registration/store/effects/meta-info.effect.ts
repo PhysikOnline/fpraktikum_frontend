@@ -46,17 +46,17 @@ export class MetaInfoEffects {
         case USER_TYPE.NOT_REGISTERED: {
           return new fromRoot.Go({ path: ['registration', 'info'] });
         }
-        case USER_TYPE.REGISTRANT: {
+        default: {
           return new fromRoot.Go({ path: ['registration', 'info-registrant'] });
         }
-        case USER_TYPE.ON_WAITLIST: {
-          return new fromRoot.Go({
-            path: ['registration', 'info-on-waitlist'],
-          });
-        }
-        case USER_TYPE.PARTNER: {
-          return new fromRoot.Go({ path: ['registration', 'info-partner'] });
-        }
+        // case USER_TYPE.ON_WAITLIST: {
+        //   return new fromRoot.Go({
+        //     path: ['registration', 'info-on-waitlist'],
+        //   });
+        // }
+        // case USER_TYPE.PARTNER: {
+        //   return new fromRoot.Go({ path: ['registration', 'info-partner'] });
+        // }
       }
     })
   );

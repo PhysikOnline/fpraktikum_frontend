@@ -1,1 +1,31 @@
+<h1>Informationen zu deiner Anmeldung</h1>
+
+<p [ngSwitch]="userType | async">
+  <ng-container *ngSwitchCase="USER_TYPE.REGISTRANT">
+    Du bist für das Fortgeschrittenen Praktikum
+    <strong>angemeldet</strong>. Hier sind deine Daten.
+  </ng-container>
+  <ng-container *ngSwitchCase="USER_TYPE.PARTNER">
+    Du wurdest von {{ (user.pluck('registrant') | async)?.name }} als
+    <strong>Partner</strong> angemeldet. Bitte bestätige deine Anmeldung oder lehne sie ab.
+  </ng-container>
+  <ng-container *ngSwitchCase="USER_TYPE.ON_WAITLIST">
+    Du stehst auf der
+    <strong>Warteliste</strong>. Hier sind deine Daten.
+  </ng-container>
+</p>
+
 <app-info-list [user]="user | async" [partner]="user.pluck('partner') | async" [info]="metaInfo | async"></app-info-list>
+
+<div [ngSwitch]="userType | async" class="mt-2">
+  <ng-container *ngSwitchCase="USER_TYPE.REGISTRANT">
+    <button mat-raised-button color="warn" (click)="signout()">Abmelden</button>
+  </ng-container>
+  <ng-container *ngSwitchCase="USER_TYPE.PARTNER">
+    <button mat-raised-button color="accent" (click)="accept()">Bestätigen</button>
+    <button mat-raised-button color="warn" (click)="deny()">Abmelden</button>
+  </ng-container>
+  <ng-container *ngSwitchCase="USER_TYPE.ON_WAITLIST">
+    <button mat-raised-button color="warn" (click)="signout()">Abmelden</button>
+  </ng-container>
+</div>
