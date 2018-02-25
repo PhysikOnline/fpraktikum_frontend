@@ -30,7 +30,6 @@ export class PartnerEffects {
       return this.apiService.checkPartner(p.name, p.number).pipe(
         map(partner => new CheckPartnerSuccess(partner)),
         catchError(error => {
-          console.log(error);
           return of(new CheckPartnerFail(error));
         })
       );
@@ -50,14 +49,16 @@ export class PartnerEffects {
       if (!partner) {
         return new ChangePartnerType(ChosenPartner.doesNotExist);
       }
-      if (partner.status === UserType.notRegistered) {
-        return new ChangePartnerType(ChosenPartner.notRegistered);
+      if (partner.status === UserType.registrant) {
+        return new ChangePartnerType(ChosenPartner.registeredAndFree);
       } else if (partner.graduation !== user.graduation) {
         return new ChangePartnerType(ChosenPartner.hasDifferentGraduation);
+      } else if (partner.login !== user.login) {
+        return new ChangePartnerType(ChosenPartner.sameAsUser);
       } else if (partner.partner || partner.registrant) {
         return new ChangePartnerType(ChosenPartner.hasPartner);
       } else {
-        return new ChangePartnerType(ChosenPartner.registeredAndFree);
+        return new ChangePartnerType(ChosenPartner.notRegistered);
       }
     })
   );

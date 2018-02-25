@@ -25,6 +25,10 @@ export const SEND_WAITLIST = '[User] Send Waitlist';
 export const SEND_WAITLIST_SUCCESS = '[User] Send Waitlist Success';
 export const SEND_WAITLIST_FAIL = '[User] Send Waitlist Fail';
 
+export const ACCEPT_DENY_PARTNER = '[User] Send Accept Partner';
+export const ACCEPT_DENY_PARTNER_SUCCESS = '[User] Send Accept Partner Success';
+export const ACCEPT_DENY_PARTNER_FAIL = '[User] Send Accept Partner Fail';
+
 export class LoadUser implements Action {
   readonly type = LOAD_USER;
 }
@@ -91,6 +95,20 @@ export class SendWaitlistFail implements Action {
   constructor(public payload: any) {}
 }
 
+export class AcceptDenyPartner implements Action {
+  readonly type = ACCEPT_DENY_PARTNER;
+  constructor(public payload: boolean) {}
+}
+
+export class AcceptDenyPartnerSuccess implements Action {
+  readonly type = ACCEPT_DENY_PARTNER_SUCCESS;
+}
+
+export class AcceptDenyPartnerFail implements Action {
+  readonly type = ACCEPT_DENY_PARTNER_FAIL;
+  constructor(public payload: any) {}
+}
+
 export type UserAction =
   | LoadUser
   | LoadUserFail
@@ -103,4 +121,7 @@ export type UserAction =
   | SendRegistrationFail
   | Signout
   | SignoutSuccess
-  | SignoutFail;
+  | SignoutFail
+  | AcceptDenyPartner
+  | AcceptDenyPartnerSuccess
+  | AcceptDenyPartnerFail;

@@ -12,7 +12,7 @@ export interface UserApiModel {
   notes?: string;
   institutes?: InstituteApiModel[];
   status?: string;
-  partner?: PartnerApiModel;
+  partner?: UserApiModel;
   graduation?: string;
   partner_has_accepted?: boolean;
   has_accepted?: boolean;
@@ -28,7 +28,7 @@ export class User extends Record {
     const institutes = record.institutes
       ? record.institutes.map(i => Institute.fromApiType(i))
       : null;
-    const partner = record.partner ? Partner.fromApiType(record.partner) : null;
+    const partner = record.partner ? User.fromApiType(record.partner) : null;
     const registrant = record.registrant
       ? User.fromApiType(record.registrant)
       : null;
@@ -90,7 +90,7 @@ export class User extends Record {
     public matrikel?: string,
     public notes?: string,
     public institutes?: Institute[],
-    public partner?: Partner,
+    public partner?: User,
     public hasPartnerAccepted?: boolean,
     public hasAccepted?: boolean,
     public registrant?: User
