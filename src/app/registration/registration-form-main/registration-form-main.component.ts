@@ -36,11 +36,12 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
   readonly partner = this.partnerStore.select(selectors.getPartner);
   readonly partnerType = this.partnerStore.select(selectors.getPartnerType);
 
-  readonly partnerAcceptable = this.partnerType.map(
-    type => type === ChosenPartner.notRegistered
-  );
   readonly chooseOnlyOneInstitute = this.userGraduation.map(
     g => g === GRADUATION.LA
+  );
+
+  readonly partnerAcceptable = this.partnerType.map(
+    type => type === ChosenPartner.notRegistered
   );
 
   readonly availableInstitutes = this.metaStore.select(
@@ -51,12 +52,15 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     selectors.getSelectedInstitutes
   );
 
+  readonly selectedInstitutesOk = Observable.combineLatest(
+    this.chooseOnlyOneInstitute,
+    this.selectedInstitutes
+  ).pipe(map(([one, institutes]) => institutes.length === (one ? 1 : 2)));
+
   readonly partnerForm: FormGroup;
-  institutesForm: FormGroup;
   readonly notesForm: FormGroup;
 
   readonly partnerInput = new Subject();
-  readonly institutesSelect: ReplaySubject<Institute> = new ReplaySubject(1);
   readonly notesInput: ReplaySubject<void> = new ReplaySubject(1);
 
   readonly noPartner = new BehaviorSubject(false);
@@ -76,28 +80,7 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     this.notesForm = formBuilder.group({
       notes: [''],
     });
-    this.chooseOnlyOneInstitute.subscribe(console.log);
     this.userGraduation.subscribe(console.log);
-
-    this.sink = this.chooseOnlyOneInstitute.subscribe(res => {
-      if (res) {
-        this.institutesForm = formBuilder.group({
-          institutes: ['', Validators.required],
-        });
-      } else {
-        this.institutesForm = formBuilder.group({
-          institutes1: ['', Validators.required],
-          institutes2: ['', Validators.required],
-        });
-      }
-    });
-
-    this.sink = Observable.combineLatest(
-      this.institutesSelect,
-      this.chooseOnlyOneInstitute
-    ).subscribe(([institute, oneInstitute]) => {
-      this.updateInstitutes(institute, oneInstitute);
-    });
 
     this.sink = this.partnerInput
       .pipe(filter(() => this.partnerForm.valid), debounceTime(500))
@@ -131,43 +114,14 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
   }
 
   startNextStep() {
-    if (this.institutesForm.invalid) {
-      return;
-    }
     this.metaStore.dispatch(new UpdateRegistrationStep(REGISTRATION_STEP.END));
   }
 
-  private updateInstitutes(institute: Institute, oneInstitute: boolean): void {
-    if (oneInstitute) {
-      return this.metaStore.dispatch(new UpdateSelectedInstitutes([institute]));
-    }
-    const index = this.institutes.findIndex(
-      i => i.semesterHalf === institute.semesterHalf
-    );
-    if (index > -1) {
-      this.institutes[index] = institute;
-    } else {
-      this.institutes.push(institute);
-    }
-    return this.metaStore.dispatch(
-      new UpdateSelectedInstitutes(this.institutes)
-    );
-  }
-
-  shouldOptionBeDisabled(instituteName, semesterHalf) {
-    const otherHalf = semesterHalf % 2 + 1;
-    return this.selectedInstitutes.pipe(
-      filter(i => !!i),
-      map(institutes =>
-        institutes.find(
-          i => i.name === instituteName && i.semesterHalf === otherHalf
-        )
-      )
-    );
+  private updateInstitutes(institutes: Institute[]): void {
+    return this.metaStore.dispatch(new UpdateSelectedInstitutes(institutes));
   }
 
   resetInstitutes() {
-    this.institutesForm.reset();
     this.metaStore.dispatch(new UpdateSelectedInstitutes([]));
   }
 

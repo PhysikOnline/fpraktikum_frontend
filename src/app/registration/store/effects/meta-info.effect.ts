@@ -125,7 +125,7 @@ export class MetaInfoEffects {
   ).pipe(
     withLatestFrom(this.metaInfoStore.select(metaInfoSelectors.getGraduation)),
     map(([[partner, availableInstitutes], graduation]) => {
-      const placesNeeded = partner ? 2 : 100;
+      const placesNeeded = partner ? 2 : 1;
       let areEnoughPlacesAvailable = true;
       if (graduation === GRADUATION.LA) {
         areEnoughPlacesAvailable = availableInstitutes.some(

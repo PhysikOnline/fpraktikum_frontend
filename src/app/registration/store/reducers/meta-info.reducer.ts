@@ -46,10 +46,10 @@ export function reducer(
       return { ...state, userType: action.payload };
     }
     case fromMetaInfo.UPDATE_AVAILABLE_INSTITUTE: {
-      return { ...state, avInstitutes: action.payload };
+      return { ...state, avInstitutes: action.payload || [] };
     }
     case fromMetaInfo.UPDATE_SELECTED_INSTITUTE: {
-      return { ...state, selectedInstitutes: action.payload };
+      return { ...state, selectedInstitutes: action.payload || [] };
     }
   }
   return state;
