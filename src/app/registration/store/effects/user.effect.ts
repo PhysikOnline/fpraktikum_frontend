@@ -126,7 +126,7 @@ export class UserEffects {
     map((a: userActions.SendWaitlist) => a.payload),
     withLatestFrom(this.userStore.select(fromSelectors.getUser)),
     switchMap(([institutes, user]: [Institute[], User]) => {
-      // TODO add institutes
+      user.institutes = institutes;
       return this.apiService
         .writeOnWaitinglist(user)
         .pipe(

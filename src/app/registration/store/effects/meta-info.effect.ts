@@ -88,15 +88,10 @@ export class MetaInfoEffects {
             (<registrationActions.LoadRegistrationInfoSuccess>a).payload
               .institutes
         )
-      ),
-    this.partnerStore.select(partnerSelectors.getPartner)
+      )
   ).pipe(
-    map(([bio, graduation, masterIT, institutes, partner]) => {
-      const placesNeeded = partner ? 2 : 1;
+    map(([bio, graduation, masterIT, institutes]) => {
       const avInstitutes = institutes.filter(i => {
-        if (i.places < placesNeeded) {
-          return false;
-        }
         if (graduation !== i.graduation) {
           return false;
         }
@@ -122,7 +117,7 @@ export class MetaInfoEffects {
   ).pipe(
     withLatestFrom(this.metaInfoStore.select(metaInfoSelectors.getGraduation)),
     map(([[partner, availableInstitutes], graduation]) => {
-      const placesNeeded = partner ? 2 : 1;
+      const placesNeeded = partner ? 2 : 100;
       let areEnoughPlacesAvailable = true;
       if (graduation === GRADUATION.LA) {
         areEnoughPlacesAvailable = availableInstitutes.some(
