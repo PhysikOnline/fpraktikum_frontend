@@ -51,14 +51,6 @@ export class MetaInfoEffects {
         case USER_TYPE.NOT_REGISTERED: {
           return new fromRoot.Go({ path: ['registration', 'info'] });
         }
-        // case USER_TYPE.ON_WAITLIST: {
-        //   return new fromRoot.Go({
-        //     path: ['registration', 'info-on-waitlist'],
-        //   });
-        // }
-        case USER_TYPE.PARTNER: {
-          return new fromRoot.Go({ path: ['registration', 'info-partner'] });
-        }
         default: {
           return new fromRoot.Go({ path: ['registration', 'info-registrant'] });
         }
@@ -96,10 +88,15 @@ export class MetaInfoEffects {
             (<registrationActions.LoadRegistrationInfoSuccess>a).payload
               .institutes
         )
-      )
+      ),
+    this.partnerStore.select(partnerSelectors.getPartner)
   ).pipe(
-    map(([bio, graduation, masterIT, institutes]) => {
+    map(([bio, graduation, masterIT, institutes, partner]) => {
+      const placesNeeded = partner ? 2 : 1;
       const avInstitutes = institutes.filter(i => {
+        if (i.places < placesNeeded) {
+          return false;
+        }
         if (graduation !== i.graduation) {
           return false;
         }

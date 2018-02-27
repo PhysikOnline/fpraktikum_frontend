@@ -33,7 +33,7 @@
       </div>
     </form>
   </mat-step>
-  <mat-step>
+  <mat-step [stepControl]="instituteForm">
     <ng-template matStepLabel>Institute</ng-template>
     <div class="step-body">
       <app-institute-form [graduation]="userGraduation | async" [institutes]="availableInstitutes | async"

@@ -1,7 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { GRADUATION } from '../../../config';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { MetaInfoState } from '../store/reducers/meta-info.reducer';
 import { Store } from '@ngrx/store';
@@ -59,6 +64,7 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
 
   readonly partnerForm: FormGroup;
   readonly notesForm: FormGroup;
+  readonly instituteForm: FormGroup;
 
   readonly partnerInput = new Subject();
   readonly notesInput: ReplaySubject<void> = new ReplaySubject(1);
@@ -67,6 +73,18 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
 
   institutes: Institute[] = [];
 
+  validatePartner(control: AbstractControl) {
+    return this.partnerAcceptable.map(res => {
+      return res ? null : { partnerInvalid: true };
+    });
+  }
+
+  validateInstitutes(control: AbstractControl) {
+    return this.selectedInstitutesOk.map(res => {
+      return res ? null : { institutesInvalid: true };
+    });
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private metaStore: Store<MetaInfoState>,
@@ -74,16 +92,19 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     private userStore: Store<UserState>
   ) {
     this.partnerForm = formBuilder.group({
-      partnerNumber: ['', Validators.required],
-      partnerName: ['', Validators.required],
+      partnerNumber: ['', Validators.required, this.validatePartner.bind(this)],
+      partnerName: ['', Validators.required, this.validatePartner.bind(this)],
     });
     this.notesForm = formBuilder.group({
       notes: [''],
     });
+    this.instituteForm = formBuilder.group({
+      nop: ['', [], this.validateInstitutes.bind(this)],
+    });
     this.userGraduation.subscribe(console.log);
 
     this.sink = this.partnerInput
-      .pipe(filter(() => this.partnerForm.valid), debounceTime(500))
+      .pipe(debounceTime(500))
       .subscribe(this.checkPartner.bind(this));
     this.sink = this.noPartner.subscribe(this.onNoPartner.bind(this));
     this.sink = this.notesInput
@@ -95,7 +116,9 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     const number = this.partnerForm.get('partnerNumber').value;
     const name = this.partnerForm.get('partnerName').value;
 
-    this.partnerStore.dispatch(new CheckPartner({ number, name }));
+    if (number && name) {
+      this.partnerStore.dispatch(new CheckPartner({ number, name }));
+    }
   }
 
   private onNoPartner(res: boolean): void {
