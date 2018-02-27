@@ -124,9 +124,15 @@ export class UserEffects {
   @Effect()
   waitlist$ = this.actions$.ofType(userActions.SEND_WAITLIST).pipe(
     map((a: userActions.SendWaitlist) => a.payload),
-    withLatestFrom(this.userStore.select(fromSelectors.getUser)),
-    switchMap(([institutes, user]: [Institute[], User]) => {
+    withLatestFrom(
+      Observable.combineLatest(
+        this.metaStore.select(fromSelectors.getMetaInfoState),
+        this.userStore.select(fromSelectors.getUser)
+      )
+    ),
+    switchMap(([institutes, [metaInfo, user]]) => {
       user.institutes = institutes;
+      user.graduation = metaInfo.graduation;
       return this.apiService
         .writeOnWaitinglist(user)
         .pipe(
