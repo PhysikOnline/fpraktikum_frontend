@@ -15,8 +15,7 @@ export class ErrorDialogComponent implements OnInit {
     this.error = data.error;
     this.content = data.content;
     this.title = data.isBackend ? 'ERROR_TITLE_BACKEND' : 'ERROR_TITLE_GENERIC';
-    // this.desc = data.isBackend ? 'ERROR_BACKEND_DESC' : '';
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }
