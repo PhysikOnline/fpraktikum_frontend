@@ -7,6 +7,7 @@ import { RegistrationGuard } from './guards/registraton.guard';
 import { RegistrationEndComponent } from './registration-end/registration-end.component';
 import { RegistrantInfoComponent } from './registrant-info/registrant-info.component';
 import { RegistrationWaitlistComponent } from './registration-waitlist/registration-waitlist.component';
+import { InTimeGuard } from './guards/intime.guard';
 
 export const routes: Route[] = [
   {
@@ -18,14 +19,17 @@ export const routes: Route[] = [
       {
         path: 'preflight',
         component: RegistrationFormPreflightComponent,
+        canActivate: [InTimeGuard],
       },
       {
         path: 'main',
         component: RegistrationFormMainComponent,
+        canActivate: [InTimeGuard],
       },
       {
         path: 'end',
         component: RegistrationEndComponent,
+        canActivate: [InTimeGuard],
       },
       {
         path: 'info-registrant',
@@ -34,6 +38,7 @@ export const routes: Route[] = [
       {
         path: 'waitlist',
         component: RegistrationWaitlistComponent,
+        canActivate: [InTimeGuard],
       },
     ],
   },

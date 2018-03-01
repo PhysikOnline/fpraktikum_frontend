@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner-info.component';
 import { InfoListComponent } from './info-list/info-list.component';
 import { InstituteFormComponent } from './institute-form/institute-form.component';
+import { LoadingButtonDirective } from './loading-button/loading-button.directive';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { InstituteFormComponent } from './institute-form/institute-form.componen
     ChosenPartnerInfoComponent,
     InfoListComponent,
     InstituteFormComponent,
+    LoadingButtonDirective,
   ],
   exports: [
     StepComponent,
@@ -41,6 +43,7 @@ import { InstituteFormComponent } from './institute-form/institute-form.componen
     ChosenPartnerInfoComponent,
     InfoListComponent,
     InstituteFormComponent,
+    LoadingButtonDirective,
   ],
 })
 export class ThemeModule {}

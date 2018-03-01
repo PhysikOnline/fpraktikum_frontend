@@ -10,21 +10,7 @@ import { Store } from '@ngrx/store/src/store';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  showView = true;
-  inTime: InTime = InTime.inTime;
-  inTimeEnum = InTime;
-
   constructor() {}
-
-  private isInTime(date) {
-    const now = DateService.now();
-    if (now < date.start) {
-      this.inTime = InTime.tooEarly;
-    }
-    if (now > date.end) {
-      this.inTime = InTime.tooLate;
-    }
-  }
 
   ngOnInit() {}
 }
