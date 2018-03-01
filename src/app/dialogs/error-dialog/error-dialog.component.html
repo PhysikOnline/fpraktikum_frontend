@@ -1,7 +1,17 @@
 <h2 mat-dialog-title>{{ title | translate }}</h2>
 <mat-dialog-content>
-  <p *ngIf="desc" [innerHtml]="desc | translate"></p>
-  <pre *ngIf="content">{{ content | json }}</pre>
+  <p *ngIf="content" [innerHtml]="content | translate"></p>
+  <mat-accordion *ngIf="error">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Technische Details
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <pre>{{ error | json }}</pre>
+
+    </mat-expansion-panel>
+  </mat-accordion>
   <p [innerHtml]="'ERROR_HELP' | translate:(content)"></p>
 </mat-dialog-content>
 <mat-dialog-actions>

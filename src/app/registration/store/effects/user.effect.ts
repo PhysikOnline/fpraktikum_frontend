@@ -83,6 +83,10 @@ export class UserEffects {
             appUserType = USER_TYPE.NOT_REGISTERED;
             break;
           }
+          case 'partner': {
+            appUserType = USER_TYPE.PARTNER;
+            break;
+          }
           default: {
             appUserType = USER_TYPE.REGISTRANT;
           }
@@ -120,9 +124,15 @@ export class UserEffects {
   @Effect()
   waitlist$ = this.actions$.ofType(userActions.SEND_WAITLIST).pipe(
     map((a: userActions.SendWaitlist) => a.payload),
-    withLatestFrom(this.userStore.select(fromSelectors.getUser)),
-    switchMap(([institutes, user]: [Institute[], User]) => {
-      // TODO add institutes
+    withLatestFrom(
+      Observable.combineLatest(
+        this.metaStore.select(fromSelectors.getMetaInfoState),
+        this.userStore.select(fromSelectors.getUser)
+      )
+    ),
+    switchMap(([institutes, [metaInfo, user]]) => {
+      user.institutes = institutes;
+      user.graduation = metaInfo.graduation;
       return this.apiService
         .writeOnWaitinglist(user)
         .pipe(
@@ -145,7 +155,11 @@ export class UserEffects {
     switchMap(([metaInfo, partner, user]) => {
       user.graduation = metaInfo.graduation;
       user.institutes = metaInfo.selectedInstitutes;
-      user.partner = partner ? Partner.fromApiType(partner.toApiType()) : null;
+      user.partner = partner ? User.fromApiType(partner.toApiType()) : null;
+      if (user.partner) {
+        user.partner.institutes = user.institutes;
+        user.partner.notes = user.notes;
+      }
       return this.apiService
         .postUser(user)
         .pipe(
@@ -168,4 +182,27 @@ export class UserEffects {
           new userActions.LoadUserSuccess(action.payload)
       )
     );
+
+  @Effect()
+  acceptPartner$ = this.actions$
+    .ofType(userActions.ACCEPT_DENY_PARTNER)
+    .pipe(
+      map((a: userActions.AcceptDenyPartner) => a.payload),
+      withLatestFrom(this.userStore.select(fromSelectors.getUser)),
+      switchMap(([accept, user]) =>
+        this.apiService
+          .acceptDecline(user, accept)
+          .pipe(
+            map(() => new userActions.AcceptDenyPartnerSuccess()),
+            catchError(error =>
+              of(new userActions.AcceptDenyPartnerFail(error))
+            )
+          )
+      )
+    );
+
+  @Effect()
+  acceptPartnerSuccess$ = this.actions$
+    .ofType(userActions.ACCEPT_DENY_PARTNER_SUCCESS)
+    .pipe(map(() => new userActions.LoadUser()));
 }

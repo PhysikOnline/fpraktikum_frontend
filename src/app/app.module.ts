@@ -48,6 +48,7 @@ export const ROUTES: Routes = [
   imports: [
     BrowserModule,
     ServiceModule,
+    DialogsModule,
     BrowserAnimationsModule,
     FormsModule,
     StarRatingModule.forRoot(),

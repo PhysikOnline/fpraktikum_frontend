@@ -1,3 +1,7 @@
-<p>
-  registration-waitlist works!
-</p>
+<h1>Warteliste</h1>
+<div id="waitlist-form">
+  <app-institute-form [institutes]="institutes | async" (institutesSelected)="institutesSelected.next($event)"
+    [graduation]="graduation | async"></app-institute-form>
+
+  <button mat-raised-button color="accent" (click)="send()">Abschicken</button>
+</div>

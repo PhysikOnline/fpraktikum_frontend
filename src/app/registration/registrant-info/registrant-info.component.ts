@@ -5,7 +5,7 @@ import { MetaInfoState } from '../store/reducers/meta-info.reducer';
 import * as selectors from '../store/selectors';
 import { USER_TYPE } from '../../models/user-type';
 import { AlertService } from '../../services/alert.service';
-import { Signout } from '../store/index';
+import { Signout, AcceptDenyPartner } from '../store/index';
 
 @Component({
   selector: 'app-registrant-info',
@@ -35,9 +35,17 @@ export class RegistrantInfoComponent implements OnInit {
     });
   }
 
-  accept() {}
+  accept() {
+    this.userStore.dispatch(new AcceptDenyPartner(true));
+  }
 
-  deny() {}
+  deny() {
+    this.alert.showQuestionDialog('Wirklich ablehnen?').then(res => {
+      if (res) {
+        this.userStore.dispatch(new AcceptDenyPartner(false));
+      }
+    });
+  }
 
   ngOnInit() {}
 }

@@ -90,23 +90,16 @@ export class ApiService {
   }
 
   acceptDecline(user: User, accept: boolean): Observable<void> {
-    const req = this.http
-      .post(
-        `${this._apiUrl}/accept/`,
-        AcceptDecline.fromUser(user, accept).toApiType(),
-        {
-          responseType: 'text',
-        }
-      )
-      .map((res: string) => {
-        if (res) {
-          return User.fromApiType(JSON.parse(res));
-        } else {
-          return null;
-        }
-      })
-      .catch(this.handleError);
-    return this.makeRequest(req);
+    let req;
+    if (accept) {
+      req = this.http.put(
+        `${this._apiUrl}/user_partner/${user.id}/`,
+        user.toApiType()
+      );
+    } else {
+      req = this.http.delete(`${this._apiUrl}/user_partner/${user.id}/`);
+    }
+    return this.makeRequest(req.catch(this.handleError));
   }
 
   writeOnWaitinglist(user: User): Observable<void> {

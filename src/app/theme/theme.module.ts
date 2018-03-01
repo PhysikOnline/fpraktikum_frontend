@@ -8,9 +8,10 @@ import { RatingComponent } from './rating/rating.component';
 import { MaterialModule } from '../material/material.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { StarRatingModule } from 'angular-star-rating';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChosenPartnerInfoComponent } from './chosen-partner-info/chosen-partner-info.component';
 import { InfoListComponent } from './info-list/info-list.component';
+import { InstituteFormComponent } from './institute-form/institute-form.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { InfoListComponent } from './info-list/info-list.component';
     PipesModule,
     StarRatingModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     StepComponent,
@@ -28,6 +30,7 @@ import { InfoListComponent } from './info-list/info-list.component';
     RatingComponent,
     ChosenPartnerInfoComponent,
     InfoListComponent,
+    InstituteFormComponent,
   ],
   exports: [
     StepComponent,
@@ -37,6 +40,7 @@ import { InfoListComponent } from './info-list/info-list.component';
     RatingComponent,
     ChosenPartnerInfoComponent,
     InfoListComponent,
+    InstituteFormComponent,
   ],
 })
 export class ThemeModule {}
