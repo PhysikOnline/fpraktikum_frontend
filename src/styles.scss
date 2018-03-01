@@ -121,3 +121,42 @@ mat-radio-button {
 .mt-3 {
   margin-top: 3rem !important;
 }
+
+.btn-loading-btn {
+  display: inline-flex;
+  align-items: baseline;
+  .loading-icon {
+    line-height: 30px;
+    margin-bottom: 0;
+    vertical-align: middle;
+    margin-right: 0.25rem;
+    margin-left: calc(-1em - 0.25rem);
+    transition: opacity 0.3s, margin-left 0.2s 0.15s;
+    opacity: 0;
+  }
+
+  &.is-loading {
+    .loading-icon {
+      transition: opacity 0.3s 0.1s, margin-left 0.2s;
+      opacity: 1;
+      margin-left: 0;
+      animation: spin 2s linear infinite;
+      @-moz-keyframes spin {
+        100% {
+          -moz-transform: rotate(360deg);
+        }
+      }
+      @-webkit-keyframes spin {
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+      @keyframes spin {
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
+}

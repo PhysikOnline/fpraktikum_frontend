@@ -32,7 +32,8 @@
   </mat-expansion-panel>
 </mat-accordion>
 
-<button id="go-btn" mat-raised-button color="primary" [disabled]="!(startBtn$.pluck('active') | async)"
+<button id="go-btn" mat-raised-button color="primary" appLoadingButton [disabled]="!(startBtn$.pluck('active') | async)"
   (click)="startRegistration()">
   {{ startBtn$.pluck( 'text') | async }}
 </button>
+<button (click)="test()">Test</button>

@@ -13,6 +13,7 @@ import {
   UpdateRegistrationStep,
 } from '../store/actions/meta-info.action';
 import { REGISTRATION_STEP } from '../../models/registration-step';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-registration-info',
@@ -55,8 +56,13 @@ export class RegistrationInfoComponent implements OnInit {
   constructor(
     private regInfoStore: Store<RegistrationInfoState>,
     private userStore: Store<UserState>,
-    private metaInfoStore: Store<MetaInfoState>
+    private metaInfoStore: Store<MetaInfoState>,
+    private loadingService: LoadingService
   ) {}
+
+  test() {
+    this.loadingService.add(Observable.timer(5000));
+  }
 
   ngOnInit() {}
 }
