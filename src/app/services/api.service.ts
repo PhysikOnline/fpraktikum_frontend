@@ -201,7 +201,7 @@ export class ApiService {
     return this.token.pipe(
       map(token => {
         return new HttpHeaders({
-          HTTP_TOKEN: token,
+          token,
         });
       })
     );
