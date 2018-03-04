@@ -11,7 +11,38 @@
         Informationen über die Anmeldung
       </mat-panel-title>
     </mat-expansion-panel-header>
-
+    <h3>Zeitpunkt</h3>
+    <p>
+      Die Anmeldung wird am {{ (registration$.pluck('startDate') | async) | date }} beginnen
+      und bis zum {{ (registration$.pluck('endDate') | async) | date }} offen sein.
+    </p>
+    <h3>Ablauf</h3>
+    <ol>
+      <li>
+        Zunächst fragen wir dich ein paar allgemeine Fragen:
+        <ul>
+          <li>In welchem Studiengang du studierst.</li>
+          <li>(Falls Masterstudent): Ob du den Master mit Schwerpunkt Computational Science
+            machst.
+          </li>
+          <li>Ob du das Modul "Einführung in die Biophysik" absolviert hast.</li>
+        </ul>
+      </li>
+      <li>
+        Du hast dann die Möglichkeit eine PartnerIn anzugeben, hierzu benötigst du ihre/seine
+        s-Nummer und Nachnamen. (Dieser Schritt ist optional.)
+      </li>
+      <li>
+        Falls ausreichend Plätze verfügbar sind, kannst du danach Institute für das Praktikum
+        auswählen und optional Bemerkungen zu deiner Anmeldung anzugeben.
+      </li>
+    </ol>
+    <h3>Warteliste</h3>
+    <p>
+      Sollten nicht genügend Plätze verfügbar sein, gibt es die Möglichkeit, dich auf eine
+      Warteliste eintragen zu lassen. Hierbei kann keine PartnerIn mit angemeldet
+      werden! Du hast die Möglichkeit, deine Wunschkonstellation von Instituten anzugeben.
+    </p>
   </mat-expansion-panel>
   <mat-expansion-panel>
     <mat-expansion-panel-header>
@@ -36,4 +67,3 @@
   (click)="startRegistration()">
   {{ startBtn$.pluck( 'text') | async }}
 </button>
-<button (click)="test()">Test</button>

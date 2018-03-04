@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Effect, Actions } from '@ngrx/effects';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, filter } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { merge } from 'rxjs/observable/merge';
 
@@ -95,8 +95,7 @@ export class MetaInfoEffects {
         if (graduation !== i.graduation) {
           return false;
         }
-        // FIXME
-        if (!bio && i.name === 'BMI????') {
+        if (!bio && i.name === 'IFB') {
           return false;
         }
         if (graduation === GRADUATION.MA && !masterIT && i.name === 'ITP') {
@@ -115,9 +114,10 @@ export class MetaInfoEffects {
       .ofType(metaInfoActions.UPDATE_AVAILABLE_INSTITUTE)
       .map((a: metaInfoActions.UpdateAvailableInstitutes) => a.payload)
   ).pipe(
+    filter(([p, i]) => !!i && i.length > 0),
     withLatestFrom(this.metaInfoStore.select(metaInfoSelectors.getGraduation)),
     map(([[partner, availableInstitutes], graduation]) => {
-      const placesNeeded = partner ? 2 : 100;
+      const placesNeeded = partner ? 2 : 1;
       let areEnoughPlacesAvailable = true;
       if (graduation === GRADUATION.LA) {
         areEnoughPlacesAvailable = availableInstitutes.some(

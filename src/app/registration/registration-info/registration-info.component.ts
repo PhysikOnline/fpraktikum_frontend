@@ -60,9 +60,5 @@ export class RegistrationInfoComponent implements OnInit {
     private loadingService: LoadingService
   ) {}
 
-  test() {
-    this.loadingService.add(Observable.timer(5000));
-  }
-
   ngOnInit() {}
 }

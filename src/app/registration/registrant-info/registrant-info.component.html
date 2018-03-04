@@ -19,13 +19,13 @@
 
 <div [ngSwitch]="userType | async" class="mt-2">
   <ng-container *ngSwitchCase="USER_TYPE.REGISTRANT">
-    <button mat-raised-button color="warn" (click)="signout()">Abmelden</button>
+    <button mat-raised-button color="warn" appLoadingButton (click)="signout()">Abmelden</button>
   </ng-container>
   <ng-container *ngSwitchCase="USER_TYPE.PARTNER">
-    <button mat-raised-button color="accent" (click)="accept()">Bestätigen</button>
-    <button mat-raised-button color="warn" (click)="deny()">Abmelden</button>
+    <button mat-raised-button color="accent" appLoadingButton (click)="accept()">Bestätigen</button>
+    <button mat-raised-button color="warn" appLoadingButton (click)="deny()">Abmelden</button>
   </ng-container>
   <ng-container *ngSwitchCase="USER_TYPE.ON_WAITLIST">
-    <button mat-raised-button color="warn" (click)="signout()">Abmelden</button>
+    <button mat-raised-button color="warn" appLoadingButton (click)="signout()">Abmelden</button>
   </ng-container>
 </div>

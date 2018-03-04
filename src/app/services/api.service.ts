@@ -19,7 +19,7 @@ import { Params } from '@angular/router';
 import { Http, RequestOptions } from '@angular/http';
 import * as Raven from 'raven-js';
 import { environment } from '../../environments/environment';
-import { map, catchError, switchMap, tap, filter } from 'rxjs/operators';
+import { map, catchError, switchMap, tap, filter, take } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { LoadingService } from './loading.service';
 import { Store } from '@ngrx/store';
@@ -144,18 +144,22 @@ export class ApiService {
   }
 
   writeOnWaitinglist(user: User): Observable<void> {
-    const req = this.http
-      .post(`${this._apiUrl}/waitlist/`, user.toApiType())
-      .catch(this.handleError);
+    const req = this.getHeaders().pipe(
+      switchMap(headers =>
+        this.http
+          .post(`${this._apiUrl}/waitlist/`, user.toApiType(), { headers })
+          .catch(this.handleError)
+      )
+    );
     return this.makeRequest(req);
   }
 
   removeFromWaitinglist(user: User): Observable<void> {
-    const req = this.http2
-      .delete(`${this._apiUrl}/waitlist/`, {
-        body: user.toApiType(),
-      })
-      .catch(this.handleError);
+    const req = this.getHeaders().pipe(
+      switchMap(headers =>
+        this.http.delete(`${this._apiUrl}/waitlist/`).catch(this.handleError)
+      )
+    );
     return this.makeRequest(req);
   }
 
@@ -199,6 +203,7 @@ export class ApiService {
 
   private getHeaders() {
     return this.token.pipe(
+      take(1),
       map(token => {
         return new HttpHeaders({
           token,
