@@ -39,7 +39,6 @@ export class UserEffects {
     private metaStore: Store<MetaInfoState>,
     private partnerStore: Store<PartnerState>,
     private userStore: Store<UserState>,
-    private globalUserStore: Store<GlobalUserState>,
     private alert: AlertService
   ) {}
 
