@@ -22,54 +22,54 @@ export class ErrorEffects {
   @Effect({ dispatch: false })
   registrationErrors$ = this.actions$
     .ofType(
-      regActions.LOAD_USER_FAIL,
-      regActions.LOAD_REGISTRATION_INFO_FAIL,
-      regActions.SEND_REGISTRATION_FAIL,
-      regActions.CHECK_PARTNER_FAIL,
-      regActions.ACCEPT_DENY_PARTNER_FAIL,
-      regActions.SEND_WAITLIST_FAIL,
-      regActions.SIGNOUT_FAIL
+    regActions.LOAD_USER_FAIL,
+    regActions.LOAD_REGISTRATION_INFO_FAIL,
+    regActions.SEND_REGISTRATION_FAIL,
+    regActions.CHECK_PARTNER_FAIL,
+    regActions.ACCEPT_DENY_PARTNER_FAIL,
+    regActions.SEND_WAITLIST_FAIL,
+    regActions.SIGNOUT_FAIL
     )
     .pipe(
-      tap(a => {
-        let text;
-        const error = (<any>a).payload;
-        switch (a.type) {
-          case regActions.LOAD_USER_FAIL:
-            text =
-              'Beim Laden der Nutzerinformationen ist etwas schief gelaufen!';
-            break;
-          case regActions.SEND_REGISTRATION_FAIL:
-            text =
-              'Beim Senden deiner Registrierung ist etwas schief gelaufen!';
-            break;
-          case regActions.LOAD_REGISTRATION_INFO_FAIL:
-            text =
-              'Beim Laden der Registrierungsinformation ist etwas schief gelaufen!';
-            break;
-          case regActions.CHECK_PARTNER_FAIL:
-            text =
-              'Beim Überprüfen deiner PartnerIn ist etwas schief gelaufen!';
-            break;
-          case regActions.ACCEPT_DENY_PARTNER_FAIL:
-            text =
-              'Beim Absenden deiner Zu-/Absage ist etwas schief gelaufen!';
-            break;
-          case regActions.SEND_WAITLIST_FAIL:
-            text =
-              'Beim Schreiben auf die Warteliste ist etwas schief gelaufen!';
-            break;
-          case regActions.SIGNOUT_FAIL:
-            text =
-              'Beim Senden deiner Abmeldung ist etwas schief gelaufen!';
-            break;
+    tap(a => {
+      let text;
+      const error = (<any>a).payload;
+      switch (a.type) {
+        case regActions.LOAD_USER_FAIL:
+          text =
+            'Beim Laden der Nutzerinformationen ist etwas schief gelaufen!';
+          break;
+        case regActions.SEND_REGISTRATION_FAIL:
+          text =
+            'Beim Senden deiner Registrierung ist etwas schief gelaufen!';
+          break;
+        case regActions.LOAD_REGISTRATION_INFO_FAIL:
+          text =
+            'Beim Laden der Registrierungsinformation ist etwas schief gelaufen!';
+          break;
+        case regActions.CHECK_PARTNER_FAIL:
+          text =
+            'Beim Überprüfen deiner PartnerIn ist etwas schief gelaufen!';
+          break;
+        case regActions.ACCEPT_DENY_PARTNER_FAIL:
+          text =
+            'Beim Absenden deiner Zu-/Absage ist etwas schief gelaufen!';
+          break;
+        case regActions.SEND_WAITLIST_FAIL:
+          text =
+            'Beim Schreiben auf die Warteliste ist etwas schief gelaufen!';
+          break;
+        case regActions.SIGNOUT_FAIL:
+          text =
+            'Beim Senden deiner Abmeldung ist etwas schief gelaufen!';
+          break;
 
-          default:
-            text = 'Etwas ist schief gelaufen!';
-            break;
-        }
-        this.showError(text, error);
-      })
+        default:
+          text = 'Etwas ist schief gelaufen!';
+          break;
+      }
+      this.showError(text, error);
+    })
     );
 
   private showError(text: string, error: any) {

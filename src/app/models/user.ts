@@ -17,6 +17,8 @@ export interface UserApiModel {
   partner_has_accepted?: boolean;
   has_accepted?: boolean;
   registrant?: UserApiModel;
+  institute_firsthalf?: string;
+  institute_secondhalf?: string;
 }
 
 export class User extends Record {
@@ -52,7 +54,9 @@ export class User extends Record {
       partner,
       record.partner_has_accepted,
       record.has_accepted,
-      registrant
+      registrant,
+      record.institute_firsthalf,
+      record.institute_secondhalf
     );
   }
 
@@ -76,6 +80,8 @@ export class User extends Record {
       status: this.status,
       partner: this.partner ? this.partner.toApiType() : null,
       partner_has_accepted: this.hasPartnerAccepted,
+      institute_firsthalf: this.instituteFirstHalf,
+      institute_secondhalf: this.instituteSecondHalf,
     };
   }
 
@@ -93,7 +99,9 @@ export class User extends Record {
     public partner?: User,
     public hasPartnerAccepted?: boolean,
     public hasAccepted?: boolean,
-    public registrant?: User
+    public registrant?: User,
+    public instituteFirstHalf?: string,
+    public instituteSecondHalf?: string
   ) {
     super();
   }

@@ -7,11 +7,11 @@ import { MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./error-dialog.component.scss'],
 })
 export class ErrorDialogComponent implements OnInit {
-  error: string;
+  error: any;
   title: string;
   content: string;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor( @Inject(MAT_DIALOG_DATA) public data: any) {
     this.error = data.error;
     this.content = data.content;
     this.title = data.isBackend ? 'ERROR_TITLE_BACKEND' : 'ERROR_TITLE_GENERIC';
