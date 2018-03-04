@@ -83,7 +83,11 @@ export class UserEffects {
             break;
           }
           case 'partner': {
-            appUserType = USER_TYPE.PARTNER;
+            if (user.hasAccepted) {
+              appUserType = USER_TYPE.REGISTRANT;
+            } else {
+              appUserType = USER_TYPE.PARTNER;
+            }
             break;
           }
           default: {

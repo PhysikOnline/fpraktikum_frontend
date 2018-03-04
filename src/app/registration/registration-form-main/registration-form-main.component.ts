@@ -45,9 +45,7 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     g => g === GRADUATION.LA
   );
 
-  readonly partnerAcceptable = this.partnerType.map(
-    type => type === ChosenPartner.notRegistered
-  );
+  readonly partnerAcceptable = new BehaviorSubject(false);
 
   readonly availableInstitutes = this.metaStore.select(
     selectors.getAvailableInstitutes
@@ -86,9 +84,7 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
   institutes: Institute[] = [];
 
   validatePartner(control: AbstractControl) {
-    return this.partnerAcceptable.map(res => {
-      return res ? null : { partnerInvalid: true };
-    });
+    return this.partnerAcceptable.getValue() ? null : { partnerInvalid: true };
   }
 
   validateInstitutes(control: AbstractControl) {
@@ -104,8 +100,11 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     private userStore: Store<UserState>
   ) {
     this.partnerForm = formBuilder.group({
-      partnerNumber: ['', Validators.required, this.validatePartner.bind(this)],
-      partnerName: ['', Validators.required, this.validatePartner.bind(this)],
+      partnerNumber: [
+        '',
+        [Validators.required, this.validatePartner.bind(this)],
+      ],
+      partnerName: ['', [Validators.required, this.validatePartner.bind(this)]],
     });
     this.notesForm = formBuilder.group({
       notes: [''],
@@ -124,6 +123,19 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
       .subscribe(this.onNotesUpdate.bind(this));
 
     this.sink = this.canTakePartner.subscribe(c => this.noPartner.next(!c));
+    this.sink = this.partner.filter(p => !!p).subscribe(partner => {
+      this.partnerForm.setValue({
+        partnerNumber: partner.login,
+        partnerName: partner.lastName,
+      });
+    });
+
+    this.sink = this.partnerType
+      .map(type => type === ChosenPartner.notRegistered)
+      .subscribe(res => {
+        this.partnerAcceptable.next(res);
+        this.partnerForm.setValue(this.partnerForm.value);
+      });
   }
 
   checkPartner() {
@@ -160,6 +172,12 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
 
   resetInstitutes() {
     this.metaStore.dispatch(new UpdateSelectedInstitutes([]));
+  }
+
+  goBack() {
+    this.metaStore.dispatch(
+      new UpdateRegistrationStep(REGISTRATION_STEP.PREFLIGHT)
+    );
   }
 
   ngOnInit() {}

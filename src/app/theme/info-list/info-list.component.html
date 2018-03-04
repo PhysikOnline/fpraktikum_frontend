@@ -23,7 +23,7 @@
   </mat-list-item>
   <mat-list-item class="info-list-item" *ngIf="info?.userType !== userType.ON_WAITLIST">
     <div class="list-identifier">{{ 'INSTITUTES' | translate }}</div>
-    <div *ngFor="let i of info?.selectedInstitutes" class="list-institute">{{ i.name }}</div>
+    <div *ngFor="let i of (user?.institutes || info?.selectedInstitutes)" class="list-institute">{{ i.name }}</div>
   </mat-list-item>
   <mat-list-item class="info-list-item" *ngIf="info?.userType === userType.ON_WAITLIST">
     <div class="list-identifier">{{ 'INSTITUTES' | translate }}</div>
