@@ -6,6 +6,8 @@ import { AbstractControl } from '@angular/forms/src/model';
 import { Store } from '@ngrx/store';
 import { MetaInfoState } from '../store/reducers/meta-info.reducer';
 import * as metaInfoActions from '../store/actions/meta-info.action';
+import * as selectors from '../store/selectors';
+import * as fromRoot from '../../store';
 import { Subscription } from 'rxjs/Subscription';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { UpdateHasCompletedBioModule } from '../store/actions/meta-info.action';
@@ -22,6 +24,10 @@ export class RegistrationFormPreflightComponent implements OnInit, OnDestroy {
     this.sub.add(sub);
   }
 
+  readonly userGraduation = this.metaStore.select(selectors.getGraduation);
+  readonly userMasterIT = this.metaStore.select(selectors.getIsMasterIt);
+  readonly userBio = this.metaStore.select(selectors.getHasCompletedBioModule);
+
   readonly graduation = GRADUATION;
 
   readonly graduationForm: FormGroup;
@@ -32,14 +38,13 @@ export class RegistrationFormPreflightComponent implements OnInit, OnDestroy {
   readonly masterITSelected: ReplaySubject<boolean> = new ReplaySubject(1);
   readonly biologySelected: ReplaySubject<boolean> = new ReplaySubject(1);
 
-  readonly masterITRequired = this.graduationSelected.map(
-    g => g === GRADUATION.MA
-  );
+  readonly masterITRequired = this.userGraduation.map(g => g === GRADUATION.MA);
 
   constructor(
     private formBuilder: FormBuilder,
     private metaStore: Store<MetaInfoState>
   ) {
+    this.userGraduation.subscribe(console.log);
     this.graduationForm = formBuilder.group({
       graduation: ['', Validators.required],
     });
@@ -70,6 +75,15 @@ export class RegistrationFormPreflightComponent implements OnInit, OnDestroy {
         new metaInfoActions.UpdateHasCompletedBioModule(b)
       )
     );
+    this.sink = this.userGraduation.subscribe(graduation =>
+      this.graduationForm.setValue({ graduation })
+    );
+    this.sink = this.userMasterIT.subscribe(masterIT =>
+      this.masterITForm.setValue({ masterIT })
+    );
+    this.sink = this.userBio.subscribe(biology =>
+      this.biologyForm.setValue({ biology })
+    );
   }
 
   startNextStep() {
@@ -78,6 +92,12 @@ export class RegistrationFormPreflightComponent implements OnInit, OnDestroy {
     }
     this.metaStore.dispatch(
       new metaInfoActions.UpdateRegistrationStep(REGISTRATION_STEP.MAIN)
+    );
+  }
+
+  goBack() {
+    this.metaStore.dispatch(
+      new metaInfoActions.UpdateRegistrationStep(REGISTRATION_STEP.INFO)
     );
   }
 

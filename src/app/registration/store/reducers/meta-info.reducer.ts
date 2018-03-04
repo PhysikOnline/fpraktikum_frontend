@@ -31,22 +31,35 @@ export function reducer(
 ): MetaInfoState {
   switch (action.type) {
     case fromMetaInfo.UPDATE_GRADUATION: {
-      return { ...state, graduation: action.payload };
+      return {
+        ...state,
+        graduation: action.payload,
+        selectedInstitutes: [],
+        isMasterIT: null,
+      };
     }
     case fromMetaInfo.UPDATE_REG_STEP: {
       return { ...state, registrationStep: action.payload };
     }
     case fromMetaInfo.UPDATE_MASTER_IT: {
-      return { ...state, isMasterIT: action.payload };
+      return { ...state, isMasterIT: action.payload, selectedInstitutes: [] };
     }
     case fromMetaInfo.UPDATE_BIO_MODULE: {
-      return { ...state, hasCompletedBioModule: action.payload };
+      return {
+        ...state,
+        hasCompletedBioModule: action.payload,
+        selectedInstitutes: [],
+      };
     }
     case fromMetaInfo.UPDATE_USER_TYPE: {
       return { ...state, userType: action.payload };
     }
     case fromMetaInfo.UPDATE_AVAILABLE_INSTITUTE: {
-      return { ...state, avInstitutes: action.payload || [] };
+      return {
+        ...state,
+        avInstitutes: action.payload || [],
+        selectedInstitutes: [],
+      };
     }
     case fromMetaInfo.UPDATE_SELECTED_INSTITUTE: {
       return { ...state, selectedInstitutes: action.payload || [] };

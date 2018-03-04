@@ -9,6 +9,7 @@
           <mat-radio-button [value]="graduation.LA">Lehramt</mat-radio-button>
         </mat-radio-group>
         <div class="step-btns">
+          <button mat-raised-button (click)="goBack()">Zurück</button>
           <button mat-raised-button color="primary" [disabled]="graduationForm.invalid" matStepperNext>Weiter</button>
         </div>
       </div>
