@@ -140,7 +140,7 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     this.metaStore.dispatch(new UpdateRegistrationStep(REGISTRATION_STEP.END));
   }
 
-  private updateInstitutes(institutes: Institute[]): void {
+  public updateInstitutes(institutes: Institute[]): void {
     return this.metaStore.dispatch(new UpdateSelectedInstitutes(institutes));
   }
 
