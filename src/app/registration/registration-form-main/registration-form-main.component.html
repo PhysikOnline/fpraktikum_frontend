@@ -11,6 +11,10 @@
         <p>
           Falls du die s-Nummer also nicht weißt, überspringe diesen Schritt einfach.
         </p>
+        <strong *ngIf="!(canTakePartner | async)">
+          Leider kannst du keine PartnerIn angeben, da nicht genügend Plätze für euch beide
+          vorhanden sind.
+        </strong>
         <mat-form-field>
           <input matInput placeholder="s000000" formControlName="partnerNumber" [value]="(partner | async)?.login || ''"
             (keyup)="partnerInput.next()">
@@ -23,7 +27,7 @@
         <app-chosen-partner-info *ngIf="!(noPartner | async)" [partner]="partner | async"
           [partnerStatus]="partnerType | async" style="margin-top: 30px"></app-chosen-partner-info>
         <div class="mt-1">
-          <mat-checkbox (change)="noPartner.next($event.checked)">
+          <mat-checkbox (change)="noPartner.next($event.checked)" [disabled]="!(canTakePartner | async)">
             Ich möchte keine Partnerin/keinen Partner angeben.
           </mat-checkbox>
         </div>

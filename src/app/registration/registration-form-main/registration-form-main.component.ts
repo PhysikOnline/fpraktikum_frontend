@@ -57,6 +57,18 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     selectors.getSelectedInstitutes
   );
 
+  // bit hacky...
+  readonly canTakePartner = this.availableInstitutes.map(institutes => {
+    return (
+      institutes.filter(i => i.graduation === GRADUATION.LA && i.places >= 2)
+        .length > 0 ||
+      (institutes.filter(i => i.semesterHalf === 1 && i.places >= 2).length >
+        0 &&
+        institutes.filter(i => i.semesterHalf === 2 && i.places >= 2).length >
+          0)
+    );
+  });
+
   readonly selectedInstitutesOk = Observable.combineLatest(
     this.chooseOnlyOneInstitute,
     this.selectedInstitutes
@@ -110,6 +122,8 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     this.sink = this.notesInput
       .pipe(debounceTime(500))
       .subscribe(this.onNotesUpdate.bind(this));
+
+    this.sink = this.canTakePartner.subscribe(c => this.noPartner.next(!c));
   }
 
   checkPartner() {
