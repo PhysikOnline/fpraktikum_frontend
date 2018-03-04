@@ -132,6 +132,17 @@ export class UserEffects {
     switchMap(([institutes, [metaInfo, user]]) => {
       user.institutes = institutes;
       user.graduation = metaInfo.graduation;
+      if (user.graduation === GRADUATION.LA) {
+        user.instituteFirstHalf = user.institutes[0].name;
+        user.instituteSecondHalf = user.institutes[0].name;
+      } else {
+        user.instituteFirstHalf = user.institutes.find(
+          i => i.semesterHalf === 1
+        ).name;
+        user.instituteSecondHalf = user.institutes.find(
+          i => i.semesterHalf === 2
+        ).name;
+      }
       return this.apiService
         .writeOnWaitinglist(user)
         .pipe(
