@@ -119,6 +119,9 @@ export class MetaInfoEffects {
     map(([[partner, availableInstitutes], graduation]) => {
       const placesNeeded = partner ? 2 : 1;
       let areEnoughPlacesAvailable = true;
+      const freeInstitutes = availableInstitutes.filter(
+        i => i.places >= placesNeeded
+      );
       if (graduation === GRADUATION.LA) {
         areEnoughPlacesAvailable = availableInstitutes.some(
           i => i.places >= placesNeeded
@@ -134,7 +137,7 @@ export class MetaInfoEffects {
       }
 
       return areEnoughPlacesAvailable
-        ? { type: 'NO_ACTION' }
+        ? new metaInfoActions.UpdateFreeInstitutes(freeInstitutes)
         : new registrationActions.NotEnoughPlaces();
     })
   );

@@ -48,7 +48,7 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
   readonly partnerAcceptable = new BehaviorSubject(false);
 
   readonly availableInstitutes = this.metaStore.select(
-    selectors.getAvailableInstitutes
+    selectors.getFreeInstitutes
   );
 
   readonly selectedInstitutes = this.metaStore.map(

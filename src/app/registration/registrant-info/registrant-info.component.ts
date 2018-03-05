@@ -35,6 +35,14 @@ export class RegistrantInfoComponent implements OnInit {
     });
   }
 
+  signoutWaitlist() {
+    this.alert.showQuestionDialog('Wirklich abmelden?').then(res => {
+      if (res) {
+        this.userStore.dispatch(new Signout());
+      }
+    });
+  }
+
   accept() {
     this.userStore.dispatch(new AcceptDenyPartner(true));
   }
