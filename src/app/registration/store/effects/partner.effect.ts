@@ -43,7 +43,7 @@ export class PartnerEffects {
   ).pipe(
     map(([p, u]) => [
       (<CheckPartnerSuccess>p).payload,
-      (<LoadUserSuccess>p).payload,
+      (<LoadUserSuccess>u).payload,
     ]),
     map(([partner, user]) => {
       if (!partner) {
