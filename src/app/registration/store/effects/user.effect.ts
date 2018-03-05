@@ -90,6 +90,10 @@ export class UserEffects {
             }
             break;
           }
+          case 'waitlist': {
+            appUserType = USER_TYPE.ON_WAITLIST;
+            break;
+          }
           default: {
             appUserType = USER_TYPE.REGISTRANT;
           }
@@ -107,9 +111,19 @@ export class UserEffects {
 
   @Effect()
   signout$ = this.actions$.ofType(userActions.SIGNOUT).pipe(
-    withLatestFrom(this.userStore.select(fromSelectors.getUser)),
-    map(r => r[1]),
-    switchMap(user => {
+    withLatestFrom(
+      this.userStore.select(fromSelectors.getUser),
+      this.metaStore.select(fromSelectors.getUserType)
+    ),
+    switchMap(([action, user, userType]) => {
+      if (userType === USER_TYPE.ON_WAITLIST) {
+        return this.apiService
+          .removeFromWaitinglist(user)
+          .pipe(
+            map(() => new userActions.SignoutSuccess()),
+            catchError(error => of(new userActions.SignoutFail(error)))
+          );
+      }
       return this.apiService
         .signOut(user)
         .pipe(

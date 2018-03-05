@@ -13,6 +13,7 @@ export interface MetaInfoState {
   registrationStep: REGISTRATION_STEP;
   avInstitutes: Institute[];
   selectedInstitutes: Institute[];
+  freeInstitutes: Institute[];
 }
 
 export const initialState: MetaInfoState = {
@@ -23,6 +24,7 @@ export const initialState: MetaInfoState = {
   registrationStep: REGISTRATION_STEP.INFO,
   avInstitutes: [],
   selectedInstitutes: [],
+  freeInstitutes: [],
 };
 
 export function reducer(
@@ -64,6 +66,9 @@ export function reducer(
     case fromMetaInfo.UPDATE_SELECTED_INSTITUTE: {
       return { ...state, selectedInstitutes: action.payload || [] };
     }
+    case fromMetaInfo.UPDATE_FREE_INSTITUTE: {
+      return { ...state, freeInstitutes: action.payload || [] };
+    }
   }
   return state;
 }
@@ -79,3 +84,4 @@ export const getAvailableInstitutes = (state: MetaInfoState) =>
   state.avInstitutes;
 export const getSelectedInstitutes = (state: MetaInfoState) =>
   state.selectedInstitutes;
+export const getFreeInstitutes = (state: MetaInfoState) => state.freeInstitutes;

@@ -15,6 +15,7 @@ export const UPDATE_AVAILABLE_INSTITUTE =
   '[Registration] Update Available Institutes';
 export const UPDATE_SELECTED_INSTITUTE =
   '[Registration] Update Selected Institutes';
+export const UPDATE_FREE_INSTITUTE = '[Registration] Update Free Institutes';
 
 export class UpdateRegistrationStep implements Action {
   readonly type = UPDATE_REG_STEP;
@@ -51,6 +52,11 @@ export class UpdateSelectedInstitutes implements Action {
   constructor(public payload: Institute[]) {}
 }
 
+export class UpdateFreeInstitutes implements Action {
+  readonly type = UPDATE_FREE_INSTITUTE;
+  constructor(public payload: Institute[]) {}
+}
+
 export type MetaInfoAction =
   | UpdateRegistrationStep
   | UpdateIsMasterIT
@@ -58,4 +64,5 @@ export type MetaInfoAction =
   | UpdateHasCompletedBioModule
   | UpdateUserType
   | UpdateAvailableInstitutes
-  | UpdateSelectedInstitutes;
+  | UpdateSelectedInstitutes
+  | UpdateFreeInstitutes;

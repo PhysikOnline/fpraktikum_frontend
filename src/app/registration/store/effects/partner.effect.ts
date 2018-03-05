@@ -53,7 +53,7 @@ export class PartnerEffects {
         return new ChangePartnerType(ChosenPartner.registeredAndFree);
       } else if (partner.graduation !== user.graduation) {
         return new ChangePartnerType(ChosenPartner.hasDifferentGraduation);
-      } else if (partner.login !== user.login) {
+      } else if (partner.login === user.login) {
         return new ChangePartnerType(ChosenPartner.sameAsUser);
       } else if (partner.partner || partner.registrant) {
         return new ChangePartnerType(ChosenPartner.hasPartner);

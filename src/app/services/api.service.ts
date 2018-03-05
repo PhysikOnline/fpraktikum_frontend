@@ -144,10 +144,13 @@ export class ApiService {
   }
 
   writeOnWaitinglist(user: User): Observable<void> {
+    // The api cannot handle a partner property here
+    const apiUser = user.toApiType();
+    delete apiUser.partner;
     const req = this.getHeaders().pipe(
       switchMap(headers =>
         this.http
-          .post(`${this._apiUrl}/waitlist/`, user.toApiType(), { headers })
+          .post(`${this._apiUrl}/waitlist/`, apiUser, { headers })
           .catch(this.handleError)
       )
     );
@@ -157,7 +160,9 @@ export class ApiService {
   removeFromWaitinglist(user: User): Observable<void> {
     const req = this.getHeaders().pipe(
       switchMap(headers =>
-        this.http.delete(`${this._apiUrl}/waitlist/`).catch(this.handleError)
+        this.http
+          .delete(`${this._apiUrl}/waitlist/${user.id}`, { headers })
+          .catch(this.handleError)
       )
     );
     return this.makeRequest(req);

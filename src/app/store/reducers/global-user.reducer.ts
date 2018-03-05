@@ -11,7 +11,7 @@ export interface GlobalUserState {
 }
 
 export const initialState: GlobalUserState = {
-  token: null,
+  token: '',
   data: null,
 };
 
