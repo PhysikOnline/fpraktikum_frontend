@@ -112,12 +112,17 @@ export class MetaInfoEffects {
     this.partnerStore.select(partnerSelectors.getPartner),
     this.actions$
       .ofType(metaInfoActions.UPDATE_AVAILABLE_INSTITUTE)
-      .map((a: metaInfoActions.UpdateAvailableInstitutes) => a.payload)
+      .map((a: metaInfoActions.UpdateAvailableInstitutes) => a.payload),
+    this.actions$
+      .ofType(metaInfoActions.UPDATE_REG_STEP)
+      .map((a: metaInfoActions.UpdateRegistrationStep) => a.payload)
   ).pipe(
-    filter(([p, i]) => !!i && i.length > 0),
+    filter(
+      ([p, i, step]) => !!i && i.length > 0 && step === REGISTRATION_STEP.MAIN
+    ),
     withLatestFrom(this.metaInfoStore.select(metaInfoSelectors.getGraduation)),
-    map(([[partner, availableInstitutes], graduation]) => {
-      const placesNeeded = partner ? 2 : 1;
+    map(([[partner, availableInstitutes, step], graduation]) => {
+      const placesNeeded = partner ? 2 : 10;
       let areEnoughPlacesAvailable = true;
       const freeInstitutes = availableInstitutes.filter(
         i => i.places >= placesNeeded

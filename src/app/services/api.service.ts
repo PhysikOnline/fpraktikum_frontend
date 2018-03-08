@@ -143,7 +143,7 @@ export class ApiService {
     return this.makeRequest(req.catch(this.handleError));
   }
 
-  writeOnWaitinglist(user: User): Observable<void> {
+  writeOnWaitinglist(user: User): Observable<User> {
     // The api cannot handle a partner property here
     const apiUser = user.toApiType();
     delete apiUser.partner;
@@ -151,6 +151,9 @@ export class ApiService {
       switchMap(headers =>
         this.http
           .post(`${this._apiUrl}/waitlist/`, apiUser, { headers })
+          .map(res => {
+            return User.fromApiType(res);
+          })
           .catch(this.handleError)
       )
     );

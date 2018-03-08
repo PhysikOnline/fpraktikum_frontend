@@ -11,7 +11,7 @@ import * as userActions from '../actions/user.action';
 import * as fromSelectors from '../selectors';
 import { ApiService } from '../../../services/api.service';
 import { LOAD_USER_SUCCESS } from '../actions/user.action';
-import { USER_TYPE } from '../../../models/user-type';
+import { USER_TYPE, UserType } from '../../../models/user-type';
 import { MetaInfoState } from '../reducers/meta-info.reducer';
 import { Store } from '@ngrx/store';
 import { PartnerState } from '../reducers/partner.reducer';
@@ -97,7 +97,6 @@ export class UserEffects {
           default: {
             appUserType = USER_TYPE.REGISTRANT;
           }
-          // TODO
         }
         return [
           new metaInfoActions.UpdateUserType(appUserType),
@@ -164,11 +163,23 @@ export class UserEffects {
       return this.apiService
         .writeOnWaitinglist(user)
         .pipe(
-          map(() => new userActions.SendWaitlistSuccess()),
+          map(res => new userActions.SendWaitlistSuccess(res)),
           catchError(error => of(new userActions.SendWaitlistFail(error)))
         );
     })
   );
+
+  @Effect()
+  waitlistSuccess$ = this.actions$
+    .ofType(userActions.SEND_WAITLIST_SUCCESS)
+    .pipe(
+      tap(() => this.alert.showDialog(RegistrationCompleteComponent, {})),
+      switchMap((action: userActions.SendWaitlistSuccess) => {
+        const user = action.payload;
+        user.status = 'waitlist';
+        return [new userActions.LoadUserSuccess(user)];
+      })
+    );
 
   @Effect()
   sendRegistration$ = this.actions$.ofType(userActions.SEND_REGISTRATION).pipe(
@@ -199,10 +210,7 @@ export class UserEffects {
 
   @Effect()
   sendRegistratonSuccess$ = this.actions$
-    .ofType(
-      userActions.SEND_REGISTRATION_SUCCESS,
-      userActions.SEND_WAITLIST_SUCCESS
-    )
+    .ofType(userActions.SEND_REGISTRATION_SUCCESS)
     .pipe(
       tap(() => this.alert.showDialog(RegistrationCompleteComponent, {})),
       map(

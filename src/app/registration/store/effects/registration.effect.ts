@@ -62,14 +62,4 @@ export class RegistrationInfoEffects {
         return { type: 'NO_ACTION' };
       })
     );
-
-  @Effect({ dispatch: false })
-  showError$ = merge(
-    this.actions$.ofType(registrationActions.LOAD_REGISTRATION_INFO_FAIL),
-    this.actions$.ofType(userActions.LOAD_USER_FAIL)
-  ).pipe(
-    tap(action => {
-      console.error(action);
-    })
-  );
 }

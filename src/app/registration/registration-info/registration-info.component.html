@@ -50,7 +50,18 @@
         Verfügbare Institute
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <pre>{{ (registration$.pluck('institutes') | async) | json }}</pre>
+    <p>Bachelor</p>
+    <ul>
+      <li *ngFor="let i of (institutes$ | async)['BA']">{{ i }}</li>
+    </ul>
+    <p>Master</p>
+    <ul>
+      <li *ngFor="let i of (institutes$ | async)['MA']">{{ i }}</li>
+    </ul>
+    <p>Lehramt</p>
+    <ul>
+      <li *ngFor="let i of (institutes$ | async)['LA']">{{ i }}</li>
+    </ul>
   </mat-expansion-panel>
   <mat-expansion-panel>
     <mat-expansion-panel-header>

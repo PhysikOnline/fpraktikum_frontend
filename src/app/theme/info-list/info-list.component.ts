@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MetaInfoState } from '../../registration/store/reducers/meta-info.reducer';
 import { User } from '../../models/user';
 import { USER_TYPE } from '../../models/user-type';
+import { GRADUATION } from '../../../config';
 
 @Component({
   selector: 'app-info-list',
@@ -13,6 +14,7 @@ export class InfoListComponent implements OnInit {
   @Input() user: User;
   @Input() partner: User;
   userType = USER_TYPE;
+  graduation = GRADUATION;
 
   constructor() {}
 

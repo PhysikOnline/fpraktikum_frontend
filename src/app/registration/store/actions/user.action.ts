@@ -88,6 +88,7 @@ export class SendWaitlist implements Action {
 
 export class SendWaitlistSuccess implements Action {
   readonly type = SEND_WAITLIST_SUCCESS;
+  constructor(public payload: User) {}
 }
 
 export class SendWaitlistFail implements Action {

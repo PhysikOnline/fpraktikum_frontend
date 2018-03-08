@@ -5,6 +5,11 @@ import * as userActions from '../store/actions/user.action';
 import * as fromSelectors from '../store/selectors';
 import { BehaviorSubject } from 'rxjs';
 import { Institute } from '../../models/institute';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+import { GRADUATION } from '../../../config';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-registration-waitlist',
@@ -12,6 +17,8 @@ import { Institute } from '../../models/institute';
   styleUrls: ['./registration-waitlist.component.scss'],
 })
 export class RegistrationWaitlistComponent implements OnInit {
+  notes: string;
+
   public readonly institutes = this.metaInfoStore.select(
     fromSelectors.getAvailableInstitutes
   );
@@ -21,8 +28,25 @@ export class RegistrationWaitlistComponent implements OnInit {
   );
 
   public readonly institutesSelected = new BehaviorSubject<Institute[]>([]);
+  public readonly notesInput = new Subject<string>();
 
-  constructor(private metaInfoStore: Store<MetaInfoState>) {}
+  public institutesOk: Observable<boolean> = combineLatest(
+    this.graduation,
+    this.institutesSelected
+  ).pipe(
+    map(
+      ([graduation, institutes]) =>
+        institutes.length === (graduation === GRADUATION.LA ? 1 : 2)
+    )
+  );
+
+  constructor(private metaInfoStore: Store<MetaInfoState>) {
+    this.notesInput
+      .debounceTime(300)
+      .subscribe(() =>
+        this.metaInfoStore.dispatch(new userActions.UpdateNotes(this.notes))
+      );
+  }
 
   send() {
     this.institutesSelected.subscribe(institutes => {

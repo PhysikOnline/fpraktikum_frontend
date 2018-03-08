@@ -25,12 +25,16 @@
     <div class="list-identifier">{{ 'INSTITUTES' | translate }}</div>
     <div *ngFor="let i of (user?.institutes || info?.selectedInstitutes)" class="list-institute">{{ i.name }}</div>
   </mat-list-item>
-  <mat-list-item class="info-list-item" *ngIf="info?.userType === userType.ON_WAITLIST">
-    <div class="list-identifier">{{ 'INSTITUTES' | translate }}</div>
-    <div class="list-content">{{ 'WAITLIST' | translate }}</div>
+  <mat-list-item class="info-list-item" *ngIf="info?.userType === userType.ON_WAITLIST && info?.graduation === graduation.LA">
+    <div class="list-identifier">{{ 'INSTITUTE' | translate }}</div>
+    <div *ngFor="let i of [user?.instituteFirstHalf]" class="list-institute">{{ i }}</div>
   </mat-list-item>
-  <mat-list-item class="info-list-item">
-    <div class="list-identifier">{{ 'NOTES' | translate }}</div>
-    <div class="list-content">{{ user?.notes }}</div>
+  <mat-list-item class="info-list-item" *ngIf="info?.userType === userType.ON_WAITLIST && info?.graduation !== graduation.LA">
+    <div class="list-identifier ">{{ 'INSTITUTES' | translate }}</div>
+    <div *ngFor="let i of [user?.instituteFirstHalf, user?.instituteSecondHalf]" class="list-institute ">{{ i }}</div>
+  </mat-list-item>
+  <mat-list-item class="info-list-item ">
+    <div class="list-identifier ">{{ 'NOTES' | translate }}</div>
+    <div class="list-content ">{{ user?.notes }}</div>
   </mat-list-item>
 </mat-list>
