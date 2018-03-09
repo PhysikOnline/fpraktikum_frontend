@@ -6,6 +6,9 @@ import * as fromSelectors from '../store/selectors';
 import { Store } from '@ngrx/store';
 import { USER_TYPE } from '../../models/user-type';
 import { SendRegistration } from '../store/actions/user.action';
+import { Go } from '../../store';
+import { UpdateRegistrationStep } from '../store';
+import { REGISTRATION_STEP } from '../../models/registration-step';
 
 @Component({
   selector: 'app-registration-end',
@@ -25,6 +28,10 @@ export class RegistrationEndComponent implements OnInit {
 
   send() {
     this.userStore.dispatch(new SendRegistration());
+  }
+
+  goBack() {
+    this.userStore.dispatch(new UpdateRegistrationStep(REGISTRATION_STEP.MAIN));
   }
 
   ngOnInit() {}

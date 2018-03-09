@@ -3,6 +3,7 @@
     <form [formGroup]="partnerForm">
       <ng-template matStepLabel>Partnerwahl</ng-template>
       <div class="step-body">
+        <h2>Partnerwahl</h2>
         <p>
           Falls du bereits eine Partnerin oder einen Partner für das Praktikum hast, kannst
           sie oder ihn hier auswählen. Dies kann aber auch noch am Tag der Einführungsveranstaltung
@@ -39,6 +40,7 @@
   <mat-step [stepControl]="instituteForm">
     <ng-template matStepLabel>Institute</ng-template>
     <div class="step-body">
+      <h2>Institute</h2>
       <app-institute-form [graduation]="userGraduation | async" [institutes]="availableInstitutes | async"
         [selectedInstitutes]="selectedInstitutes | async" (institutesSelected)="updateInstitutes($event)"></app-institute-form>
 
@@ -53,6 +55,8 @@
     <form [formGroup]="notesForm">
       <ng-template matStepLabel>Bemerkungen</ng-template>
       <div class="step-body">
+        <h2>Bemerkungen</h2>
+
         <p>
           Hier kannst du Bemerkungen eintragen.
         </p>

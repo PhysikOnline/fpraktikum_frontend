@@ -2,4 +2,8 @@
 
 <app-info-list [user]="user | async" [info]="metaInfo | async" [partner]="partner | async"></app-info-list>
 
-<button class="mt-2" mat-raised-button color="accent" appLoadingButton (click)="send()">Abschicken</button>
+<div class="mt-2">
+
+  <button mat-raised-button color="accent" appLoadingButton (click)="send()">Abschicken</button>
+  <button mat-raised-button (click)="goBack()">Zurück</button>
+</div>
