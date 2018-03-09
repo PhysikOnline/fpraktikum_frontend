@@ -3,4 +3,5 @@ export interface GlobalUser {
   firstName: string;
   lastName: string;
   email: string;
+  matrikel: string;
 }

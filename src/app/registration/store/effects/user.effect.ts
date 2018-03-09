@@ -78,6 +78,7 @@ export class UserEffects {
               user.lastName = globalUser.lastName;
               user.firstName = globalUser.firstName;
               user.email = globalUser.email;
+              user.matrikel = globalUser.matrikel;
             }
             appUserType = USER_TYPE.NOT_REGISTERED;
             break;

@@ -27,12 +27,14 @@ export class GlobalUserEffects {
       const firstName = params['firstName'];
       const lastName = params['lastName'];
       const email = params['email'];
+      const matrikel = params['matrikel'];
       return [
         new GlobalUserUpdate({
           login,
           firstName,
           lastName,
           email,
+          matrikel,
         }),
         new TokenUpdate(token),
       ];

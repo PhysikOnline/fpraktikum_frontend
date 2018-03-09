@@ -57,7 +57,7 @@ export class ApiService {
     const req = this.getHeaders().pipe(
       switchMap(headers =>
         this.http
-          .get(`${this._apiUrl}/user/${sNumber}`, { headers })
+          .get(`${this._apiUrl}/user/${sNumber}/`, { headers })
           .map(User.fromApiType)
           .catch(this.handleError)
       )
@@ -83,7 +83,7 @@ export class ApiService {
     const req = this.getHeaders().pipe(
       switchMap(headers =>
         this.http
-          .delete(`${this._apiUrl}/user_registrant/${user.id}`, { headers })
+          .delete(`${this._apiUrl}/user_registrant/${user.id}/`, { headers })
           .catch(this.handleError)
       )
     );
@@ -164,7 +164,7 @@ export class ApiService {
     const req = this.getHeaders().pipe(
       switchMap(headers =>
         this.http
-          .delete(`${this._apiUrl}/waitlist/${user.id}`, { headers })
+          .delete(`${this._apiUrl}/waitlist/${user.id}/`, { headers })
           .catch(this.handleError)
       )
     );
