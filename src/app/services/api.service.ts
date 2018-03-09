@@ -80,10 +80,14 @@ export class ApiService {
   }
 
   signOut(user: User): Observable<void> {
+    let route = `${this._apiUrl}/user_registrant/`;
+    if (user.status === 'partner') {
+      route = `${this._apiUrl}/user_partner/`;
+    }
     const req = this.getHeaders().pipe(
       switchMap(headers =>
         this.http
-          .delete(`${this._apiUrl}/user_registrant/${user.id}/`, { headers })
+          .delete(`${route}${user.id}/`, { headers })
           .catch(this.handleError)
       )
     );

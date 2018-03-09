@@ -60,8 +60,14 @@ export class MetaInfoEffects {
 
   @Effect()
   onRegStepChange$ = this.actions$.ofType(metaInfoActions.UPDATE_REG_STEP).pipe(
-    map((action: UpdateRegistrationStep) => {
-      return this.getRouterActionOnStep(action.payload);
+    switchMap((action: UpdateRegistrationStep) => {
+      if (action.payload === REGISTRATION_STEP.MAIN) {
+        return [
+          this.getRouterActionOnStep(action.payload),
+          new registrationActions.LoadRegistrationInfo(),
+        ];
+      }
+      return [this.getRouterActionOnStep(action.payload)];
     })
   );
 
