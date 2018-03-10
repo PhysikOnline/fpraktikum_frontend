@@ -17,6 +17,10 @@
 
 <app-info-list [user]="user | async" [partner]="user.pluck('partner') | async" [info]="metaInfo | async"></app-info-list>
 
+<div class="mt-1" *ngIf="(user.pluck('partner') | async) && !(user.pluck('hasPartnerAccepted') | async)">
+  Deine PartnerIn hat die Anmeldung noch nicht bestätigt. Wenn du dich abmeldest, meldest du sie/ihn automatisch mit ab.
+</div>
+
 <div [ngSwitch]="userType | async" class="mt-2">
   <ng-container *ngSwitchCase="USER_TYPE.REGISTRANT">
     <button mat-raised-button color="warn" appLoadingButton (click)="signout()">Abmelden</button>
