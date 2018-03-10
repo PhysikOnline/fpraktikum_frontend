@@ -35,6 +35,6 @@
   </mat-list-item>
   <mat-list-item class="info-list-item ">
     <div class="list-identifier ">{{ 'NOTES' | translate }}</div>
-    <div class="list-content ">{{ user?.notes }}</div>
+    <div class="list-content ">{{ user?.notes ? user?.notes : 'keine Bemerkungen' }}</div>
   </mat-list-item>
 </mat-list>
