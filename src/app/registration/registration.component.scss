@@ -6,13 +6,17 @@
   width: 90vw;
   height: 90vh;
   margin: 5vh 5vw 5vh 5vw;
-  overflow: auto;
 
   @media screen and (max-width: 800px) {
     margin: 1vh 1vw 1vh 1vw;
     width: 98vw;
     height: 98vh;
     padding: 15px;
+  }
+
+  #registration-card-content {
+    overflow: auto;
+    height: 100%;
   }
 
   #loading-bar {
