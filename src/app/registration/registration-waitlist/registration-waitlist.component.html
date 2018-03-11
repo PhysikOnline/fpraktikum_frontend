@@ -1,6 +1,6 @@
 <h1>Warteliste</h1>
 <div id="waitlist-form">
-  <app-institute-form [institutes]="institutes | async" (institutesSelected)="institutesSelected.next($event)"
+  <app-institute-form [availableInstitutes]="institutes | async" [allInstitutes]="allInstitutes | async" (institutesSelected)="institutesSelected.next($event)"
     [graduation]="graduation | async" [selectedInstitutes]="institutesSelected | async"></app-institute-form>
 
   <p>

@@ -20,7 +20,7 @@ import { debounceTime, filter, map } from 'rxjs/operators';
 
 import * as selectors from '../store/selectors';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { CheckPartner, UpdateSelectedInstitutes } from '../store/index';
+import { CheckPartner, UpdateSelectedInstitutes, RegistrationState } from '../store/index';
 import { RemovePartner } from '../store/actions/partner.action';
 import { UpdateNotes } from '../store/actions/user.action';
 import { ChosenPartner } from '../../models/chosen-partner';
@@ -54,6 +54,9 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
   readonly selectedInstitutes = this.metaStore.map(
     selectors.getSelectedInstitutes
   );
+
+  readonly allInstitutes = this.regStore.select(selectors.getInstitutes)
+  .switchMap(institutes => this.userGraduation.map(graduation => institutes.filter(i => i.graduation === graduation)));
 
   // bit hacky...
   readonly canTakePartner = this.availableInstitutes.map(institutes => {
@@ -97,7 +100,8 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private metaStore: Store<MetaInfoState>,
     private partnerStore: Store<PartnerState>,
-    private userStore: Store<UserState>
+    private userStore: Store<UserState>,
+    private regStore: Store<RegistrationState>,
   ) {
     this.partnerForm = formBuilder.group({
       partnerNumber: [

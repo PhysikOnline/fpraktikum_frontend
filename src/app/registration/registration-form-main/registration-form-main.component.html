@@ -41,7 +41,7 @@
     <ng-template matStepLabel>Institute</ng-template>
     <div class="step-body">
       <h2>Institute</h2>
-      <app-institute-form [graduation]="userGraduation | async" [institutes]="availableInstitutes | async"
+      <app-institute-form [graduation]="userGraduation | async" [allInstitutes]="allInstitutes | async" [availableInstitutes]="availableInstitutes | async"
         [selectedInstitutes]="selectedInstitutes | async" (institutesSelected)="updateInstitutes($event)"></app-institute-form>
 
       <div class="step-btns">

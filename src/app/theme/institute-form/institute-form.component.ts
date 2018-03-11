@@ -20,7 +20,8 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InstituteFormComponent implements OnInit, OnDestroy {
-  @Input() institutes: Institute[];
+  @Input() availableInstitutes: Institute[];
+  @Input() allInstitutes: Institute[];
   @Input()
   set graduation(g: GRADUATION) {
     this._graduation = g;
@@ -66,6 +67,9 @@ export class InstituteFormComponent implements OnInit, OnDestroy {
   }
 
   shouldOptionBeDisabled(instituteName, semesterHalf) {
+    if (!this.availableInstitutes.find(i => i.name === instituteName && i.semesterHalf === semesterHalf)) {
+      return true;
+    }
     const otherHalf = semesterHalf % 2 + 1;
     return !!this.selectedInstitutes
       .filter(i => !!i)

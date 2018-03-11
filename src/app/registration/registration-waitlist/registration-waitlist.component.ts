@@ -10,6 +10,8 @@ import { GRADUATION } from '../../../config';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { RegistrationState } from '../store/index';
+import { switchMap } from 'rxjs/operators/switchMap';
 
 @Component({
   selector: 'app-registration-waitlist',
@@ -21,6 +23,12 @@ export class RegistrationWaitlistComponent implements OnInit {
 
   public readonly institutes = this.metaInfoStore.select(
     fromSelectors.getAvailableInstitutes
+  );
+
+  public readonly allInstitutes = this.regStore.select(
+    fromSelectors.getInstitutes
+  ).pipe(
+    switchMap(institutes => this.graduation.map(g => institutes.filter(i => i.graduation === g)))
   );
 
   public readonly graduation = this.metaInfoStore.select(
@@ -40,7 +48,10 @@ export class RegistrationWaitlistComponent implements OnInit {
     )
   );
 
-  constructor(private metaInfoStore: Store<MetaInfoState>) {
+  constructor(
+    private metaInfoStore: Store<MetaInfoState>,
+    private regStore: Store<RegistrationState>
+  ) {
     this.notesInput
       .debounceTime(300)
       .subscribe(() =>
