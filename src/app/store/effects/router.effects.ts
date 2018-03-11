@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { delay } from 'rxjs/operators/delay';
 
 @Injectable()
 export class RouterEffects {
@@ -23,10 +24,11 @@ export class RouterEffects {
       .pipe(map((action: RouterActions.Go) => action.payload)),
     this.route.queryParams
   ).pipe(
+    delay(10), // Edge does not like Routing Events which are too fast...
     tap(([{ path, query: queryParams, extras }, origParams]) => {
-      if (!queryParams) {
-        queryParams = origParams;
-      }
+      // if (!queryParams) {
+      //   queryParams = origParams;
+      // }
       this.router.navigate(path, { queryParams, ...extras });
     })
   );
