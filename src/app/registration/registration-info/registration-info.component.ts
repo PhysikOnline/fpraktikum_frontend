@@ -31,25 +31,25 @@ export class RegistrationInfoComponent implements OnInit {
 
   institutes$ = this.registration$.pipe(
     map(reg => reg.institutes),
-    map(instittes => {
+    map(institutes => {
       return {
         BA: Array.from(
           new Set(
-            instittes
+            institutes
               .filter(i => i.graduation === GRADUATION.BA)
               .map(i => i.name)
           )
         ),
         MA: Array.from(
           new Set(
-            instittes
+            institutes
               .filter(i => i.graduation === GRADUATION.MA)
               .map(i => i.name)
           )
         ),
         LA: Array.from(
           new Set(
-            instittes
+            institutes
               .filter(i => i.graduation === GRADUATION.LA)
               .map(i => i.name)
           )

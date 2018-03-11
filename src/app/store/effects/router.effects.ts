@@ -26,9 +26,9 @@ export class RouterEffects {
   ).pipe(
     delay(10), // Edge does not like Routing Events which are too fast...
     tap(([{ path, query: queryParams, extras }, origParams]) => {
-      // if (!queryParams) {
-      //   queryParams = origParams;
-      // }
+      if (!queryParams) {
+        queryParams = origParams;
+      }
       this.router.navigate(path, { queryParams, ...extras });
     })
   );

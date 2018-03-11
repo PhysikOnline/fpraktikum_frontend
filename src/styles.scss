@@ -22,6 +22,46 @@ app-root {
   transform: translate(-50%, -50%);
 }
 
+.sk-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sk-spinner-animate {
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+  border-radius: 100%;
+  -webkit-animation: sk-pulseScaleOut 1s infinite ease-in-out;
+  animation: sk-pulseScaleOut 1s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-pulseScaleOut {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-pulseScaleOut {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
 .full-sized {
   width: 100%;
   height: 100%;
@@ -120,6 +160,12 @@ mat-radio-button {
 
 .mt-3 {
   margin-top: 3rem !important;
+}
+
+.mat-step-label {
+  @media screen and (max-width: 800px) {
+    display: none !important;
+  }
 }
 
 .btn-loading-btn {

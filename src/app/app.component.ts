@@ -10,7 +10,8 @@ import { Store } from '@ngrx/store/src/store';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {}
 }

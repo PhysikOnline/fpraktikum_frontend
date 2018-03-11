@@ -44,7 +44,7 @@
       werden! Du hast die Möglichkeit, deine Wunschkonstellation von Instituten anzugeben.
     </p>
   </mat-expansion-panel>
-  <mat-expansion-panel>
+  <mat-expansion-panel *ngIf="institutes$ | async">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Verfügbare Institute
