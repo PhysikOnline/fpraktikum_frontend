@@ -12,6 +12,9 @@ import { Subscription } from 'rxjs/Subscription';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { UpdateHasCompletedBioModule } from '../store/actions/meta-info.action';
 import { REGISTRATION_STEP } from '../../models/registration-step';
+import { BehaviorSubject } from 'rxjs';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration-form-preflight',
@@ -27,6 +30,8 @@ export class RegistrationFormPreflightComponent implements OnInit, OnDestroy {
   readonly userGraduation = this.metaStore.select(selectors.getGraduation);
   readonly userMasterIT = this.metaStore.select(selectors.getIsMasterIt);
   readonly userBio = this.metaStore.select(selectors.getHasCompletedBioModule);
+
+  public readonly activeStep = new BehaviorSubject<number>(0);
 
   readonly graduation = GRADUATION;
 
@@ -99,6 +104,20 @@ export class RegistrationFormPreflightComponent implements OnInit, OnDestroy {
     this.metaStore.dispatch(
       new metaInfoActions.UpdateRegistrationStep(REGISTRATION_STEP.INFO)
     );
+  }
+
+  onStepChange(event: StepperSelectionEvent) {
+    if (event.selectedIndex === 1) {
+      this.graduationSelected.pipe(
+        take(1),
+        tap((graduation) => {
+          console.log(graduation)
+          if (graduation !== GRADUATION.MA) {
+            this.activeStep.next(2);
+          }
+        })
+      ).subscribe();
+    }
   }
 
   ngOnInit() {}

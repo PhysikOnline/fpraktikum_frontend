@@ -1,4 +1,4 @@
-<mat-horizontal-stepper [linear]="true">
+<mat-horizontal-stepper [linear]="true" (selectionChange)="onStepChange($event)" [selectedIndex]="activeStep | async">
   <mat-step [stepControl]="graduationForm">
     <form [formGroup]="graduationForm">
       <ng-template matStepLabel>Studiengang</ng-template>
