@@ -1,6 +1,9 @@
 <h2 mat-dialog-title>{{ title | translate }}</h2>
 <mat-dialog-content>
   <p *ngIf="content" [innerHtml]="content | translate"></p>
+  <ul>
+    <li *ngFor="let point of errorPoints">{{ point }}</li>
+  </ul>
   <mat-accordion *ngIf="error">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
