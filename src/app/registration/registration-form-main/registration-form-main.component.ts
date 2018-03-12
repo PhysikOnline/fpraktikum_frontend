@@ -138,8 +138,8 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     this.sink = this.canTakePartner.subscribe(c => this.noPartner.next(!c));
     this.sink = this.partner.filter(p => !!p).subscribe(partner => {
       this.partnerForm.setValue({
-        partnerNumber: partner.login,
-        partnerName: partner.lastName,
+        partnerNumber: partner.login ? partner.login : this.partnerForm.get('partnerNumber').value,
+        partnerName: partner.lastName ? partner.lastName : this.partnerForm.get('partnerName').value,
       });
     });
 
