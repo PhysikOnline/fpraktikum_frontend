@@ -111,7 +111,6 @@ export class RegistrationFormPreflightComponent implements OnInit, OnDestroy {
       this.graduationSelected.pipe(
         take(1),
         tap((graduation) => {
-          console.log(graduation)
           if (graduation !== GRADUATION.MA) {
             this.activeStep.next(2);
           }
