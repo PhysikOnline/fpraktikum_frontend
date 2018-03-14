@@ -16,6 +16,8 @@ import { REGISTRATION_STEP } from '../../models/registration-step';
 import { LoadingService } from '../../services/loading.service';
 import { map, tap } from 'rxjs/operators';
 import { GRADUATION } from '../../../config';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-registration-info',
@@ -29,35 +31,31 @@ export class RegistrationInfoComponent implements OnInit {
     fromStore.getRegistrationInfo
   );
 
-  institutes$ = this.registration$.pipe(
-    map(reg => reg.institutes),
-    map(institutes => {
-      return {
-        BA: Array.from(
-          new Set(
-            institutes
-              .filter(i => i.graduation === GRADUATION.BA)
-              .map(i => i.name)
-          )
-        ),
-        MA: Array.from(
-          new Set(
-            institutes
-              .filter(i => i.graduation === GRADUATION.MA)
-              .map(i => i.name)
-          )
-        ),
-        LA: Array.from(
-          new Set(
-            institutes
-              .filter(i => i.graduation === GRADUATION.LA)
-              .map(i => i.name)
-          )
-        ),
-      };
-    }),
-    tap(console.log)
-  );
+  // TODO: does not work in edge
+  // institutes$ = this.registration$.pipe(
+  //   tap(console.log),
+  //   map(reg => reg.institutes),
+  //   map(institutes => {
+  //     return { BA: Array.from(new Set(institutes
+  //             .filter(i => i.graduation === GRADUATION.BA)
+  //             .map(
+  //               i => i.name
+  //             )) || []), MA: Array.from(new Set(institutes
+  //             .filter(i => i.graduation === GRADUATION.MA)
+  //             .map(
+  //               i => i.name
+  //             )) || []), LA: Array.from(new Set(institutes
+  //             .filter(i => i.graduation === GRADUATION.LA)
+  //             .map(i => i.name)) || []) };
+  //   }),
+  //   tap(console.log)
+  // );
+
+  institutes$ = of({
+    BA: ['IAP', 'PI', 'IKF', 'IFB'],
+    MA: ['IAP', 'PI', 'IKF', 'IFB', 'ITP'],
+    LA: ['IAP', 'PI', 'IKF'],
+  });
 
   startBtn$: Observable<{
     text: string;

@@ -164,13 +164,17 @@ mat-radio-button {
 
 .step-btns {
   @media screen and (max-width: 800px) {
-    margin-top: 1rem !important;
+    margin-top: 0.5rem !important;
     button {
+      margin-top: 0.5rem;
       display: block;
       width: 100%;
-      margin-top: 0.5rem;
     }
   }
+}
+
+.mat-checkbox-label {
+  white-space: normal;
 }
 
 .mat-step-label {

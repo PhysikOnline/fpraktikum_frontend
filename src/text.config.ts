@@ -54,7 +54,7 @@ export const APP_TEXT = {
     PARTNER_IS_FREE_TITLE: '%0% ist bereits registriert.',
     PARTNER_IS_FREE_CONTENT:
       'Aktuell ist es leider nicht möglich, einen bereits registrierten Nutzer als Partner zu wählen',
-    PARTNER_IS_NOT_REGISTERED_TITLE: '%0% ist noch nicht registriert.',
+    PARTNER_IS_NOT_REGISTERED_TITLE: 'Diese Person ist noch nicht registriert.',
     PARTNER_IS_NOT_REGISTERED_CONTENT:
       'Du kannst sie/ihn als PartnerIn anmelden.',
     PARTNER_DOES_NOT_EXIST_TITLE:
