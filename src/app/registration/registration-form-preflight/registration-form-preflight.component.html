@@ -1,0 +1,63 @@
+<mat-horizontal-stepper [linear]="true" (selectionChange)="onStepChange($event)" [selectedIndex]="activeStep | async">
+  <mat-step [stepControl]="graduationForm">
+    <form [formGroup]="graduationForm">
+      <ng-template matStepLabel>Studiengang</ng-template>
+      <div class="step-body">
+        <h2>Studiengang</h2>
+        <mat-radio-group formControlName="graduation" (change)="graduationSelected.next($event.value)">
+          <mat-radio-button [value]="graduation.BA">Bachelor</mat-radio-button>
+          <mat-radio-button [value]="graduation.MA">Master</mat-radio-button>
+          <mat-radio-button [value]="graduation.LA">Lehramt</mat-radio-button>
+        </mat-radio-group>
+        <div class="step-btns">
+          <button mat-raised-button (click)="goBack()">Zurück</button>
+          <button mat-raised-button color="primary" [disabled]="graduationForm.invalid" matStepperNext>Weiter</button>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="masterITForm">
+    <form [formGroup]="masterITForm">
+      <ng-template matStepLabel>Schwerpunkt Computational Physics</ng-template>
+      <div class="step-body">
+        <h2>Schwerpunkt Computational Physics</h2>
+        <p *ngIf="(masterITRequired | async); else noMaster">
+          Bitte wähle aus, ob du den Master Physik mit Schwerpunkt Computational Physics belegst.
+        </p>
+        <ng-template #noMaster>
+          <p>Du brauchst diesen Schritt nicht auszufüllen.</p>
+        </ng-template>
+        <mat-radio-group formControlName="masterIT" (change)="masterITSelected.next($event.value)">
+          <mat-radio-button [value]="true">Ja</mat-radio-button>
+          <mat-radio-button [value]="false">Nein</mat-radio-button>
+        </mat-radio-group>
+        <div class="step-btns">
+          <button mat-raised-button matStepperPrevious>Zurück</button>
+          <button mat-raised-button color="primary" [disabled]="masterITForm.invalid" matStepperNext>Weiter</button>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="biologyForm">
+    <form [formGroup]="biologyForm">
+      <ng-template matStepLabel>Biologie Vorlesung</ng-template>
+      <div class="step-body">
+        <h2>Biologie Vorlesung</h2>
+        <p>
+          Bitte wähle aus, ob du bereits das Modul "Einführung in die Biophysik" in den Biowissenschaften
+          erfolgreich abgeschlossen hast. Es ist Voraussetzung für das Institut der
+          Biophysik.
+        </p>
+        <mat-radio-group formControlName="biology" (change)="biologySelected.next($event.value)">
+          <mat-radio-button [value]="true">Ja</mat-radio-button>
+          <mat-radio-button [value]="false">Nein</mat-radio-button>
+        </mat-radio-group>
+        <div class="step-btns">
+          <button mat-raised-button matStepperPrevious>Zurück</button>
+          <button mat-raised-button color="primary" [disabled]="biologyForm.invalid" matStepperNext
+            (click)="startNextStep()">Weiter</button>
+        </div>
+      </div>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>

@@ -1,0 +1,41 @@
+<form [formGroup]="institutesForm">
+  <p>
+    Wähle bitte {{ chooseOnlyOneInstitute() ? 'ein Institut' : 'zwei Institute' }} aus.
+  </p>
+  <p *ngIf="!chooseOnlyOneInstitute()">
+    Die Institute in beiden Semesterhälften müssen sich unterscheiden.
+  </p>
+  <p>
+    Ausgegraute Institute kannst du entweder nicht belegen oder haben aktuell nicht ausreichend freie Plätze.
+  </p>
+  <div class="institute-form" *ngIf="!chooseOnlyOneInstitute()">
+    <p>1. {{ 'SEMESTER_HALF' | translate }}</p>
+    <mat-radio-group (change)="institutesSelect.next($event.value)" formControlName="institutes1">
+      <mat-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 1)"
+        *ngFor="let institute of allInstitutes | instituteFilter:1" [value]="institute"
+        [checked]="isInstituteChecked(institute)">
+        {{ institute.name }}
+        <span class="institute-notes">{{ institute.notes }}</span>
+      </mat-radio-button>
+    </mat-radio-group>
+    <p>2. {{ 'SEMESTER_HALF' | translate }}</p>
+    <mat-radio-group (change)="institutesSelect.next($event.value)" formControlName="institutes2">
+      <mat-radio-button class="radio-button-vertical" [disabled]="shouldOptionBeDisabled(institute.name, 2)"
+        *ngFor="let institute of allInstitutes | instituteFilter:2" [value]="institute"
+        [checked]="isInstituteChecked(institute)">
+        {{ institute.name }}
+        <span class="institute-notes">{{ institute.notes }}</span>
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="institute-form" *ngIf="chooseOnlyOneInstitute()">
+    <mat-radio-group (change)="institutesSelect.next($event.value)" formControlName="institutes">
+      <mat-radio-button class="radio-button-vertical" *ngFor="let institute of allInstitutes"
+        [checked]="isInstituteChecked(institute)" [value]="institute">
+        {{ institute.name }}
+        <span class="institute-notes">{{ institute.notes }}</span>
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+</form>

@@ -1,0 +1,25 @@
+.info-list {
+  .info-list-item {
+    // TODO: Does not work
+    .mat-list-item-content {
+      padding: 0 !important;
+      background-color: #000066;
+      @media (max-width: 600px) {
+      }
+    }
+  }
+
+  .list-identifier {
+    width: 20%;
+    min-width: 120px;
+    font-weight: bold;
+  }
+
+  .list-content {
+    display: inline-block;
+  }
+
+  .list-institute {
+    margin-right: 5px;
+  }
+}

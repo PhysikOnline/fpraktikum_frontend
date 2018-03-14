@@ -1,9 +1,0 @@
-<div class="centered welcome-wrapper full-width">
-  <mat-card id="welcome">
-    <mat-card-title>{{ 'WELCOME' | translate }} {{ user.firstName }},</mat-card-title>
-    <mat-card-content>
-      <p *ngIf="isTooLate"><strong>{{ 'TOO_LATE' | translate:date }}</strong></p>
-      <p *ngIf="!isTooLate"><strong>{{ 'TOO_EARLY' | translate:date }}</strong></p>
-    </mat-card-content>
-  </mat-card>
-</div>

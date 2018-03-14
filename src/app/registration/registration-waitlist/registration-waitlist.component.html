@@ -1,0 +1,16 @@
+<h1>Warteliste</h1>
+<div id="waitlist-form">
+  <app-institute-form [availableInstitutes]="institutes | async" [allInstitutes]="allInstitutes | async" (institutesSelected)="institutesSelected.next($event)"
+    [graduation]="graduation | async" [selectedInstitutes]="institutesSelected | async"></app-institute-form>
+
+  <p>
+    Hier kannst du Bemerkungen eintragen.
+  </p>
+  <mat-form-field>
+    <textarea matInput matTextareaAutosize [(ngModel)]="notes" placeholder="Bemerkungen..."
+      (keyup)="notesInput.next($event)" rows="3"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button (click)="institutesSelected.next([])">Zurücksetzen</button>
+  <button mat-raised-button color="accent" (click)="send()" [disabled]="!(institutesOk | async)" appLoadingButton>Abschicken</button>
+</div>

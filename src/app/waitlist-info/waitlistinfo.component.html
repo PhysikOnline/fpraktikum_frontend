@@ -1,9 +1,0 @@
-<app-step [nextButtonName]="''" [backButtonName]="''"
-          [progressValue]="submitting ? -1 : 100" [stepName]="'REG_WAITLIST_TITLE'">
-  <p>{{ 'ON_WAITLIST_INFO' | translate }}</p>
-  <app-user-info-list [user]="user"></app-user-info-list>
-  <div class="button-bottom">
-    <button mat-raised-button color="warn" (click)="onDelete()">{{ 'WAITLIST_DELETE' | translate }}</button>
-  </div>
-
-</app-step>

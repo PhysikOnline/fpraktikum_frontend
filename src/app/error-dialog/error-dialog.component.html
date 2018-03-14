@@ -1,9 +1,0 @@
-<h2 mat-dialog-title>{{ title | translate }}</h2>
-<mat-dialog-content>
-  <p *ngIf="desc" [innerHtml]="desc | translate"></p>
-  <pre *ngIf="content">{{ content | json }}</pre>
-  <p [innerHtml]="'ERROR_HELP' | translate:(content)"></p>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-raised-button mat-dialog-close>{{ 'CLOSE' | translate }}</button>
-</mat-dialog-actions>

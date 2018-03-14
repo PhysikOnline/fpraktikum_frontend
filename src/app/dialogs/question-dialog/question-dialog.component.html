@@ -1,0 +1,6 @@
+<h2 mat-dialog-title>{{ questionTitle }}</h2>
+<mat-dialog-content [innerHtml]="questionContent || ''"></mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close(true)">{{ 'YES' | translate }}</button>
+  <button mat-raised-button (click)="close(false)">{{ 'NO' | translate }}</button>
+</mat-dialog-actions>

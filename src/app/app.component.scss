@@ -1,8 +1,9 @@
-app-registration-form, app-registered-info {
+app-registration-form,
+app-registered-info {
   display: block;
   position: relative;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
 }
 
 .view-wrapper {
@@ -11,5 +12,3 @@ app-registration-form, app-registered-info {
   height: 100%;
   width: 100%;
 }
-
-

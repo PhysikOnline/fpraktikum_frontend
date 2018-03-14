@@ -1,0 +1,31 @@
+<mat-card class="partner-is-free" *ngIf="partnerStatus === chosenPartnerEnum.registeredAndFree">
+  <mat-card-title>{{ 'PARTNER_IS_FREE_TITLE' | translate:partner?.firstName }}</mat-card-title>
+  <mat-card-content>
+    {{ 'PARTNER_IS_FREE_CONTENT' | translate:partner.firstName }}
+    <!--<app-user-info-list [user]="fullPartner"></app-user-info-list>-->
+  </mat-card-content>
+</mat-card>
+<mat-card class="partner-not-registered" *ngIf="partnerStatus === chosenPartnerEnum.notRegistered">
+  <mat-card-title>{{ 'PARTNER_IS_NOT_REGISTERED_TITLE' | translate }}
+  </mat-card-title>
+  <mat-card-content>{{ 'PARTNER_IS_NOT_REGISTERED_CONTENT' | translate }}</mat-card-content>
+</mat-card>
+<mat-card class="partner-not-registered" *ngIf="partnerStatus === chosenPartnerEnum.hasDifferentGraduation">
+  <mat-card-title>{{ 'PARTNER_IS_DIFFERENT_GRADUATION_TITLE' | translate:partner?.firstName }}
+  </mat-card-title>
+  <mat-card-content>{{ 'PARTNER_IS_DIFFERENT_GRADUATION_CONTENT' | translate:partner?.firstName }}
+  </mat-card-content>
+</mat-card>
+<mat-card class="partner-does-not-exist" *ngIf="partnerStatus === chosenPartnerEnum.doesNotExist">
+  <mat-card-title>{{ 'PARTNER_DOES_NOT_EXIST_TITLE' | translate }}
+  </mat-card-title>
+  <mat-card-content>{{ 'PARTNER_DOES_NOT_EXIST_CONTENT' | translate }}</mat-card-content>
+</mat-card>
+<mat-card class="partner-has-partner" *ngIf="partnerStatus === chosenPartnerEnum.hasPartner">
+  <mat-card-title>{{ 'PARTNER_HAS_PARTNER_TITLE' | translate:partner?.firstName }}
+  </mat-card-title>
+  <mat-card-content>{{ 'PARTNER_HAS_PARTNER_CONTENT' | translate }}</mat-card-content>
+</mat-card>
+<mat-card class="partner-same-as-user" *ngIf="partnerStatus === chosenPartnerEnum.sameAsUser">
+  <mat-card-title>{{ 'PARTNER_SAME_AS_TITLE' | translate }}</mat-card-title>
+</mat-card>
