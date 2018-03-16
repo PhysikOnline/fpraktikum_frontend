@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { Effect, Actions } from '@ngrx/effects';
-import { switchMap, map, catchError, filter } from 'rxjs/operators';
+import {
+  switchMap,
+  map,
+  catchError,
+  filter,
+  debounceTime,
+} from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { merge } from 'rxjs/observable/merge';
 
@@ -118,16 +124,19 @@ export class MetaInfoEffects {
     this.partnerStore.select(partnerSelectors.getPartner),
     this.actions$
       .ofType(metaInfoActions.UPDATE_AVAILABLE_INSTITUTE)
-      .map((a: metaInfoActions.UpdateAvailableInstitutes) => a.payload),
-    this.actions$
-      .ofType(metaInfoActions.UPDATE_REG_STEP)
-      .map((a: metaInfoActions.UpdateRegistrationStep) => a.payload)
+      .map((a: metaInfoActions.UpdateAvailableInstitutes) => a.payload)
   ).pipe(
-    filter(
-      ([p, i, step]) => !!i && i.length > 0 && step === REGISTRATION_STEP.MAIN
-    ),
     withLatestFrom(this.metaInfoStore.select(metaInfoSelectors.getGraduation)),
-    map(([[partner, availableInstitutes, step], graduation]) => {
+    withLatestFrom(
+      this.actions$
+        .ofType(metaInfoActions.UPDATE_REG_STEP)
+        .map((a: metaInfoActions.UpdateRegistrationStep) => a.payload)
+    ),
+    filter(
+      ([[[p, i], graduation], step]) =>
+        !!i && i.length > 0 && step === REGISTRATION_STEP.MAIN
+    ),
+    map(([[[partner, availableInstitutes], graduation], step]) => {
       const placesNeeded = partner ? 2 : 1;
       let areEnoughPlacesAvailable = true;
       const freeInstitutes = availableInstitutes.filter(
