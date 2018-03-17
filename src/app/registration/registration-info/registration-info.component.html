@@ -13,8 +13,9 @@
     </mat-expansion-panel-header>
     <h3>Zeitpunkt</h3>
     <p>
-      Die Anmeldung wird am {{ (registration$.pluck('startDate') | async) | date }} beginnen
-      und bis zum {{ (registration$.pluck('endDate') | async) | date }} offen sein.
+      Die Anmeldung wird am {{ (registration$.pluck('startDate') | async) | date:'dd.MM.yyyy,
+      HH:mm' }} beginnen und bis zum {{ (registration$.pluck('endDate') | async)
+      | date:'dd.MM.yyyy, HH:mm' }} offen sein.
     </p>
     <h3>Ablauf</h3>
     <ol>
