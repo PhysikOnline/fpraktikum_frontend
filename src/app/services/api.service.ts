@@ -206,7 +206,7 @@ export class ApiService {
         message = error.message;
       }
     }
-    console.error('ERROR:', error);
+    console.error('API-ERROR:', error);
     Raven.captureMessage(error.statusText, {
       extra: error,
     });
