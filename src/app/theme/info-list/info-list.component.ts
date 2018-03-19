@@ -16,6 +16,16 @@ export class InfoListComponent implements OnInit {
   userType = USER_TYPE;
   graduation = GRADUATION;
 
+  get institutes() {
+    const userInstitutes = this.user ? this.user.institutes : null;
+    const selectedInstitutes = this.info ? this.info.selectedInstitutes : null;
+
+    const institutes = userInstitutes || selectedInstitutes || [];
+    return institutes.sort((a, b) => {
+      return a.semesterHalf - b.semesterHalf;
+    });
+  }
+
   constructor() {}
 
   ngOnInit() {}
