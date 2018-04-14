@@ -21,9 +21,19 @@ export class InfoListComponent implements OnInit {
     const selectedInstitutes = this.info ? this.info.selectedInstitutes : null;
 
     const institutes = userInstitutes || selectedInstitutes || [];
-    return institutes.sort((a, b) => {
+    const sortetInstitutes = institutes.sort((a, b) => {
       return a.semesterHalf - b.semesterHalf;
     });
+
+    return sortetInstitutes;
+
+  }
+
+  get institutesString() {
+    // create a comma seperatet string from the institutes
+    const instituteString:string = this.institutes.length === 1 ? this.institutes[0].name : this.institutes[0].name + ', ' + this.institutes[1].name;
+
+    return instituteString;
   }
 
   constructor() {}
