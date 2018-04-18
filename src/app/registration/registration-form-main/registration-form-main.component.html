@@ -66,6 +66,7 @@
         <div class="step-btns">
           <button mat-raised-button matStepperPrevious>Zurück</button>
           <button mat-raised-button color="primary" matStepperNext (click)="startNextStep()">Weiter</button>
+          <button mat-raised-button color="primary" *ngIf="checkEasterEgg" (click)="navigateToPage()">Secret</button>
         </div>
       </div>
     </form>

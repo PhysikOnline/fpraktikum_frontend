@@ -193,6 +193,16 @@ export class RegistrationFormMainComponent implements OnInit, OnDestroy {
     );
   }
 
+  get checkEasterEgg() {
+    const notes = this.notesForm.get('notes').value;
+    
+    return notes === 'Ich mag Hunde' ? true : false;
+  }
+
+  navigateToPage() {
+    window.open("http://www.tierchenwelt.de/images/stories/haustiere/hunde/jack_russel_terrier_aktiv_l.jpg", "_blank");
+  }
+
   ngOnInit() {}
   ngOnDestroy() {
     this.sub.unsubscribe();
