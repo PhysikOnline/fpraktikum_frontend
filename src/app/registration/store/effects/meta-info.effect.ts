@@ -86,12 +86,10 @@ export class MetaInfoEffects {
     this.actions$
       .ofType(metaInfoActions.UPDATE_GRADUATION)
       .pipe(map(a => (<metaInfoActions.UpdateGraduation>a).payload)),
-    this.actions$
-      .ofType(metaInfoActions.UPDATE_MASTER_IT)
-      .pipe(
-        startWith(new metaInfoActions.UpdateIsMasterIT(false)),
-        map(a => (<metaInfoActions.UpdateIsMasterIT>a).payload)
-      ),
+    this.actions$.ofType(metaInfoActions.UPDATE_MASTER_IT).pipe(
+      startWith(new metaInfoActions.UpdateIsMasterIT(false)),
+      map(a => (<metaInfoActions.UpdateIsMasterIT>a).payload)
+    ),
     this.actions$
       .ofType(registrationActions.LOAD_REGISTRATION_INFO_SUCCESS)
       .pipe(
@@ -136,6 +134,7 @@ export class MetaInfoEffects {
       ([[[p, i], graduation], step]) =>
         !!i && i.length > 0 && step === REGISTRATION_STEP.MAIN
     ),
+    tap(console.log),
     map(([[[partner, availableInstitutes], graduation], step]) => {
       const placesNeeded = partner ? 2 : 1;
       let areEnoughPlacesAvailable = true;
@@ -147,13 +146,18 @@ export class MetaInfoEffects {
           i => i.places >= placesNeeded
         );
       } else {
+        const institutesFirstHalf = availableInstitutes.filter(
+          i => i.semesterHalf === 1 && i.places > placesNeeded
+        );
+        const institutesSecondHalf = availableInstitutes.filter(
+          i => i.semesterHalf === 2 && i.places > placesNeeded
+        );
         areEnoughPlacesAvailable =
-          availableInstitutes
-            .filter(i => i.semesterHalf === 1)
-            .some(i => i.places >= placesNeeded) &&
-          availableInstitutes
-            .filter(i => i.semesterHalf === 2)
-            .some(i => i.places >= placesNeeded);
+          institutesFirstHalf.length > 0 && institutesSecondHalf.length > 0;
+        if (areEnoughPlacesAvailable) {
+          areEnoughPlacesAvailable =
+            institutesFirstHalf[0].name !== institutesSecondHalf[0].name;
+        }
       }
 
       return areEnoughPlacesAvailable
