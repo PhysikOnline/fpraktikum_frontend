@@ -10,5 +10,5 @@ export const CONFIG = {
     MA: GRADUATION.MA,
     LA: GRADUATION.LA,
   },
-  version: '1.0',
+  version: '1.0.5',
 };
