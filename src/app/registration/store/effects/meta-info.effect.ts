@@ -154,7 +154,10 @@ export class MetaInfoEffects {
         );
         areEnoughPlacesAvailable =
           institutesFirstHalf.length > 0 && institutesSecondHalf.length > 0;
-        if (areEnoughPlacesAvailable) {
+        if (
+          institutesFirstHalf.length === 1 &&
+          institutesSecondHalf.length === 1
+        ) {
           areEnoughPlacesAvailable =
             institutesFirstHalf[0].name !== institutesSecondHalf[0].name;
         }
